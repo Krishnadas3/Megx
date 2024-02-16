@@ -1,17 +1,24 @@
 
 const express = require('express')
 const app = express()
+const passport = require('passport')
+const GoogleStartegy = require('passport-google-oauth20').Strategy
 const path = require('path')
-var jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
+const bcrypt = require('bcrypt')
 const cookieparser = require('cookie-parser')
+const userrouter = require('./routes/user')
 let ejs = require('ejs')
+
+const user = require('./modal/users')
 const {parsed:config} = require('dotenv').config()
 global.config = config
-const port = process.env.PORT || 5050;
+
+
+const port = process.env.PORT || 5050;  // env port connecting here 
 
 app.set('view engine','ejs')
-// app.use(expressEjsLayouts)
 app.set('views',path.join(__dirname,'views'))
 app.use(cookieparser())
 
@@ -29,59 +36,75 @@ mongoose.connect(config.CONNECTION_STRING,{
   })    
 
 
+// here we can all public file accessing here 
+
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(express.static(path.join(__dirname,'public')))
-
 
 app.get('/', function(req, res) {
     res.render('index');
 });
 
-app.get('/login', function(req, res) {
-    res.render('login');
-});
+app.get('/login',function(req,res){
+    res.render('login')
+})
 
-app.get('/signup',function(req,res){
+app.get('/signup',function(re,res){
     res.render('signup')
 })
 
-app.get('/my-account',function(req,res){
-    res.render('my-account')
+
+// register User here 
+
+app.post('/signup',async(req,res)=>{
+
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password,10)
+
+        const data = new user({
+            name:req.body.username,
+            email:req.body.email,
+            password:hashedPassword
+        })
+        console.log(data);
+    
+        const userdata = await data.save()
+        console.log(userdata);
+
+        // create a jwt toekn for the user 
+        res.redirect("/login")
+    
+    }catch (error){
+        console.error(error)
+        res.status(500).json({message:'internal server error'})
+    }
 })
 
-app.get('/wishlist',function(req,res){
-    res.render('wishlist')
+// login page 
+
+app.post('/login',async(req,res)=>{
+    try {
+
+        const foundUser = await user.findOne({email:req.body.email})
+
+        if(foundUser){
+            const passwordMatch = await bcrypt.compare(req.body.password, foundUser.password)
+
+            if(passwordMatch){
+                res.redirect('/')
+            }else{
+                res.render('login',{error:'wrong password'})
+            }
+        }else{
+            res.render('login',{error:'user not found'})
+        }
+    } catch (error) {
+        console.error(error)
+        res.render('login',{error:'internal server error'})
+    }
 })
-
-app.get('/shop',function(req,res){
-    res.render('shop')
-})
-
-app.get('/about',function(req,res){
-    res.render('about')
-})
-
-app.get('/product-details-2',function(req,res){
-    res.render('product-details-2')
-})
-
-app.get('/cart-page',function(req,res){
-    res.render('cart-page')
-})
-
-app.get('/checkout',function(req,res){
-    res.render('checkout')
-})
-
-
-app.get('/contact',function(req,res){
-    res.render('contact')
-})
-
 
 app.listen(port,()=>{
     console.log('listening');
 })
-
-
