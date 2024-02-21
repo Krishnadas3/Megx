@@ -1,12 +1,12 @@
 
 const express = require('express')
-const mainrouter = express.Router()
+const router = express.Router()
 const adminController = require('../controller/adminController')
-const bodyParser = require('body-parser')
-const adminRouter = require('./adminRoute')
 
-mainrouter.use(bodyParser.urlencoded({extended:true}))
 
-mainrouter.get('/admin',adminController.homepage)
 
-module.exports = mainrouter
+router.get('/admin',adminController.adminlogin)
+
+router.post('/admin/login',adminController.loginPostpage)
+
+module.exports = router
