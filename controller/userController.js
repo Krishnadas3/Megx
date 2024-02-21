@@ -1,5 +1,4 @@
 
-const User = require('../models/users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const user = require('../models/users')
@@ -18,6 +17,10 @@ let homepage = (req,res)=>{
         res.status(500).send('internal server error')
     }
 }
+
+const loadAuth = (req,res) =>[
+    res.render('auth')
+]
 
 // user signup page display 
 
@@ -44,7 +47,7 @@ let signupPostpage = async (req, res) => {
   
       const hashedPassword = await bcrypt.hash(password, 10);
   
-      const data = new User({
+      const data = new user({
         name: req.body.username,
         email: req.body.email,
         password: hashedPassword,
@@ -86,6 +89,12 @@ const loginPostpage = async(req,res) =>{
             const passwordMatch = await bcrypt.compare(req.body.password, foundUser.password)
 
             if(passwordMatch){
+                
+                req.session.user= {
+                    id:foundUser._id,
+                    username:foundUser.username,
+                    email:foundUser.email
+                }
                 res.redirect('/')
             }else{
                 console.log('Incorrect password:', req.body.password);
@@ -103,14 +112,18 @@ const loginPostpage = async(req,res) =>{
 
 // google verification here 
 
-// app.get('/auth/google/callback', 
-//   passport.authenticate('google', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//   });
+const succesGoogleLogin = (req,res) =>{
+    if(!req.user)
+    res.redirect('/failure')
+console.log(req.user);
+    res.redirect('/')
+}
+
+const failureGooglelogin = (req,res) =>{
+    res.send('Error')
+}
 
 
 module.exports = {
-    homepage,signupGetpage,logiGetpage,signupPostpage,loginPostpage
+    homepage,signupGetpage,logiGetpage,signupPostpage,loginPostpage,loadAuth,succesGoogleLogin,failureGooglelogin
 }
