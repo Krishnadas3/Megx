@@ -11,6 +11,8 @@ let adminlogin = (req,res) =>{
     }
 }
 
+// admin login here
+
 const loginPostpage = async(req,res) =>{
     try {
         const foundUser = await admin.findOne({email:req.body.email})
@@ -44,7 +46,7 @@ const loginPostpage = async(req,res) =>{
 
 
 
-// verifylogin
+
 
 
 

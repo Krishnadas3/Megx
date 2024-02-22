@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Create an Account</title>
+  <title></title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
@@ -77,32 +78,15 @@
 
   <div class="signup-container">
 
-    <img src="https://see.fontimg.com/api/renderfont4/owrrV/eyJyIjoiZnMiLCJoIjo0MCwidyI6MTI1MCwiZnMiOjMyLCJmZ2MiOiIjMDAwMDAwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/TUVHWA/black-romero-demo.png" alt="logo" class="logo">
-    <br>
-    <br>
+    <h2 class="text-center mb-4">For otp Login</h2>
 
-    <h2 class="text-center mb-4">Create an Account</h2>
-
-    <form action="/user/login" method="post">
-      <% if (typeof error !== 'undefined' && error !== null) { %>
+    <form action="" method="post">
+      <!-- <% if (typeof error !== 'undefined' && error !== null) { %>
           <p style="color: red;"><%= error %></p>
-      <% } %>
-      <input type="email" name="email" id="" class="form-control my-4 py-2" placeholder="email" />
-      <input type="password" name="password" id="" class="form-control my-4 py-2" placeholder="Password" />
-      <button class="btn btn-primary btn-block">Login</button>
-
+      <% } %> -->
+      <input type="" name="phone" id="number" class="form-control my-4 py-2" placeholder="enter your phonenumber" />
       
-      <a href="/auth/google" class="btn btn-primary btn-block ">Login Google</a>
-      <br>
-      
-      <a href="/forgotpass">Forget Password |</a>
-      <a href="/loginotp">Login with Otp</a>
-      <br>
-      <br>
-      <span>Don't have an account ? <a style="text-decoration: none;" href="/signup">Create Account</a></span
-  
-      
-      
+      <button class="btn btn-primary btn-block">sendotp</button>  
   </form>
   
   
@@ -111,6 +95,4 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>
-

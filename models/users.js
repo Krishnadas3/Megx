@@ -8,7 +8,6 @@ const loginSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
     },
     email: {
         type: String,
@@ -16,7 +15,6 @@ const loginSchema = new mongoose.Schema({
     }
 
 });
-
 
 // Collection part
 const user = mongoose.model('user', loginSchema); // Changed the model name to 'User' for better clarity
