@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const user = require('../models/users')
 
+
 // const user = require('../models/users')
 
 require('dotenv').config()
@@ -34,6 +35,7 @@ let signupGetpage = async(req,res) =>{
 }
 
 
+
 // use signup here 
 
 
@@ -58,6 +60,14 @@ let signupPostpage = async (req, res) => {
       const userdata = await data.save();
       console.log(userdata);
 
+      // Generate JWT token after successful ginup 
+
+      const token = jwt.sign({userId:userdata._id},'your_secret_key',{expiresIn:'1h'})
+
+      //her send the token in responses or stroe it as needed
+
+      res.cookie('token',token,{httpOnly:true})
+
       res.redirect('/login');
     } catch (error) {
       console.error(error);
@@ -78,7 +88,7 @@ let logiGetpage = async(req,res) => {
 }
 
 
-//  user login 
+//  user login route
 
 
 const loginPostpage = async(req,res) =>{
@@ -89,6 +99,11 @@ const loginPostpage = async(req,res) =>{
             const passwordMatch = await bcrypt.compare(req.body.password, foundUser.password)
 
             if(passwordMatch){
+
+                const token = jwt.sign({userId:foundUser._id},'your_secret_key',{expiresIn:'1h'})
+
+                //
+                res.cookie('token',token,{httpOnly:true})
                 
                 req.session.user= {
                     id:foundUser._id,
@@ -112,11 +127,33 @@ const loginPostpage = async(req,res) =>{
 
 // google verification here 
 
-const succesGoogleLogin = (req,res) =>{
-    if(!req.user)
-    res.redirect('/failure')
-console.log(req.user);
-    res.redirect('/')
+const succesGoogleLogin = async (req,res) =>{
+    try {
+        if(!req.user)
+
+        return res.status(401).send('no user data, login failed')
+   
+        console.log(req.user);
+        
+        let newUser = await user.findOne({email:req.user.email})
+
+        if(!newUser){
+
+            newUser = new user({
+                name:req.user.displayName,
+                email:req.user.email
+            })
+
+            await newUser.save()
+        }
+   
+        req.session.user = newUser
+        res.status(200).render('user/index')
+   
+    } catch (error) {
+       console.error('login erroe',error)
+       res.status(500).redirect('user/login')
+    }
 }
 
 const failureGooglelogin = (req,res) =>{
@@ -124,6 +161,62 @@ const failureGooglelogin = (req,res) =>{
 }
 
 
+// for otp login 
+
+let logingetotp = async(req,res) => {
+    try {
+        res.render('user/loginphonotp')
+    } catch (error) {
+        console.error('failed to get login page',error)
+        res.status(500).send('intenal server error')
+    }
+}
+
+
+let myaccountgetpage = async(req,res) =>{
+    try {
+        res.render('user/myaccount')
+    } catch (error) {
+        console.error('failed to get login page',error)
+        res.status(500).send('intenal server error')
+    }
+}
+
+// USER LOGOUT
+
+let userLogout = (req, res) => {
+    if (!req.session.user) {
+      // User is already logged out, redirect to a page with a message
+      const alertScript = `
+        <script>
+          alert("You are already logged out.");
+          window.location.href = "/login";
+        </script>
+      `;
+      return res.send(alertScript);
+    }
+  
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error destroying session:", err);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.redirect("/login");
+      console.log("User logged out");
+    });
+  };
+
+
+// forgot password here 
+
+let forgotpasspage = async(req,res) =>{
+    try {
+        res.render('user/forgotpass')
+    } catch (error) {
+        console.error('failed to get login page',error)
+        res.status(500).send('intenal server error')
+    }
+}
 module.exports = {
-    homepage,signupGetpage,logiGetpage,signupPostpage,loginPostpage,loadAuth,succesGoogleLogin,failureGooglelogin
+    homepage,signupGetpage,logiGetpage,signupPostpage,loginPostpage,loadAuth,succesGoogleLogin,failureGooglelogin,logingetotp,myaccountgetpage,userLogout,forgotpasspage
 }
