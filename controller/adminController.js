@@ -1,8 +1,7 @@
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+
 const admin = require('../models/admin')
 
-let adminlogin = (req,res) =>{
+let logingetpage = (req,res) =>{
     try {
         res.render('admin/adminlogin')
     } catch (error) {
@@ -27,10 +26,10 @@ const loginPostpage = async(req,res) =>{
                     id:foundUser._id,
                     email:foundUser.email
                 }
-                res.render('admin/home')
+                res.render('admin/dashboard')
             }else{
                 console.log('Incorrect password:', req.body.password);
-                res.render('user/login',{error:'wrong password'})
+                res.render('admin/adminlogin',{error:'wrong password'})
             }
         }else{
             console.log('User not found:', req.body.email);
@@ -42,17 +41,47 @@ const loginPostpage = async(req,res) =>{
     }
 }
 
+// admin logout here 
 
 
 
+// admin dashboard display 
 
+let dashboardPage = (req, res) => {
+    try {
+      res.redirect("admin/dashboard")
+    } catch (error) {
+        console.error('failed to get home:',error)
+        res.status(500).send('internal server error')
+    }
+  };
 
+  // admin customerpage
 
+  let customerspage = (req,res) =>{
+        try {
+            res.render('admin/customers')
+        } catch (error) {
+            console.error('failed to get home:',error)
+            res.status(500).send('internal server error')
+        }
+  }
 
+    // admin customerdetail
 
-
+  let customerdetailpage = (req,res) =>{
+    try {
+        res.render('admin/customerdetail')
+    } catch (error) {
+        console.error('failed to get home:',error)
+        res.status(500).send('internal server error')
+    }
+}
 
 module.exports = {
-    adminlogin,
-    loginPostpage
+    logingetpage,
+    loginPostpage,
+    dashboardPage,
+    customerspage,
+    customerdetailpage
 }

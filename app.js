@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const userRouter = require('./routes/userRoute');
-const adminRoutes = require('./routes/adminRoute')
+const adminRouter = require('./routes/adminRoute')
 const session = require('express-session')
 
 
@@ -27,9 +27,8 @@ app.use(session({
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'views')));
-// app.use(express.static(path.join(__dirname,'views')))
 app.use(express.static('public'));
-// app.use(express.static('public/admin'))
+
 
 const { parsed: config } = require('dotenv').config();
 global.config = config;
@@ -45,7 +44,7 @@ mongoose.connect(config.CONNECTION_STRING, {
 });
 
 app.use('/', userRouter);
-app.use('/',adminRoutes)
+app.use('/',adminRouter)
 
 
 app.listen(5050, () => {
