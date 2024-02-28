@@ -3,6 +3,7 @@ const router = express.Router()
 const userController = require('../controller/userController')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const jwtMiddleware = require('../middleware/jwtmiddle')
 require('../passport')
 require('dotenv').config()
 
@@ -15,13 +16,17 @@ router.get('/login',userController.logiGetpage)
 router.post('/user/login',userController.loginPostpage)
 router.get('/signup',userController.signupGetpage)
 router.post('/user/signup',userController.signupPostpage)
-// router.get('forotp',userController.otpGetpage)
 router.get('/',userController.loadAuth)
 
-router.get('/loginotp',userController.logingetotp)
+
 router.get('/myaccount',userController.myaccountgetpage)
 router.get('/logout',userController.userLogout)
 router.get('/forgotpass',userController.forgotpasspage)
+router.post("/forgotpassword",userController.forgetEmailPostpage)
+router.post("/resetpassword",userController.resetPassword)
+router.get('/loginotp',userController.logingetotp)
+router.post('/loginotp',userController.loginrequestsotp)
+router.post('/loginotpdone',userController.loginverifyotp)
 
 //otp verfication 
 

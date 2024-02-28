@@ -9,10 +9,15 @@ const loginSchema = new mongoose.Schema({
     password: {
         type: String,
     },
+    phonenumber: {
+        type: String
+    },
     email: {
         type: String,
         required: true
-    }
+    },
+    otp : {type :String},
+    otpExpiration : {type : String},
 
 });
 
