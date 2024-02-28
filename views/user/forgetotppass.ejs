@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title></title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #fff;
+    }
+
+    .signup-container {
+      max-width: 400px;
+      width: 100%;
+      padding: 1px;
+      text-align: center;
+    }
+
+    .logo {
+      max-width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .form-control {
+      border: 2px solid #ced4da;
+      border-radius: 5px;
+      height: 46px;
+    }
+
+    .btn-primary {
+      background-color: #000;
+      border-color: #000;
+      height: 46px;
+      color: #fff;
+      /* Set text color to white */
+    }
+
+    .btn-primary:hover {
+      background-color: #000;
+      /* No hover effect */
+      border-color: #000;
+    }
+
+    /* Remove underline from <a> tag */
+    a {
+      text-decoration: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+      /* Set link color to black */
+    }
+
+    h2 {
+      font-weight: bolder;
+      font-size: 28px;
+    }
+
+    */
+
+    /* Additional style for terms and conditions checkbox */
+    .form-check-label {
+      font-size: 14px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="signup-container">
+
+    <h2 class="text-center mb-4">Forget password </h2>
+   
+    <!-- <h4 style="font-size: 16px;">Enter your email address below and we’ll send you a link to reset your password.</h4> -->
+
+    <!-- <p>Enter your email address send you a link to reset your password.</p> -->
+ 
+    <form action="/resetpassword" method="post">
+      <!-- <% if (typeof error !== 'undefined' && error !== null) { %>
+          <p style="color: red;"><%= error %></p>
+      <% } %> -->
+      <!-- <input type="hidden" name="email" id="email" class="form-control my-4 py-2" value="<%= email %>"/> -->
+      <input type="text" name="otp" id="otp" class="form-control my-4 py-2" placeholder="enter your Otp" />
+      <input type="text" name="newpassword" id="newpassword" class="form-control my-4 py-2" placeholder="enter your new password" />
+      <input type="text" name="confirmpassword" id="confirmpassword" class="form-control my-4 py-2" placeholder="confirm password" />
+      
+      <button class="btn btn-primary btn-block">Send Reset Link</button>  
+  </form>
+  
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>

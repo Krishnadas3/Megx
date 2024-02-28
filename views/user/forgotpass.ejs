@@ -84,11 +84,11 @@
 
     <!-- <p>Enter your email address send you a link to reset your password.</p> -->
  
-    <form action="" method="post">
+    <form action="/forgotpassword" method="post">
       <!-- <% if (typeof error !== 'undefined' && error !== null) { %>
           <p style="color: red;"><%= error %></p>
       <% } %> -->
-      <input type="" name="phone" id="number" class="form-control my-4 py-2" placeholder="enter your email" />
+      <input type="text" name="email" id="email" class="form-control my-4 py-2" placeholder="enter your email" />
       
       <button class="btn btn-primary btn-block">Send Reset Link</button>  
   </form>
