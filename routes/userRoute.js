@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controller/userController')
+const otp = require('../controller/otp')
 const bodyParser = require('body-parser')
 const passport = require('passport')
-const jwtMiddleware = require('../middleware/jwtmiddle')
+// const jwtMiddleware = require('../middleware/jwtmiddle')
 require('../passport')
 require('dotenv').config()
 
@@ -20,6 +21,8 @@ router.get('/',userController.loadAuth)
 
 
 router.get('/myaccount',userController.myaccountgetpage)
+router.get('/shop',userController.shopepage)
+router.get('/productdetail',userController.productdetailpage)
 router.get('/logout',userController.userLogout)
 router.get('/forgotpass',userController.forgotpasspage)
 router.post("/forgotpassword",userController.forgetEmailPostpage)

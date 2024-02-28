@@ -21,6 +21,30 @@ let homepage = (req,res)=>{
     }
 }
 
+// shope pagee
+
+
+let shopepage = (req,res)=>{
+    try {
+        res.render('user/shop')
+    } catch (error) {
+        console.error('failed to get home:',error)
+        res.status(500).send('internal server error')
+    }
+}
+
+let productdetailpage = (req,res) =>{
+    try {
+        res.render('user/productdetail')
+    } catch (error) {
+        console.error('failed to connet',error)
+        res.status(500).send('internal server error')
+    }
+}
+
+
+
+
 const loadAuth = (req,res) =>[
     res.render('auth')
 ]
@@ -54,7 +78,7 @@ let signupPostpage = async (req, res) => {
         const data = new user({
             name: req.body.username,
             email: req.body.email,
-            phonenumber:phone,
+            phonenumber:req.body.phonenumber,
             password: hashedPassword,
         });
 
@@ -400,5 +424,7 @@ module.exports = {
     resetPassword,
     logingetotp,
     loginrequestsotp,
-    loginverifyotp
+    loginverifyotp,
+    shopepage,
+    productdetailpage
 }
