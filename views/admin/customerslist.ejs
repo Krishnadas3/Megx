@@ -22,7 +22,7 @@
         <!-- sidebar -->
         <div class="sidebar px-4 py-4 py-md-4 me-0">
             <div class="d-flex flex-column h-100">
-                <a href="index.html" class="mb-0 brand-icon">
+                <a href="/admin/dashboard" class="mb-0 brand-icon">
                     <span class="logo-icon">
                         <i class="bi bi-bag-check-fill fs-4"></i>
                     </span>
@@ -30,7 +30,7 @@
                 </a>
                 <!-- Menu: main ul -->
                 <ul class="menu-list flex-grow-1 mt-3">
-                    <li><a class="m-link" href="index.html"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
+                    <li><a class="m-link" href="/admin/dashboard"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
                     <li class="collapsed">
                         <a class="m-link" data-bs-toggle="collapse" data-bs-target="#menu-product" href="#">
                             <i class="icofont-truck-loaded fs-5"></i> <span>Products</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
@@ -50,8 +50,8 @@
                             <i class="icofont-chart-flow fs-5"></i> <span>Categories</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
                             <!-- Menu: Sub menu ul -->
                             <ul class="sub-menu collapse" id="categories">
-                                <li><a class="ms-link" href="/categorielist.html">Categories List</a></li>
-                                <li><a class="ms-link" href="categories-edit.html">Categories Edit</a></li>
+                                <li><a class="ms-link" href="/admin/categorielist">Categories List</a></li>
+                                <li><a class="ms-link" href="/admin/">Categories Edit</a></li>
                                 <li><a class="ms-link" href="categories-add.html">Categories Add</a></li>
                             </ul>
                     </li>
@@ -333,155 +333,58 @@
                                     <table id="myProjectTable" class="table table-hover align-middle mb-0" style="width:100%">
                                         <thead>
                                             <tr>
-                                                <th>Id</th>
+                                                <!-- <th>Id</th> -->
                                                 <th>Customers</th> 
-                                                <th>Register  Date</th>
+                                                <!-- <th>Register  Date</th> -->
                                                 <th>Mail</th>
                                                 <th>Phone</th> 
-                                                <th>Country</th> 
+                                                <!-- <th>Country</th>  -->
                                                 <th>Total Order</th>
                                                 <th>Actions</th>  
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <% User.forEach(data=>{ %>
                                             <tr>
-                                                <td><strong>#CS-00002</strong></td>
+                                                <!-- <td><strong>#CS-00002</strong></td> -->
                                                 <td>
                                                         <a href="customer-detail.html">
-                                                            <img class="avatar rounded" src="assets/images/xs/avatar1.svg" alt="">
-                                                            <span class="fw-bold ms-1">Joan Dyer</span>
+                                                            <img class="avatar rounded" src="/admin/assets/images/xs/avatar1.svg" alt="">
+                                                            <span class="fw-bold ms-1"><%= data.name %></span>
                                                         </a>
                                                 </td>
-                                                <td>
-                                                        12/03/2021
-                                                </td>
-                                                <td>JoanDyer@gmail.com</td>
-                                                <td>202-555-0983</td>
-                                                <td>South Africa</td>
+                                                <!-- <td><%= data.createdAt %></td> -->
+                                                <td><%= data.email %></td>
+                                                <td><%= data.phoneNumber %></td>
+                                                <!-- <td>South Africa</td> -->
                                                 <td>18</td>
                                                 <td>
-                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                        <button type="button" class="btn btn-outline-secondary"  data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button>
-                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>
-                                                    </div>
+                                                        <% if (data.blocked) { %>
+                                                            <form class="unblock-form" method="post" action="/blockUser">
+                                                                <input type="hidden" name="email" value="<%= data.email %>">
+                                                                <button type="submit" class="btn btn-success text-light">UnBlock</button>  
+                                                            </form>
+                                                        <% } else { %>
+                                                            <form class="block-form" method="post" action="/blockUser">
+                                                                <input type="hidden" name="email" value="<%= data.email %>">
+                                                                <button type="submit" class="btn btn-danger text-light">Block</button>  
+                                                            </form>
+                                                        <% } %>
+                                                        <!-- <div class="btn-group" role="group" aria-label="Basic outlined example"> -->
+                                                            <!-- <button type="button" class="btn btn-outline-secondary"  data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button> -->
+                                                            <!-- <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button> -->
+                                                        <!-- </div> -->
+                                                    
                                                 </td>
                                             </tr>
-                                            <tr>
-                                                <td><strong>#CS-00006</strong></td>
-                                                <td>
-                                                    <a href="customer-detail.html">
-                                                        <img class="avatar rounded" src="assets/images/xs/avatar2.svg" alt="">
-                                                        <span class="fw-bold ms-1">Ryan	Randall</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    12/03/2021
-                                                </td>
-                                                <td>RyanRandall@gmail.com</td>
-                                                <td>303-555-0151</td>
-                                                <td>Australia</td>
-                                                <td>4568</td>
-                                                <td>
-                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button>
-                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>#CS-00004</strong></td>
-                                                <td>
-                                                    <a href="customer-detail.html">
-                                                        <img class="avatar rounded" src="assets/images/xs/avatar3.svg" alt="">
-                                                        <span class="fw-bold ms-1">Phil	Glover</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    16/03/2021
-                                                </td>
-                                                <td>PhilGlover@gmail.com</td>
-                                                <td>843-555-0175</td>
-                                                <td>Sri Lanka</td>
-                                                <td>05</td>
-                                                <td>
-                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button>
-                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>#CS-00008</strong></td>
-                                                <td>
-                                                    <a href="customer-detail.html">
-                                                        <img class="avatar rounded" src="assets/images/xs/avatar4.svg" alt="">
-                                                        <span class="fw-bold ms-1">Victor Rampling</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    25/02/2021
-                                                </td>
-                                                <td>VictorRampling@gmail.com</td>
-                                                <td>404-555-0100</td>
-                                                <td>Israel</td>
-                                                <td>14</td>
-                                                <td>
-                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button>
-                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>#CS-00018</strong></td>
-                                                <td>
-                                                    <a href="customer-detail.html">
-                                                        <img class="avatar rounded" src="assets/images/xs/avatar5.svg" alt="">
-                                                        <span class="fw-bold ms-1">Sally Graham</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    16/02/2021
-                                                </td>
-                                                <td>SallyGraham@gmail.com</td>
-                                                <td>502-555-0118</td>
-                                                <td>Indonesia</td>
-                                                <td>03</td>
-                                                <td>
-                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button>
-                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>#CS-00014</strong></td>
-                                                <td>
-                                                    <a href="customer-detail.html">
-                                                        <img class="avatar rounded" src="assets/images/xs/avatar6.svg" alt="">
-                                                        <span class="fw-bold ms-1">Robert Anderson</span>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                18/01/2021
-                                                </td>
-                                                <td>RobertAnderson@gmail.com</td>
-                                                <td>502-555-0133</td>
-                                                <td>Malaysia</td>
-                                                <td>02</td>
-                                                <td>
-                                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#expedit"><i class="icofont-edit text-success"></i></button>
-                                                        <button type="button" class="btn btn-outline-secondary deleterow"><i class="icofont-ui-delete text-danger"></i></button>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            <%  }) %>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div><!-- Row End -->
+
                 </div>
             </div>
             

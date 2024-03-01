@@ -30,7 +30,7 @@
     "passport": "^0.7.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
-    "twilio": "^4.22.0"
+    "twilio": "^4.23.0"
   },
   "devDependencies": {
     "nodemon": "3.0.3"
