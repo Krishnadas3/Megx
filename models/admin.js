@@ -1,5 +1,4 @@
 
-
 const mongoose = require('mongoose')
 
 const adminSchema = new mongoose.Schema({
@@ -12,6 +11,16 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category:[{
+        categoryName:{
+            type:String,
+        },
+        createdAt:{
+            type:Date,
+            default:Date.now
+        }
+    }],
+    subcategory: [{subcategoryName: String}]
     
 })
 

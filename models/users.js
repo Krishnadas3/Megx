@@ -18,6 +18,10 @@ const loginSchema = new mongoose.Schema({
     },
     otp : {type :String},
     otpExpiration : {type : String},
+    blocked: {
+        type: Boolean,
+        default: false,
+      },
 
 });
 

@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const user = require('../models/users')
 const nodemailer = require('nodemailer')
 const twilio = require('twilio')
+require("dotenv").config()
 
 
 // const user = require('../models/users')
@@ -120,7 +121,11 @@ const loginPostpage = async (req, res) => {
         if (foundUser) {
             const passwordMatch = await bcrypt.compare(req.body.password, foundUser.password);
 
-            if (passwordMatch) {
+            if (foundUser.blocked) {
+                console.log('User is blocked');
+                res.render('user/login', { error: 'User is blocked' });
+            }
+            else if (passwordMatch) {
                 req.session.user = {
                     id: foundUser._id,
                     username: foundUser.username,
@@ -133,7 +138,7 @@ const loginPostpage = async (req, res) => {
             }
         } else {
             console.log('User not found:', req.body.email);
-            res.render('user/login', { error: 'user not found' });
+            res.render('user/login', { error: 'user not found plese Register' });
         }
     } catch (error) {
         console.error('Internal server error:', error);
@@ -227,21 +232,20 @@ let forgotpasspage = async(req,res) =>{
 }
 
 // forgot here 
-
 const transporter = nodemailer.createTransport({
     service:'gmail',
     host:'smtp.gmail.com',
     port:465,
     auth:{
-        user:'megx838@gmail.com',
-        pass:'atvrqnvmhtgoqqci'
+        user:process.env.EMAIL,
+        pass:process.env.EMAIL_PASS
     }
 })
 
 
 const sendOtpEmail = async (email, otp) =>{
     const mailOptions = {
-        from:'megx838@gmail.com',
+        from:'krishnadasp004@gmail.com',
         to: email,
         subject:'Reset your Password',
         text:`your OTP to reset your password is: ${otp}`,
@@ -259,9 +263,11 @@ const sendOtpEmail = async (email, otp) =>{
 let forgetEmailPostpage = async(req,res) =>{
     const {email} =req.body
 
+
     try {
         const User = await user.findOne({email})
           
+    console.log(User);
         if(!User) {
             return res.status(404).json({message:'user not found'})
         }
@@ -288,6 +294,7 @@ let resetPassword = async (req,res) =>{
 
     try {
         const User = await user.findOne({email})
+        console.log(User);
 
         if(!User) {
             return res.status(404).json({message:'user not found'})
@@ -342,10 +349,13 @@ const generateotp = () =>{
 
 const loginrequestsotp = async (req,res) =>{
     const {phonenumber} = req.body
+    console.log(phonenumber);
     
     try {
-        const User = await user.findOne({phonenumber})
+        
 
+        const User = await user.findOne({phonenumber})
+        
         if(!User){
             return res.status(404).json({message:'user not found'})
         }
@@ -355,17 +365,19 @@ const loginrequestsotp = async (req,res) =>{
         User.otpExpiration = new Date(Date.now()) + 10 *60 *1000 // otp in 10 minte
         await User.save()
 
+        console.log(`generated otp is : ${otp}`);
+
         // send otp via Twilo Sms
 
         try {
             await client.messages.create({
                 body:`your otp for login to Megx is: ${otp}`,
                 from:twilioPhoneNumber,
-                to: process.env.TO_NUMBER,
+                to: "+91"+ phonenumber,
             })
             console.log('otp sms sent');
         } catch (error) {
-            console.error('error sendingg otp smes',error)
+            console.error('error sendingg otp sms',error)
             return res.status(500).json({message:'error sending otp '})
         }
         res.render('user/loginotp',{phonenumber})
@@ -376,35 +388,35 @@ const loginrequestsotp = async (req,res) =>{
     }
 }
 
-const loginverifyotp = async (req,res) =>{
-        const {phonenumber,otp} = req.body
+const loginverifyotp = async (req, res) => {
+    const { phonenumber, otp } = req.body;
 
+    console.log("kgkh",otp);
 
-try {
-    const User = await user.findOne({phonenumber})
+    try {
+        const User = await user.findOne({ phonenumber });
 
-    if(!User){
-        return res.status(404).json({message:'user not found'})
+        if (!User) {
+            return res.status(404).json({ message: 'user not found' });
+        }
+
+        if (User.otp !== otp || Date.now() > User.otpExpiration) {
+            return res.status(400).json({ message: 'invalid or expired OTP' });
+        }
+
+        // Clear OTP field after successful verification
+        User.otp = undefined;
+        User.otpExpiration = undefined;
+        await User.save();
+
+        res.status(200).redirect('/');
+        console.log('user logging using OTP');
+    } catch (error) {
+        console.error('error verifying otp', error);
+        res.status(500).json({ message: 'server error' });
     }
+};
 
-    if(User.otp !== otp || Date.now() > user.otpExpiration)  {
-        return res.status(400).json({message:'invalid or expired OTP'})
-    }
-
-    //clear OTP filed after succesful verification 
-
-    User.otp = undefined
-    User.otpExpiration = undefined
-    await User.save()
-
-    res.status(200).redirect('/')
-    console.log('user loging use otp');
-
-} catch (error) {
-    console.error('error verifying otp',error)
-    res.status(500).json({message:'server error'})
-}
-}
 // *********************end****************************
 
 
