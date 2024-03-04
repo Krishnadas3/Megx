@@ -13,32 +13,39 @@ require('dotenv').config()
 
 //  home page display 
 
-let homepage = (req,res)=>{
+let homepage = (req, res) => {
     try {
-        res.render('user/index')
+        // check if the user is authenticated 
+
+        const isAuthenticated = req.session.user
+
+        //pass teh authentication status to the template 
+
+        res.render('user/index', { isAuthenticated })
+
     } catch (error) {
-        console.error('failed to get home:',error)
-        res.status(500).send('internal server error')
+        console.error('failed to get home:', error);
+        res.status(500).send('internal server error');
     }
 }
 
 // shope pagee
 
 
-let shopepage = (req,res)=>{
+let shopepage = (req, res) => {
     try {
         res.render('user/shop')
     } catch (error) {
-        console.error('failed to get home:',error)
+        console.error('failed to get home:', error)
         res.status(500).send('internal server error')
     }
 }
 
-let productdetailpage = (req,res) =>{
+let productdetailpage = (req, res) => {
     try {
         res.render('user/productdetail')
     } catch (error) {
-        console.error('failed to connet',error)
+        console.error('failed to connet', error)
         res.status(500).send('internal server error')
     }
 }
@@ -46,17 +53,17 @@ let productdetailpage = (req,res) =>{
 
 
 
-const loadAuth = (req,res) =>[
+const loadAuth = (req, res) => [
     res.render('auth')
 ]
 
 // user signup page display 
 
-let signupGetpage = async(req,res) =>{
+let signupGetpage = async (req, res) => {
     try {
         res.render('user/signup')
     } catch (error) {
-        console.error('failed to get login page',error);
+        console.error('failed to get login page', error);
         res.status(500).send('internal server error')
     }
 }
@@ -79,7 +86,7 @@ let signupPostpage = async (req, res) => {
         const data = new user({
             name: req.body.username,
             email: req.body.email,
-            phonenumber:req.body.phonenumber,
+            phonenumber: req.body.phonenumber,
             password: hashedPassword,
         });
 
@@ -97,15 +104,19 @@ let signupPostpage = async (req, res) => {
     }
 };
 
-  
+
 
 // user login page display 
 
-let logiGetpage = async(req,res) => {
+let logiGetpage = async (req, res) => {
     try {
+        if(req.cookies.jwt){
+            res.redirect('/')
+        }
         res.render('user/login')
+       
     } catch (error) {
-        console.error('failed to get login page',error)
+        console.error('failed to get login page', error)
         res.status(500).send('intenal server error')
     }
 }
@@ -126,11 +137,25 @@ const loginPostpage = async (req, res) => {
                 res.render('user/login', { error: 'User is blocked' });
             }
             else if (passwordMatch) {
-                req.session.user = {
+                // req.session.user = {
+                //     id: foundUser._id,
+                //     username: foundUser.username,
+                //     email: foundUser.email
+                // };
+                   
+                const token = jwt.sign({
                     id: foundUser._id,
-                    username: foundUser.username,
-                    email: foundUser.email
-                };
+                    name: foundUser.username,
+                    email: foundUser.email,
+                  },
+                  process.env.JWT_SECRET,
+                  {
+                    expiresIn: "24h",
+                  }
+                );
+                res.cookie("user_jwt", token, { httpOnly: true, maxAge: 86400000 }); // 24 hour expiry
+                console.log('user Loggined succesfully : Token created.');
+               
                 res.redirect('/');
             } else {
                 console.log('Incorrect password:', req.body.password);
@@ -149,36 +174,41 @@ const loginPostpage = async (req, res) => {
 
 // google verification here 
 
-const succesGoogleLogin = async (req,res) =>{
+const succesGoogleLogin = async (req, res) => {
     try {
-        if(!req.user)
+        if (!req.user)
 
-        return res.status(401).send('no user data, login failed')
-   
+            return res.status(401).send('no user data, login failed')
+
         console.log(req.user);
-        
-        let newUser = await user.findOne({email:req.user.email})
 
-        if(!newUser){
+        let newUser = await user.findOne({ email: req.user.email })
+
+        if (!newUser) {
 
             newUser = new user({
-                name:req.user.displayName,
-                email:req.user.email
+                name: req.user.displayName,
+                email: req.user.email
             })
 
             await newUser.save()
         }
-   
+
+        if (newUser.blocked) {
+            console.log('User is blocked');
+            res.render('user/login', { error: 'User is blocked' });
+        }
+
         req.session.user = newUser
         res.status(200).render('user/index')
-   
+
     } catch (error) {
-       console.error('login erroe',error)
-       res.status(500).redirect('user/login')
+        console.error('login erroe', error)
+        res.status(500).redirect('user/login')
     }
 }
 
-const failureGooglelogin = (req,res) =>{
+const failureGooglelogin = (req, res) => {
     res.send('Error')
 }
 
@@ -186,11 +216,11 @@ const failureGooglelogin = (req,res) =>{
 
 
 
-let myaccountgetpage = async(req,res) =>{
+let myaccountgetpage = async (req, res) => {
     try {
         res.render('user/myaccount')
     } catch (error) {
-        console.error('failed to get login page',error)
+        console.error('failed to get login page', error)
         res.status(500).send('intenal server error')
     }
 }
@@ -198,78 +228,82 @@ let myaccountgetpage = async(req,res) =>{
 // USER LOGOUT
 
 let userLogout = (req, res) => {
-    if (!req.session.user) {
-      // User is already logged out, redirect to a page with a message
-      const alertScript = `
+    // if (!req.session.user) {
+        // User is already logged out, redirect to a page with a message
+
+        res.clearCookie('jwt')
+
+        const alertScript = `
         <script>
           alert("You are already logged out.");
           window.location.href = "/login";
         </script>
       `;
-      return res.send(alertScript);
-    }
-  
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Error destroying session:", err);
-        return res.status(500).send("Internal Server Error");
-      }
-      res.redirect("/login");
-      console.log("User logged out");
-    });
-  };
+        return res.send(alertScript);
+        res.redirect("/login");
+
+    // }
+
+    // req.session.destroy((err) => {
+    //     if (err) {
+    //         console.error("Error destroying session:", err);
+    //         return res.status(500).send("Internal Server Error");
+    //     }
+    //     console.log("User logged out");
+    // });
+};
 
 
 // forgot password here 
 
-let forgotpasspage = async(req,res) =>{
+let forgotpasspage = async (req, res) => {
     try {
         res.render('user/forgotpass')
     } catch (error) {
-        console.error('failed to get login page',error)
+        console.error('failed to get login page', error)
         res.status(500).send('intenal server error')
     }
 }
 
 // forgot here 
 const transporter = nodemailer.createTransport({
-    service:'gmail',
-    host:'smtp.gmail.com',
-    port:465,
-    auth:{
-        user:process.env.EMAIL,
-        pass:process.env.EMAIL_PASS
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS
     }
 })
 
 
-const sendOtpEmail = async (email, otp) =>{
+const sendOtpEmail = async (email, otp) => {
     const mailOptions = {
-        from:'krishnadasp004@gmail.com',
+        from: 'krishnadasp004@gmail.com',
         to: email,
-        subject:'Reset your Password',
-        text:`your OTP to reset your password is: ${otp}`,
+        subject: 'Reset your Password',
+        text: `your OTP to reset your password is: ${otp}`,
     }
 
     try {
         await transporter.sendMail(mailOptions)
         console.log('emial send');
     } catch (error) {
-        console.error('error sending email',error)
+        console.error('error sending email', error)
     }
 }
 // ***************************************************************//
 
-let forgetEmailPostpage = async(req,res) =>{
-    const {email} =req.body
+let forgetEmailPostpage = async (req, res) => {
+    const { email } = req.body
 
 
     try {
-        const User = await user.findOne({email})
-          
-    console.log(User);
-        if(!User) {
-            return res.status(404).json({message:'user not found'})
+        const User = await user.findOne({ email })
+
+        console.log(User);
+        if (!User) {
+            return res.status(404).json({ message: 'user not found' })
         }
 
         const otp = Math.floor(100000 + Math.random() * 900000).toString()
@@ -277,36 +311,36 @@ let forgetEmailPostpage = async(req,res) =>{
         User.otp = otp
         User.otpExpiration = Date.now() + 10 * 60 * 1000 // otp expires in 10 minute
         await User.save()
-        
-        await sendOtpEmail(email,otp)
-        res.render('user/forgetotppass',{email})
+
+        await sendOtpEmail(email, otp)
+        res.render('user/forgetotppass', { email })
     } catch (error) {
-        console.error('error sending otp:',error)
-        res.status(500).json({message:'server error'})
+        console.error('error sending otp:', error)
+        res.status(500).json({ message: 'server error' })
     }
 }
 
 //Rest password
 
-let resetPassword = async (req,res) =>{
-    const {email,otp,newpassword,confirmpassword} = req.body
+let resetPassword = async (req, res) => {
+    const { email, otp, newpassword, confirmpassword } = req.body
     console.log(otp);
 
     try {
-        const User = await user.findOne({email})
+        const User = await user.findOne({ email })
         console.log(User);
 
-        if(!User) {
-            return res.status(404).json({message:'user not found'})
+        if (!User) {
+            return res.status(404).json({ message: 'user not found' })
         }
-        if(User.otp !== otp || Date.now() > User.otpExpiration){
-            return res.status(400).json({message:'invalid or expired OTP'})
+        if (User.otp !== otp || Date.now() > User.otpExpiration) {
+            return res.status(400).json({ message: 'invalid or expired OTP' })
         }
-        if(newpassword !== confirmpassword) {
-            return res.status(400).json({message:'password do not match'})
+        if (newpassword !== confirmpassword) {
+            return res.status(400).json({ message: 'password do not match' })
         }
 
-        const bcryptNewpassword = await bcrypt.hash(newpassword,10)
+        const bcryptNewpassword = await bcrypt.hash(newpassword, 10)
         //reset password 
         User.password = bcryptNewpassword
         //clear otp fileds
@@ -316,19 +350,19 @@ let resetPassword = async (req,res) =>{
         console.log('password resetted')
         res.status(200).render('user/login')
     } catch (error) {
-        console.error('error resetting password ',error)
-        res.status(500).json({message:'server error'})
+        console.error('error resetting password ', error)
+        res.status(500).json({ message: 'server error' })
     }
 }
 
 //Login with OTP Start here 
 
 
-let logingetotp = async(req,res) => {
+let logingetotp = async (req, res) => {
     try {
         res.render('user/loginotphone')
     } catch (error) {
-        console.error('failed to get login page',error)
+        console.error('failed to get login page', error)
         res.status(500).send('intenal server error')
     }
 }
@@ -339,30 +373,30 @@ const accountSid = process.env.TWILIO_SID
 const authToken = process.env.TWILIO_TOKEN
 const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER;
 
-const client = twilio(accountSid,authToken)
+const client = twilio(accountSid, authToken)
 
-const generateotp = () =>{
+const generateotp = () => {
     return Math.floor(100000 + Math.random() * 900000).toString()
 }
 
 // requestion for otp after enterd phone
 
-const loginrequestsotp = async (req,res) =>{
-    const {phonenumber} = req.body
+const loginrequestsotp = async (req, res) => {
+    const { phonenumber } = req.body
     console.log(phonenumber);
-    
-    try {
-        
 
-        const User = await user.findOne({phonenumber})
-        
-        if(!User){
-            return res.status(404).json({message:'user not found'})
+    try {
+
+
+        const User = await user.findOne({ phonenumber })
+
+        if (!User) {
+            return res.status(404).json({ message: 'user not found' })
         }
 
         const otp = generateotp()
         User.otp = otp
-        User.otpExpiration = new Date(Date.now()) + 10 *60 *1000 // otp in 10 minte
+        User.otpExpiration = new Date(Date.now()) + 10 * 60 * 1000 // otp in 10 minte
         await User.save()
 
         console.log(`generated otp is : ${otp}`);
@@ -371,27 +405,27 @@ const loginrequestsotp = async (req,res) =>{
 
         try {
             await client.messages.create({
-                body:`your otp for login to Megx is: ${otp}`,
-                from:twilioPhoneNumber,
-                to: "+91"+ phonenumber,
+                body: `your otp for login to Megx is: ${otp}`,
+                from: twilioPhoneNumber,
+                to: "+91" + phonenumber,
             })
             console.log('otp sms sent');
         } catch (error) {
-            console.error('error sendingg otp sms',error)
-            return res.status(500).json({message:'error sending otp '})
+            console.error('error sendingg otp sms', error)
+            return res.status(500).json({ message: 'error sending otp ' })
         }
-        res.render('user/loginotp',{phonenumber})
+        res.render('user/loginotp', { phonenumber })
 
     } catch (error) {
-        console.error('error requesing otp',error)
-        res.status(500).json({message:'server error'})
+        console.error('error requesing otp', error)
+        res.status(500).json({ message: 'server error' })
     }
 }
 
 const loginverifyotp = async (req, res) => {
     const { phonenumber, otp } = req.body;
 
-    console.log("kgkh",otp);
+    console.log("kgkh", otp);
 
     try {
         const User = await user.findOne({ phonenumber });

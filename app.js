@@ -4,6 +4,7 @@ const path = require('path');
 const userRouter = require('./routes/userRoute');
 const adminRouter = require('./routes/adminRoute')
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
 
 
 
@@ -28,6 +29,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'views')));
 app.use(express.static('public'));
+app.use(cookieParser())
 
 
 const { parsed: config } = require('dotenv').config();
