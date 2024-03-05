@@ -15,13 +15,8 @@ require('dotenv').config()
 
 let homepage = (req, res) => {
     try {
-        // check if the user is authenticated 
-
-        const isAuthenticated = req.session.user
-
-        //pass teh authentication status to the template 
-
-        res.render('user/index', { isAuthenticated })
+     
+        res.render('user/index')
 
     } catch (error) {
         console.error('failed to get home:', error);
@@ -232,15 +227,16 @@ let userLogout = (req, res) => {
         // User is already logged out, redirect to a page with a message
 
         res.clearCookie('jwt')
+        console.log('user logout ');
 
         const alertScript = `
-        <script>
-          alert("You are already logged out.");
-          window.location.href = "/login";
-        </script>
-      `;
-        return res.send(alertScript);
-        res.redirect("/login");
+    //     <script>
+    //       alert("You are already logged out.");
+    //       window.location.href = "/login";
+    //     </script>
+    //   `;
+    //     return res.send(alertScript);
+        res.redirect("/");
 
     // }
 
