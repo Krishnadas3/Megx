@@ -8,15 +8,13 @@ const userAuth = (req, res, next) => {
         jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
             if (err) {
                 res.redirect('/login');
-                //   res.render('vendor/vendorLogin',{passError:'Please Login'});
             } else {
-                req.user = decodedToken
-                next()
+                req.user = decodedToken;
+                next();
             }
         });
     } else {
-        res.redirect("/login")
-        // res.render('vendor/vendorLogin',{passError:''});
+        res.redirect("/login");
     }
 };
 

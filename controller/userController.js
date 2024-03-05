@@ -7,22 +7,20 @@ const twilio = require('twilio')
 require("dotenv").config()
 
 
-// const user = require('../models/users')
-
 require('dotenv').config()
 
 //  home page display 
 
 let homepage = (req, res) => {
     try {
-     
-        res.render('user/index')
-
+        const isAuthenticated = req.cookies.jwt !== undefined;
+        res.render('user/index', { isAuthenticated });
     } catch (error) {
         console.error('failed to get home:', error);
         res.status(500).send('internal server error');
     }
 }
+
 
 // shope pagee
 
@@ -105,11 +103,11 @@ let signupPostpage = async (req, res) => {
 
 let logiGetpage = async (req, res) => {
     try {
-        if(req.cookies.jwt){
+        if (req.cookies.jwt) {
             res.redirect('/')
         }
         res.render('user/login')
-       
+
     } catch (error) {
         console.error('failed to get login page', error)
         res.status(500).send('intenal server error')
@@ -129,40 +127,33 @@ const loginPostpage = async (req, res) => {
 
             if (foundUser.blocked) {
                 console.log('User is blocked');
-                res.render('user/login', { error: 'User is blocked' });
+                res.render('user/login', { error: 'User account is blocked. Please contact support.' });
             }
             else if (passwordMatch) {
-                // req.session.user = {
-                //     id: foundUser._id,
-                //     username: foundUser.username,
-                //     email: foundUser.email
-                // };
-                   
                 const token = jwt.sign({
                     id: foundUser._id,
                     name: foundUser.username,
                     email: foundUser.email,
-                  },
-                  process.env.JWT_SECRET,
-                  {
-                    expiresIn: "24h",
-                  }
-                );
-                res.cookie("user_jwt", token, { httpOnly: true, maxAge: 86400000 }); // 24 hour expiry
-                console.log('user Loggined succesfully : Token created.');
-               
+                },
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn: "24h",
+                    });
+
+                res.cookie("jwt", token, { httpOnly: true, maxAge: 86400000 }); // 24-hour expiry
+                console.log('User logged in successfully. Token created.');
                 res.redirect('/');
             } else {
                 console.log('Incorrect password:', req.body.password);
-                res.render('user/login', { error: 'wrong password' });
+                res.render('user/login', { error: 'Incorrect password. Please try again.' });
             }
         } else {
             console.log('User not found:', req.body.email);
-            res.render('user/login', { error: 'user not found plese Register' });
+            res.render('user/login', { error: 'User not found. Please register an account.' });
         }
     } catch (error) {
         console.error('Internal server error:', error);
-        res.render('user/login', { error: 'internal server error' });
+        res.render('user/login', { error: 'Internal server error. Please try again later.' });
     }
 };
 
@@ -194,8 +185,32 @@ const succesGoogleLogin = async (req, res) => {
             res.render('user/login', { error: 'User is blocked' });
         }
 
-        req.session.user = newUser
-        res.status(200).render('user/index')
+        // req.session.user = newUser
+        // res.status(200).render('user/index')
+
+        const token = jwt.sign({
+            id: newUser._id,
+            name: newUser.name,
+            email: newUser.email
+        },
+
+            process.env.JWT_SECRET,
+            {
+                expiresIn: '24h'
+            }
+
+        )
+
+        // set jwt token in a cookie 
+
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            maxAge: 24 * 60 * 1000, // 24 houres 
+            secure: process.env.NODE_ENV === "production"
+        })
+
+        res.status(200).redirect('/')
+        console.log('user loged in with google: jwt created');
 
     } catch (error) {
         console.error('login erroe', error)
@@ -224,19 +239,19 @@ let myaccountgetpage = async (req, res) => {
 
 let userLogout = (req, res) => {
     // if (!req.session.user) {
-        // User is already logged out, redirect to a page with a message
+    // User is already logged out, redirect to a page with a message
 
-        res.clearCookie('jwt')
-        console.log('user logout ');
+    res.clearCookie('jwt')
+    console.log('user logout ');
 
-        const alertScript = `
+    const alertScript = `
     //     <script>
     //       alert("You are already logged out.");
     //       window.location.href = "/login";
     //     </script>
     //   `;
     //     return res.send(alertScript);
-        res.redirect("/");
+    res.redirect("/login");
 
     // }
 
@@ -319,37 +334,42 @@ let forgetEmailPostpage = async (req, res) => {
 //Rest password
 
 let resetPassword = async (req, res) => {
-    const { email, otp, newpassword, confirmpassword } = req.body
-    console.log(otp);
+    const { email, otp, newpassword, confirmpassword } = req.body;
 
     try {
-        const User = await user.findOne({ email })
-        console.log(User);
+        const userRecord = await user.findOne({ email });
 
-        if (!User) {
-            return res.status(404).json({ message: 'user not found' })
+        if (!userRecord) {
+            return res.status(404).json({ error: 'User not found.' });
         }
-        if (User.otp !== otp || Date.now() > User.otpExpiration) {
-            return res.status(400).json({ message: 'invalid or expired OTP' })
+
+        if (userRecord.otp !== otp || Date.now() > userRecord.otpExpiration) {
+            return res.status(400).json({ error: 'Invalid or expired OTP.' });
         }
+
         if (newpassword !== confirmpassword) {
-            return res.status(400).json({ message: 'password do not match' })
+            return res.status(400).json({ error: 'Passwords do not match.' });
         }
 
-        const bcryptNewpassword = await bcrypt.hash(newpassword, 10)
-        //reset password 
-        User.password = bcryptNewpassword
-        //clear otp fileds
-        User.otp = undefined
-        User.otpExpiration = undefined
-        await User.save()
-        console.log('password resetted')
-        res.status(200).render('user/login')
+        const hashedPassword = await bcrypt.hash(newpassword, 10);
+
+        // Reset password
+        userRecord.password = hashedPassword;
+
+        // Clear OTP fields
+        userRecord.otp = undefined;
+        userRecord.otpExpiration = undefined;
+
+        await userRecord.save();
+
+        console.log('Password reset successful.');
+        res.status(200).render('user/login');
     } catch (error) {
-        console.error('error resetting password ', error)
-        res.status(500).json({ message: 'server error' })
+        console.error('Error resetting password:', error);
+        res.status(500).json({ error: 'Server error.' });
     }
-}
+};
+
 
 //Login with OTP Start here 
 
@@ -378,45 +398,43 @@ const generateotp = () => {
 // requestion for otp after enterd phone
 
 const loginrequestsotp = async (req, res) => {
-    const { phonenumber } = req.body
+    const { phonenumber } = req.body;
     console.log(phonenumber);
 
     try {
+        const userRecord = await user.findOne({ phonenumber });
 
-
-        const User = await user.findOne({ phonenumber })
-
-        if (!User) {
-            return res.status(404).json({ message: 'user not found' })
+        if (!userRecord) {
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        const otp = generateotp()
-        User.otp = otp
-        User.otpExpiration = new Date(Date.now()) + 10 * 60 * 1000 // otp in 10 minte
-        await User.save()
+        const otp = generateotp();
+        userRecord.otp = otp;
+        userRecord.otpExpiration = new Date(Date.now()) + 10 * 60 * 1000; // otp in 10 minutes
+        await userRecord.save();
 
-        console.log(`generated otp is : ${otp}`);
+        console.log(`Generated OTP is: ${otp}`);
 
-        // send otp via Twilo Sms
-
+        // send OTP via Twilio SMS
         try {
             await client.messages.create({
-                body: `your otp for login to Megx is: ${otp}`,
+                body: `Your OTP for login to Megx is: ${otp}`,
                 from: twilioPhoneNumber,
                 to: "+91" + phonenumber,
-            })
-            console.log('otp sms sent');
+            });
+            console.log('OTP SMS sent');
         } catch (error) {
-            console.error('error sendingg otp sms', error)
-            return res.status(500).json({ message: 'error sending otp ' })
+            console.error('Error sending OTP SMS', error);
+            return res.status(500).json({ error: 'Error sending OTP' });
         }
-        res.render('user/loginotp', { phonenumber })
+
+        res.render('user/loginotp', { phonenumber });
 
     } catch (error) {
-        console.error('error requesing otp', error)
-        res.status(500).json({ message: 'server error' })
+        console.error('Error requesting OTP', error);
+        res.status(500).json({ error: 'Server error' });
     }
-}
+};
 
 const loginverifyotp = async (req, res) => {
     const { phonenumber, otp } = req.body;
@@ -424,28 +442,29 @@ const loginverifyotp = async (req, res) => {
     console.log("kgkh", otp);
 
     try {
-        const User = await user.findOne({ phonenumber });
+        const userRecord = await user.findOne({ phonenumber });
 
-        if (!User) {
-            return res.status(404).json({ message: 'user not found' });
+        if (!userRecord) {
+            return res.status(404).json({ error: 'User not found' });
         }
 
-        if (User.otp !== otp || Date.now() > User.otpExpiration) {
-            return res.status(400).json({ message: 'invalid or expired OTP' });
+        if (userRecord.otp !== otp || Date.now() > userRecord.otpExpiration) {
+            return res.status(400).json({ error: 'Invalid or expired OTP' });
         }
 
         // Clear OTP field after successful verification
-        User.otp = undefined;
-        User.otpExpiration = undefined;
-        await User.save();
+        userRecord.otp = undefined;
+        userRecord.otpExpiration = undefined;
+        await userRecord.save();
 
         res.status(200).redirect('/');
-        console.log('user logging using OTP');
+        console.log('User logged in using OTP');
     } catch (error) {
-        console.error('error verifying otp', error);
-        res.status(500).json({ message: 'server error' });
+        console.error('Error verifying OTP', error);
+        res.status(500).json({ error: 'Server error' });
     }
 };
+
 
 // *********************end****************************
 
