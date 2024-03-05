@@ -269,14 +269,13 @@ let userLogout = (req, res) => {
 
 let forgotpasspage = async (req, res) => {
     try {
-        res.render('user/forgotpass')
+        res.render('user/forgotpass');
     } catch (error) {
-        console.error('failed to get login page', error)
-        res.status(500).send('intenal server error')
+        console.error('Failed to get login page', error);
+        res.status(500).send('Internal server error');
     }
-}
+};
 
-// forgot here 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     host: 'smtp.gmail.com',
@@ -285,53 +284,51 @@ const transporter = nodemailer.createTransport({
         user: process.env.EMAIL,
         pass: process.env.EMAIL_PASS
     }
-})
-
+});
 
 const sendOtpEmail = async (email, otp) => {
     const mailOptions = {
         from: 'krishnadasp004@gmail.com',
         to: email,
         subject: 'Reset your Password',
-        text: `your OTP to reset your password is: ${otp}`,
-    }
+        text: `Your OTP to reset your password is: ${otp}`,
+    };
 
     try {
-        await transporter.sendMail(mailOptions)
-        console.log('emial send');
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent');
     } catch (error) {
-        console.error('error sending email', error)
+        console.error('Error sending email', error);
     }
-}
-// ***************************************************************//
+};
 
 let forgetEmailPostpage = async (req, res) => {
-    const { email } = req.body
-
+    const { email } = req.body;
 
     try {
-        const User = await user.findOne({ email })
+        const userRecord = await user.findOne({ email });
 
-        console.log(User);
-        if (!User) {
-            return res.status(404).json({ message: 'user not found' })
+        console.log(userRecord);
+        if (!userRecord) {
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        const otp = Math.floor(100000 + Math.random() * 900000).toString()
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
         console.log(otp);
-        User.otp = otp
-        User.otpExpiration = Date.now() + 10 * 60 * 1000 // otp expires in 10 minute
-        await User.save()
 
-        await sendOtpEmail(email, otp)
-        res.render('user/forgetotppass', { email })
+        userRecord.otp = otp;
+        userRecord.otpExpiration = Date.now() + 10 * 60 * 1000; // OTP expires in 10 minutes
+        await userRecord.save();
+
+        // Send OTP with a message
+        await sendOtpEmail(email, otp);
+        const message = 'OTP sent. Please wait for a few seconds before trying again.';
+        res.render('user/forgetotppass', { email, message });
     } catch (error) {
-        console.error('error sending otp:', error)
-        res.status(500).json({ message: 'server error' })
+        console.error('Error sending OTP:', error);
+        res.status(500).json({ message: 'Server error' });
     }
-}
-
-//Rest password
+};
 
 let resetPassword = async (req, res) => {
     const { email, otp, newpassword, confirmpassword } = req.body;
@@ -369,6 +366,7 @@ let resetPassword = async (req, res) => {
         res.status(500).json({ error: 'Server error.' });
     }
 };
+
 
 
 //Login with OTP Start here 
