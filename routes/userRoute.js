@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const userController = require('../controller/userController')
-const otp = require('../controller/otp')
+// const otp = require('../controller/otp')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const userAuth = require('../middleware/usejwt')

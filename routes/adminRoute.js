@@ -2,7 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const adminController = require('../controller/adminController')
-const categoryController = require('../controller/categoryController')
+// const adminController = require('../controller/adminController')
 const admin = require('../models/admin')
 
 router.get('/adminlogin',adminController.logingetpage)
@@ -15,12 +15,12 @@ router.post('/blockuser',adminController.blockUser)
 
 
 // category Management 
-router.get('/admin/categorielist',categoryController.categorieList)
-router.get('/admin/addCategory',categoryController.addCategory)
-router.post('/admin/addCategory',categoryController.submitAddCategory)
-router.get('/admin/categoriesedit/:id',categoryController.editCategory)
-router.post('/admin/editCategory/:id',categoryController.submitEditCategory)
-router.post('/deleteCategory/:id',categoryController.deleteCategory)
+router.get('/admin/categorielist',adminController.categorieList)
+router.get('/admin/addCategory',adminController.addCategory)
+router.post('/admin/addCategory',adminController.submitAddCategory)
+router.get('/admin/categoriesedit/:id',adminController.editCategory)
+router.post('/admin/editCategory/:id',adminController.submitEditCategory)
+router.post('/deleteCategory/:id',adminController.deleteCategory)
 
 //subcatgroy management 
 
