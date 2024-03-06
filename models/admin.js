@@ -11,16 +11,25 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    category:[{
-        categoryName:{
-            type:String,
-        },
-        createdAt:{
-            type:Date,
-            default:Date.now
-        }
-    }],
-    subcategory: [{subcategoryName: String}]
+    // category:[{
+    //     categoryName:{
+    //         type:String,
+    //     },
+    //     createdAt:{
+    //         type:Date,
+    //         default:Date.now
+    //     }
+    // }],
+    // subCategory:[{
+    //     subCategoryName:{
+    //         type:String,
+    //         required:true
+    //     },
+    //     createdAt:{
+    //         type:Date,
+    //         default:Date.now
+    //     }
+    // }]
     
 })
 
