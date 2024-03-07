@@ -1,10 +1,13 @@
 
 const admin = require('../models/admin')
 const user = require('../models/users')
+const adminAuth = require('../middleware/adminjwt')
+const jwt = require('jsonwebtoken')
 
 
-let dashboardpage = async (req,res) => {
+let dashboardpage =(req,res) => {
     try {
+        console.log("req.user : ",req.user);
         res.status(200).render('admin/index')
     } catch (error) {
         console.log(error);
@@ -14,7 +17,10 @@ let dashboardpage = async (req,res) => {
 
 let logingetpage = (req, res) => {
     try {
-        res.render('admin/adminlogin')
+    if(req.cookies.admin_jwt){
+      return  res.redirect('/admin/dashboard')
+    }
+    res.render('admin/adminlogin')
     } catch (error) {
         console.error('failed to get home:', error)
         res.status(500).send('internal server error')
@@ -33,11 +39,26 @@ const loginPostpage = async (req, res) => {
 
             if (req.body.password === foundUser.password) {
 
-                req.session.user = {
+                // req.session.user = {
+                //     id: foundUser._id,
+                //     email: foundUser.email
+                // }
+
+                const token = jwt.sign({
                     id: foundUser._id,
-                    email: foundUser.email
-                }
-                res.render('admin/index')
+                    // name: foundUser.Adminame,
+                    email: foundUser.email,
+                },
+                    process.env.JWT_SECRET,
+                    {
+                        expiresIn: "24h",
+                    });
+
+                res.cookie("admin_jwt", token, { httpOnly: true, maxAge: 86400000 }); // 24-hour expiry
+                console.log('admin logged in successfully. Token created.');
+                // res.redirect('/admin/index');
+
+                res.redirect('/admin/dashboard')
             } else {
                 console.log('Incorrect password:', req.body.password);
                 res.render('admin/adminlogin', { error: 'wrong password' })
@@ -152,6 +173,20 @@ let deleteCategory = async (req,res) => {
         res.status(500).send('Internal server Error')
     }
 }
+
+
+let adminLogout = (req, res) => {
+    try {
+        res.clearCookie("admin_jwt");
+        res.redirect("/adminlogin");
+        console.log("admin logged out");
+        return;
+    } catch (error) {
+        console.error("Error logging out:", error);
+        res.status(500).send("Internal Server Error");
+    }
+  };
+  
 
 
 // subcategory management
@@ -314,5 +349,6 @@ module.exports = {
     // subCategoryList,
 
     blockUser,
-    customerslist
+    customerslist,
+    adminLogout
 }
