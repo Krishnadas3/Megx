@@ -48,6 +48,7 @@ router.get('/admin/productadd',productController.productaddpage)
 router.post('/admin/addProduct',adminAuth,upload.array('image',6),productController.addproductSubmit)
 router.get('/admin/productgrid',productController.productgridpage)
 router.get('/admin/productedit',productController.producteditpage)
+router.post('/admin/deletproduct',adminAuth,productController.deleteProduct)
 
 
 
