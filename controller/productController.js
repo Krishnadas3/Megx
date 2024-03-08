@@ -94,7 +94,7 @@ let producteditpage = async(req,res) => {
     }
 } 
 
-let deleteProduct = async (req,res) =>{
+ let deleteProduct = async (req,res) =>{
   let productId = req.params.id;
   console.log(productId)
   let products = await Product.find()

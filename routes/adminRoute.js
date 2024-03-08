@@ -4,6 +4,7 @@ const router = express.Router()
 const adminController = require('../controller/adminController')
 const productController = require('../controller/productController')
 // const adminController = require('../controller/adminController')
+const categoryController = require('../controller/catgorieController')
 const adminAuth = require('../middleware/adminjwt')
 const admin = require('../models/admin')
 const upload = require('../config/multer');
@@ -19,12 +20,12 @@ router.post('/blockuser',adminController.blockUser)
 
 
 // category Management 
-router.get('/admin/categorielist',adminAuth,adminController.categorieList)
-router.get('/admin/addCategory',adminAuth,adminController.addCategory)
-router.post('/admin/addCategory',adminAuth,adminController.submitAddCategory)
-router.get('/admin/categoriesedit/:id',adminAuth,adminController.editCategory)
-router.post('/admin/editCategory/:id',adminAuth,adminController.submitEditCategory)
-router.post('/deleteCategory/:id',adminAuth,adminController.deleteCategory)
+router.get('/admin/categorielist',adminAuth,categoryController.categorieList)
+router.get('/admin/addCategory',adminAuth,categoryController.addCategory)
+router.post('/admin/addCategory',adminAuth,categoryController.submitAddCategory)
+// router.get('/admin/categoriesedit/:id',adminAuth,adminController.editCategory)
+// router.post('/admin/editCategory/:id',adminAuth,adminController.submitEditCategory)
+// router.post('/deleteCategory/:id',adminAuth,adminController.deleteCategory)
 
 //subcatgroy management 
 

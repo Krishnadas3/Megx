@@ -23,7 +23,7 @@ router.get('/',userController.loadAuth)
 
 router.get('/myaccount',userAuth,userController.myaccountgetpage)
 router.get('/shop',userController.shopepage)
-router.get('/productdetail',userController.productdetailpage)
+router.get('/productdetail/:id',userController.productdetailpage)
 router.get('/logout',userAuth,userController.userLogout)
 router.get('/forgotpass',userController.forgotpasspage)
 router.post("/forgotpassword",userController.forgetEmailPostpage)

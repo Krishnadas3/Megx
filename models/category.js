@@ -11,6 +11,6 @@ const categorySchema = new mongoose.Schema({
     },
 });
 
-const Category = mongoose.model('Category', categorySchema);
+const Categorie = mongoose.model('Categorie', categorySchema);
 
-module.exports = Category
+module.exports = Categorie
