@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const user = require('../models/users')
 const nodemailer = require('nodemailer')
+const Product = require('../controller/productController')
+const Products = require('../models/product');
 const twilio = require('twilio')
 require("dotenv").config()
 
@@ -25,9 +27,10 @@ let homepage = (req, res) => {
 // shope pagee
 
 
-let shopepage = (req, res) => {
+let shopepage = async (req, res) => {
     try {
-        res.render('user/shop')
+        let products = await Products.find();
+        res.render('user/shop', { products });
     } catch (error) {
         console.error('failed to get home:', error)
         res.status(500).send('internal server error')

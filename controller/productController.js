@@ -26,7 +26,7 @@ let productgridpage = async (req,res) => {
 }
 
 let productaddpage  = async(req,res) =>{
-    try {
+    try { 
         res.status(200).render('admin/product-add')
     } catch (error) {
         console.log(error);
@@ -94,11 +94,25 @@ let producteditpage = async(req,res) => {
     }
 } 
 
+let deleteProduct = async (req,res) =>{
+  let productId = req.params.id;
+  console.log(productId)
+  let products = await Product.find()
+  if(!products){
+    return res.status(400).send('prodcut not found')
+  }
+  products = product.filter(prod => prod._id.tostring() == productId )
+  Prodcut.save()
+  console.log('product deleted');
+  res.redirect('/admin/productlist')
+}
+
 module.exports = {
     productlistpage,
     productgridpage,
     productaddpage,
     productdetailpage,
     producteditpage,
-    addproductSubmit
+    addproductSubmit,
+    deleteProduct
 }

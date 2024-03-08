@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
 
-<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist/product-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:56:19 GMT -->
+<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist//admin/productlist by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:56:19 GMT -->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -23,7 +23,7 @@
         <!-- sidebar -->
         <div class="sidebar px-4 py-4 py-md-4 me-0">
             <div class="d-flex flex-column h-100">
-                <a href="index.html" class="mb-0 brand-icon">
+                <a href="/admin/dashboard" class="mb-0 brand-icon">
                     <span class="logo-icon">
                         <i class="bi bi-bag-check-fill fs-4"></i>
                     </span>
@@ -31,17 +31,17 @@
                 </a>
                 <!-- Menu: main ul -->
                 <ul class="menu-list flex-grow-1 mt-3">
-                    <li><a class="m-link" href="index.html"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
+                    <li><a class="m-link" href="/admin/dashboard"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
                     <li class="collapsed">
                         <a class="m-link active" data-bs-toggle="collapse" data-bs-target="#menu-product" href="#">
                             <i class="icofont-truck-loaded fs-5"></i> <span>Products</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
                             <!-- Menu: Sub menu ul -->
                             <ul class="sub-menu collapse show" id="menu-product">
                                 <li><a class="ms-link" href="product-grid.html">Product Grid</a></li>
-                                <li><a class="ms-link active" href="product-list.html">Product List</a></li>
+                                <li><a class="ms-link active" href="/admin/productlist">Product List</a></li>
                                 <li><a class="ms-link" href="product-edit.html">Product Edit</a></li>
                                 <li><a class="ms-link" href="product-detail.html">Product Details</a></li>
-                                <li><a class="ms-link" href="product-add.html">Product Add</a></li>
+                                <li><a class="ms-link" href="/admin/productadd">Product Add</a></li>
                                 <li><a class="ms-link" href="product-cart.html">Shopping Cart</a></li>
                                 <li><a class="ms-link" href="checkout.html">Checkout</a></li>
                             </ul>
@@ -71,7 +71,7 @@
                         <i class="icofont-funky-man fs-5"></i> <span>Customers</span> <span class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
                         <!-- Menu: Sub menu ul -->
                         <ul class="sub-menu collapse" id="customers-info">
-                            <li><a class="ms-link" href="customers.html">Customers List</a></li>
+                            <li><a class="ms-link" href="/admin/customerslist">Customers List</a></li>
                             <li><a class="ms-link" href="customer-detail.html">Customers Details</a></li>
                         </ul>
                     </li>
@@ -448,7 +448,7 @@
                                                                                 </button>
                                                                                 <button type="button"
                                                                                     class="btn btn-outline-secondary"
-                                                                                    onclick="deleteProduct('<%= product._id %>')">
+                                                                                    onclick="deleteProductAndRedirect('<%= product._id %>')">
                                                                                     <i class="icofont-ui-delete text-danger"></i>
                                                                                 </button>
                                                                             </div>
@@ -473,6 +473,28 @@
                     <!-- Row end  -->
                 </div>
             </div>
+
+            <script>
+                async function deleteProductAndRedirect(productId) {
+                  try {
+                    const response = await fetch(`/api/deleteProduct/${productId}`, {
+                      method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    });
+              
+                    if (response.ok) {
+                      // Redirect to the desired route
+                      window.location.href = `/deleteProduct/${productId}`;
+                    } else {
+                      console.error('Failed to delete product');
+                    }
+                  } catch (error) {
+                    console.error('Error deleting product:', error);
+                  }
+                }
+              </script>
         
             <!-- Modal Custom Settings-->
             <div class="modal fade right" id="Settingmodal" tabindex="-1"  aria-hidden="true">
@@ -648,5 +670,5 @@
     </script>
 </body>
 
-<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist/product-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:56:19 GMT -->
+<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist//admin/productlist by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:56:19 GMT -->
 </html> 
