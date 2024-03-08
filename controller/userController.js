@@ -13,10 +13,11 @@ require('dotenv').config()
 
 //  home page display 
 
-let homepage = (req, res) => {
+let homepage = async (req, res) => {
     try {
         const isAuthenticated = req.cookies.jwt !== undefined;
-        res.render('user/index', { isAuthenticated });
+        let products = await Products.find()
+        res.render('user/index', { isAuthenticated }),{products};
     } catch (error) {
         console.error('failed to get home:', error);
         res.status(500).send('internal server error');
@@ -37,9 +38,20 @@ let shopepage = async (req, res) => {
     }
 }
 
-let productdetailpage = (req, res) => {
+let productdetailpage = async (req, res) => {
     try {
-        res.render('user/productdetail')
+        let productId = req.params.id;
+        let products = await Products.find();
+        let product;
+        products.forEach(product => {
+            products.forEach(prod => {
+                if(prod._id.toString() === productId){
+                    product = prod
+                }
+            })
+        })
+        res.render('user/productdetail', { products });
+        // res.render('user/productdetail')
     } catch (error) {
         console.error('failed to connet', error)
         res.status(500).send('internal server error')

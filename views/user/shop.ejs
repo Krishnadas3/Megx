@@ -412,7 +412,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-content text-center">
-                                                    <h3><a href="product-details.html">T- Shirt And Jeans</a></h3>
+                                                    <h3><a href="/productdetail/<%= product._id %>"><%= product.productName %></a></h3>
                                                     <!-- <div class="product-rating">
                                                         <i class="fa fa-star-o yellow"></i>
                                                         <i class="fa fa-star-o yellow"></i>
@@ -421,8 +421,8 @@
                                                         <i class="fa fa-star-o"></i>
                                                     </div> -->
                                                     <div class="product-price">
-                                                        <span>$ 60.00</span>
-                                                        <span class="old">$ 60.00</span>
+                                                        <span>₹ <%= product.price %></span>
+                                                        <!-- <span class="old">$ 60.00</span> -->
                                                     </div>
                                                 </div>
                                             </div>
