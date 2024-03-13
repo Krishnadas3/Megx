@@ -343,6 +343,7 @@
     </div>
 </header>
 
+
 <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
     <div class="container">
         <div class="breadcrumb-content text-center">
@@ -361,11 +362,11 @@
             <div class="col-xl-7 col-lg-7 col-md-12">
                 <div class="product-details-img mr-20 product-details-tab">
                     <div id="gallery" class="product-dec-slider-2">
-                        <a data-image="assets/img/product-details/product-detalis-l1.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl1.jpg">
-                            <img src="assets/img/product-details/product-detalis-s6.jpg" alt="">
+                        <a data-image="<%= products.images[0] %>" data-zoom-image="<%= products.images[0] %>">
+                            <img src="<%= products.images[0] %>" alt="">
                         </a>
-                        <a data-image="assets/img/product-details/product-detalis-l2.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl2.jpg">
-                            <img src="assets/img/product-details/product-detalis-s7.jpg" alt="">
+                        <a data-image="<%= products.images[1] %>" data-zoom-image="<%= products.images[1] %>">
+                            <img src="<%= products.images[1] %>" alt="">
                         </a>
                         <a data-image="assets/img/product-details/product-detalis-l3.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl3.jpg">
                             <img src="assets/img/product-details/product-detalis-s9.jpg" alt="">
@@ -375,8 +376,9 @@
                         </a> 
                         <a data-image="assets/img/product-details/product-detalis-l4.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl4.jpg">
                             <img src="assets/img/product-details/product-detalis-s1.jpg" alt="">
-                        </a> 
+                        </a>
                     </div>
+                    
                     <div class="zoompro-wrap zoompro-2 pl-20">
                         <div class="zoompro-border zoompro-span">
                             <img class="zoompro" src="assets/img/product-details/product-detalis-l1.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl1.jpg" alt=""/>          
@@ -388,10 +390,10 @@
             </div>
             <div class="col-lg-5 col-lg-5 col-md-12">
                 <div class="product-details-content">
-                    <h2>DARKWAVE T-SHIRT OVERSIZED</h2>
+                    <h2><%= products.productName %></h2>
                     <div class="product-details-price">
-                        <span>$18.00 </span>
-                        <span class="old">$20.00 </span>
+                        <span>₹ <%=products.price %></span>
+                        <!-- <span class="old">$20.00 </span> -->
                     </div>
                     <!-- <div class="pro-details-rating-wrap">
                         <div class="pro-details-rating">
@@ -403,13 +405,14 @@
                         </div>
                         <span><a href="#">3 Reviews</a></span>
                     </div> -->
-                    <p>Darkwave T-Shirt Oversized in yellow and red vintage jersey</p>
+                    <!-- <p>Darkwave T-Shirt Oversized in yellow and red vintage jersey</p> -->
                     <div class="pro-details-list">
+                        
                         <ul>
-                            <li>- Vintage jersey</li>
-                            <li>- Oversize fit</li>
-                            <li>- Cold machine wash  </li>
-                            <li>- Model is 188 cm / 6'2" and is wearing a size 4</li>
+                            <li><%= products.description %></li>
+                            <!-- <li><%= products.description %></li>
+                            <li><%= products.description %></li>
+                            <li><%= products.description %></li> -->
                         </ul>
                     </div>
                     <div class="pro-details-size-color">

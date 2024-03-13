@@ -9,6 +9,10 @@ const categorySchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    products:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'product'
+    }]
 });
 
 const Categorie = mongoose.model('Categorie', categorySchema);

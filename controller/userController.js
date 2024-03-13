@@ -41,15 +41,16 @@ let shopepage = async (req, res) => {
 let productdetailpage = async (req, res) => {
     try {
         let productId = req.params.id;
-        let products = await Products.find();
-        let product;
-        products.forEach(product => {
-            products.forEach(prod => {
-                if(prod._id.toString() === productId){
-                    product = prod
-                }
-            })
-        })
+        console.log(productId)
+        let products = await Products.findOne({_id:productId});
+        console.log(products)
+        // products.forEach(product => {
+        //     products.forEach(prod => {
+        //         if(prod._id.toString() === productId){
+        //             product = prod
+        //         }
+        //     })
+        // })
         res.render('user/productdetail', { products });
         // res.render('user/productdetail')
     } catch (error) {
