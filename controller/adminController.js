@@ -317,30 +317,6 @@ let blockUser = async (req, res) => {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = {
     dashboardpage,
     logingetpage,
