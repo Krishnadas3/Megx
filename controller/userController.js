@@ -31,6 +31,7 @@ let homepage = async (req, res) => {
 let shopepage = async (req, res) => {
     try {
         let products = await Products.find();
+        console.log('here products',products);
         res.render('user/shop', { products });
     } catch (error) {
         console.error('failed to get home:', error)
@@ -40,25 +41,16 @@ let shopepage = async (req, res) => {
 
 let productdetailpage = async (req, res) => {
     try {
-        let productId = req.params.id;
-        console.log(productId)
-        let products = await Products.findOne({_id:productId});
-        console.log(products)
-        // products.forEach(product => {
-        //     products.forEach(prod => {
-        //         if(prod._id.toString() === productId){
-        //             product = prod
-        //         }
-        //     })
-        // })
-        res.render('user/productdetail', { products });
-        // res.render('user/productdetail')
+        let productId = req.query.id; 
+        // console.log('this is productdi ',productId); 
+        let product = await Products.findOne({ _id: productId });
+        console.log(product);
+        res.render('user/productdetail', { product });
     } catch (error) {
-        console.error('failed to connet', error)
-        res.status(500).send('internal server error')
+        console.error('Failed to connect:', error);
+        res.status(500).send('Internal server error');
     }
 }
-
 
 
 
@@ -106,7 +98,7 @@ let signupPostpage = async (req, res) => {
 
         // No JWT code here
 
-        res.redirect('/login');
+        res.redirect('/login?signupSuccess=true');
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
@@ -119,10 +111,12 @@ let signupPostpage = async (req, res) => {
 
 let logiGetpage = async (req, res) => {
     try {
+        const signupSuccess = req.query.signupSuccess === 'true';
+
         if (req.cookies.jwt) {
             res.redirect('/')
         }
-        res.render('user/login')
+        res.render('user/login', { signupSuccess });
 
     } catch (error) {
         console.error('failed to get login page', error)
@@ -144,8 +138,7 @@ const loginPostpage = async (req, res) => {
             if (foundUser.blocked) {
                 console.log('User is blocked');
                 res.render('user/login', { error: 'User account is blocked. Please contact support.' });
-            }
-            else if (passwordMatch) {
+            } else if (passwordMatch) {
                 const token = jwt.sign({
                     id: foundUser._id,
                     name: foundUser.username,
@@ -161,17 +154,18 @@ const loginPostpage = async (req, res) => {
                 res.redirect('/');
             } else {
                 console.log('Incorrect password:', req.body.password);
-                res.render('user/login', { error: 'Incorrect password. Please try again.' });
+                res.render('user/login', { error: 'Incorrect password. Please try again.', signupSuccess: false });
             }
         } else {
             console.log('User not found:', req.body.email);
-            res.render('user/login', { error: 'User not found. Please register an account.' });
+            res.render('user/login', { error: 'User not found. Please register an account.', signupSuccess: false });
         }
     } catch (error) {
         console.error('Internal server error:', error);
-        res.render('user/login', { error: 'Internal server error. Please try again later.' });
+        res.render('user/login', { error: 'Internal server error. Please try again later.', signupSuccess: false });
     }
 };
+
 
 
 // google verification here 
@@ -483,6 +477,10 @@ const loginverifyotp = async (req, res) => {
 // *********************end****************************
 
 
+
+
+
+
 module.exports = {
     homepage,
     signupGetpage,
@@ -501,5 +499,5 @@ module.exports = {
     loginrequestsotp,
     loginverifyotp,
     shopepage,
-    productdetailpage
+    productdetailpage,
 }

@@ -9,10 +9,13 @@ const adminAuth = require('../middleware/adminjwt')
 const admin = require('../models/admin')
 // const upload = require('../config/multer');
 require('dotenv').config();
+const path = require('path')
+
+
 
 const multer = require('multer')
 
-const path = require('path')
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, path.join(__dirname, '../public/img'))
@@ -68,6 +71,7 @@ router.get('/admin/productgrid',productController.productgridpage)
 router.delete('/admin/deleteproduct',productController.deleteProduct)
 router.get('/admin/productedit/:id', productController.productupdate);
 router.post('/admin/productupdate',upload.array('image',4), productController.editproduct);
+
 
 // router.get('/admin/productpage:/id',auth.islogin, product_Controller.productupdate)
 // router.post('/productupdate', product_Controller.editproduct)

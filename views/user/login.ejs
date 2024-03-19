@@ -69,6 +69,28 @@
     .form-check-label {
       font-size: 14px;
     }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+        }
+        to {
+            opacity: 0;
+        }
+    }
+    .fade-in {
+        animation: fadeIn 1s ease-in;
+    }
+    .fade-out {
+        animation: fadeOut 1s ease-out;
+    }
   </style>
 
 </head>
@@ -81,30 +103,97 @@
     <!-- <br> -->
     <!-- <br> -->
 
+    <% if (signupSuccess) { %>
+      <div class="alert alert-dark fade-in" role="alert" id="signupSuccessMessage">
+          Successfully signed up! Welcome to our platform.
+      </div>
+  <% } %>
+
     <h2 class="text-center mb-4">Login</h2>
 
+   
+
     <form action="/user/login" method="post">
+
+      
+
+    
+
       <% if (typeof error !== 'undefined' && error !== null) { %>
           <p style="color: red;"><%= error %></p>
       <% } %>
-      <input type="email" name="email" id="" class="form-control my-4 py-2" placeholder="email" />
-      <input type="password" name="password" id="" class="form-control my-4 py-2" placeholder="Password" />
-      <button class="btn btn-primary btn-block">Login</button>
+      <div class="form-group">
+          <input type="email" name="email" id="emailInput" class="form-control" placeholder="Enter your email"
+              autocomplete="off">
+          <!-- <label class="form-label" for="emailInput"></label> -->
+          <small id="email-error" style="color: red; display: none;">Invalid email format</small>
+      </div>
+  
+      <div class="form-group">
+          <input type="password" name="password" id="passwordInput" class="form-control" placeholder="Create password">
+          <!-- <label class="form-label" for="passwordInput"></label> -->
+          <small id="password-error" style="color: red; display: none;">Invalid password format</small>
+      </div>
+  
+      <button type="button" class="btn btn-primary btn-block" onclick="validateAndSubmit()">Login</button>
 
-      
+   
+    
+  
+  
       <a href="/auth/google" class="btn btn-primary btn-block ">Login Google</a>
       <br>
-      
+  
       <a href="/forgotpass">Forget Password |</a>
       <a href="/loginotp">Login with Otp</a>
       <br>
       <br>
-      <span>Don't have an account ? <a style="text-decoration: none;" href="/signup">Create Account</a></span
+      <span>Don't have an account ? <a style="text-decoration: none;" href="/signup">Create Account</a></span>
   
-      
-      
+  
+  
   </form>
   
+  <script>
+      function validateAndSubmit() {
+          var emailInput = document.getElementById('emailInput');
+          var passwordInput = document.getElementById('passwordInput');
+  
+          var emailError = document.getElementById('email-error');
+          var passwordError = document.getElementById('password-error');
+  
+          var isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
+          var isValidPassword = passwordInput.value.length >= 6;
+  
+          if (!isValidEmail) {
+              emailError.style.display = "block";
+          } else {
+              emailError.style.display = "none";
+          }
+  
+          if (!isValidPassword) {
+              passwordError.style.display = "block";
+          } else {
+              passwordError.style.display = "none";
+          }
+  
+          if (isValidEmail && isValidPassword) {
+              document.forms[0].submit();
+          }
+      }
+  </script>
+  
+  <script>
+    // Hide the success message after 5 seconds
+    setTimeout(function() {
+        var successMessage = document.getElementById('signupSuccessMessage');
+        successMessage.classList.remove('fade-in');
+        successMessage.classList.add('fade-out');
+        setTimeout(function() {
+            successMessage.style.display = 'none';
+        }, 1000); // Wait for the fade-out animation to complete
+    }, 5000);
+</script>
   
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

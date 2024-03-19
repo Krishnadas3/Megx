@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
@@ -9,12 +8,12 @@ const categorySchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    products:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'product'
+    products: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product' // Assuming you have a 'Product' model
     }]
 });
 
-const Categorie = mongoose.model('Categorie', categorySchema);
+const Category = mongoose.model('Category', categorySchema);
 
-module.exports = Categorie
+module.exports = Category;

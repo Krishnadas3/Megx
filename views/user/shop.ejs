@@ -385,14 +385,15 @@
                                     <div class="row">
                                         
                                         <% if(products.length > 0) { %>
-                                            <% for(let i=0; i < products.length; i++) { %>
+                                            <% for(let i = 0; i < products.length; i++) { %>
 
                                                 <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                                     <div class="product-wrap mb-25 scroll-zoom">
                                                         <div class="product-img">
-                                                            <a href="#">
-                                                                <img class="default-img" src="" alt="">
-                                                                <img class="hover-img" src="" alt="">
+                                                            <a href="/productdetail?id=<%= products[i]._id %>">
+                                                               
+                                                                <img class="default-img"  src="/img/<%= products[i].images[0] %>" alt="">
+                                                                <img class="hover-img" src="/img/<%= products[i].images[1] %>" alt="">
                                                             </a>
                                                             <div class="product-action">
                                                                 <div class="pro-same-action pro-wishlist">
@@ -421,171 +422,6 @@
                                                 <p>No products available.</p>
                                             </div>
                                         <% } %>
-                                    </div>
-                                </div>
-                                
-                                <div id="shop-2" class="tab-pane">
-                                    <div class="shop-list-wrap mb-30">
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
-                                                <div class="product-wrap">
-                                                    <div class="product-img">
-                                                        <a href="#">
-                                                            <img class="default-img" src="assets/img/product/sweatshirt-7.jpg"
-                                                                alt="">
-                                                            <img class="hover-img" src="assets/img/product/sweatshirt-77.jpg"
-                                                                alt="">
-                                                        </a>
-                                                        <!-- <span class="pink">-10%</span> -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6">
-                                                <div class="shop-list-content">
-                                                    <h3><a href="#">Products Name Here</a></h3>
-                                                    <div class="product-list-price">
-                                                        <span>$ 60.00</span>
-                                                        <span class="old">$ 90.00</span>
-                                                    </div>
-                                                    <div class="rating-review">
-                                                        <div class="product-list-rating">
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <a href="#">3 Reviews</a>
-                                                    </div>
-                                                    <p>Lorem ipsum dolor sit amet, consecteto adipisic elit eiusm tempor
-                                                        incidid ut labore et dolore magna aliqua Ut enim ad minim </p>
-                                                    <div class="shop-list-btn btn-hover">
-                                                        <a href="#">ADD TO CART</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="shop-list-wrap mb-30">
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
-                                                <div class="product-wrap">
-                                                    <div class="product-img">
-                                                        <a href="#">
-                                                            <img class="default-img" src="assets/img/product/sweatshirt-8.jpg"
-                                                                alt="">
-                                                            <img class="hover-img" src="assets/img/product/sweatshirt-88.jpg"
-                                                                alt="">
-                                                        </a>
-                                                        <span class="purple">New</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6">
-                                                <div class="shop-list-content">
-                                                    <h3><a href="#">Products Name Here</a></h3>
-                                                    <div class="product-list-price">
-                                                        <span>$ 60.00</span>
-                                                    </div>
-                                                    <div class="rating-review">
-                                                        <div class="product-list-rating">
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <a href="#">3 Reviews</a>
-                                                    </div>
-                                                    <p>Lorem ipsum dolor sit amet, consecteto adipisic elit eiusm tempor
-                                                        incidid ut labore et dolore magna aliqua Ut enim ad minim </p>
-                                                    <div class="shop-list-btn btn-hover">
-                                                        <a href="#">ADD TO CART</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="shop-list-wrap mb-30">
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
-                                                <div class="product-wrap">
-                                                    <div class="product-img">
-                                                        <a href="#">
-                                                            <img class="default-img" src="assets/img/product/shirt-2.jpg"
-                                                                alt="">
-                                                            <img class="hover-img" src="assets/img/product/shirt-22.jpg"
-                                                                alt="">
-                                                        </a>
-                                                        <span class="pink">-20%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6">
-                                                <div class="shop-list-content">
-                                                    <h3><a href="#">Products Name Here</a></h3>
-                                                    <div class="product-list-price">
-                                                        <span>$ 30.00</span>
-                                                        <span class="old">$ 50.00</span>
-                                                    </div>
-                                                    <div class="rating-review">
-                                                        <div class="product-list-rating">
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <a href="#">3 Reviews</a>
-                                                    </div>
-                                                    <p>Lorem ipsum dolor sit amet, consecteto adipisic elit eiusm tempor
-                                                        incidid ut labore et dolore magna aliqua Ut enim ad minim </p>
-                                                    <div class="shop-list-btn btn-hover">
-                                                        <a href="#">ADD TO CART</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="shop-list-wrap mb-30">
-                                        <div class="row">
-                                            <div class="col-xl-4 col-lg-5 col-md-5 col-sm-6">
-                                                <div class="product-wrap">
-                                                    <div class="product-img">
-                                                        <a href="#">
-                                                            <img class="default-img" src="assets/img/product/tee-7.jpg"
-                                                                alt="">
-                                                            <img class="hover-img" src="assets/img/product/tee-77.jpg"
-                                                                alt="">
-                                                        </a>
-                                                        <span class="purple">New</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-8 col-lg-7 col-md-7 col-sm-6">
-                                                <div class="shop-list-content">
-                                                    <h3><a href="#">Products Name Here</a></h3>
-                                                    <div class="product-list-price">
-                                                        <span>$ 70.00</span>
-                                                    </div>
-                                                    <div class="rating-review">
-                                                        <div class="product-list-rating">
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o yellow"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                            <i class="fa fa-star-o"></i>
-                                                        </div>
-                                                        <a href="#">3 Reviews</a>
-                                                    </div>
-                                                    <p>Lorem ipsum dolor sit amet, consecteto adipisic elit eiusm tempor
-                                                        incidid ut labore et dolore magna aliqua Ut enim ad minim </p>
-                                                    <div class="shop-list-btn btn-hover">
-                                                        <a href="#">ADD TO CART</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
