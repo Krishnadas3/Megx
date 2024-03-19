@@ -362,39 +362,32 @@
             <div class="col-xl-7 col-lg-7 col-md-12">
                 <div class="product-details-img mr-20 product-details-tab">
                     <div id="gallery" class="product-dec-slider-2">
-                        <a data-image="<%= products.images[0] %>" data-zoom-image="<%= products.images[0] %>">
-                            <img src="<%= products.images[0] %>" alt="">
-                        </a>
-                        <a data-image="<%= products.images[1] %>" data-zoom-image="<%= products.images[1] %>">
-                            <img src="<%= products.images[1] %>" alt="">
-                        </a>
-                        <a data-image="assets/img/product-details/product-detalis-l3.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl3.jpg">
-                            <img src="assets/img/product-details/product-detalis-s9.jpg" alt="">
-                        </a>
-                        <a data-image="assets/img/product-details/product-detalis-l5.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl5.jpg">
-                            <img src="assets/img/product-details/product-detalis-s8.jpg" alt="">
-                        </a> 
-                        <a data-image="assets/img/product-details/product-detalis-l4.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl4.jpg">
-                            <img src="assets/img/product-details/product-detalis-s1.jpg" alt="">
-                        </a>
+                        
+                            <% product.images.forEach((image) => { %>
+                                <a data-image="/img/<%= image %>" data-zoom-image="/img/<%= image %>">
+                                    <img src="/img/<%= image %>" alt="">
+                                </a>
+                            <% }); %>
+                        
                     </div>
                     
                     <div class="zoompro-wrap zoompro-2 pl-20">
                         <div class="zoompro-border zoompro-span">
-                            <img class="zoompro" src="assets/img/product-details/product-detalis-l1.jpg" data-zoom-image="assets/img/product-details/product-detalis-bl1.jpg" alt=""/>          
+                            <img class="zoompro" src="/img/<%= product.images[0] %>" data-zoom-image="/img/<%= product.images[0] %>" alt=""/>
                             <!-- <span>-29%</span> -->
-        
                         </div>
+                        
                     </div>
                 </div>
             </div>
             <div class="col-lg-5 col-lg-5 col-md-12">
                 <div class="product-details-content">
-                    <h2><%= products.productName %></h2>
-                    <div class="product-details-price">
-                        <span>₹ <%=products.price %></span>
-                        <!-- <span class="old">$20.00 </span> -->
-                    </div>
+                    <% if (product) { %>
+                        <h2><%= product.productName %></h2>
+                        <div class="product-details-price">
+                            <span>₹ <%= product.price %></span>
+                            <!-- <span class="old">$20.00 </span> -->
+                        </div>
                     <!-- <div class="pro-details-rating-wrap">
                         <div class="pro-details-rating">
                             <i class="fa fa-star-o yellow"></i>
@@ -409,14 +402,15 @@
                     <div class="pro-details-list">
                         
                         <ul>
-                            <li><%= products.description %></li>
-                            <!-- <li><%= products.description %></li>
-                            <li><%= products.description %></li>
-                            <li><%= products.description %></li> -->
+                            <li><%= product.description %></li>
+
+                            
+                            
                         </ul>
+
                     </div>
                     <div class="pro-details-size-color">
-                        <div class="pro-details-color-wrap">
+                        <!-- <div class="pro-details-color-wrap">
                             <span>Color</span>
                             <div class="pro-details-color-content">
                                 <ul>
@@ -427,7 +421,7 @@
                                     <li class="yellow"></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="pro-details-size">
                             <span>Size</span>
                             <div class="pro-details-size-content">
@@ -445,8 +439,8 @@
                         <div class="cart-plus-minus">
                             <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
                         </div>
-                        <div class="pro-details-cart btn-hover">
-                            <a href="/cartpage">Add To Cart</a>
+                        <div class="pro-details-cart btn-hover" onclick="addToCart('<%= product._id %>')">
+                            <a href="#">Add To Cart</a>
                         </div>
                         <div class="pro-details-wishlist">
                             <a href="#"><i class="fa fa-heart-o"></i></a>
@@ -458,19 +452,22 @@
                     <div class="pro-details-meta">
                         <span>Categories :</span>
                         <ul>
-                            <li><a href="#">Minimal,</a></li>
-                            <li><a href="#">Furniture,</a></li>
-                            <li><a href="#">Fashion</a></li>
+                            <li><a href="#"><%= product.category %></a></li>
+                            <!-- <li><a href="#">Furniture,</a></li>
+                            <li><a href="#">Fashion</a></li> -->
                         </ul>
                     </div>
-                    <div class="pro-details-meta">
+                    <% } else { %>
+                        <p>Product not found.</p>
+                    <% } %>
+                    <!-- <div class="pro-details-meta">
                         <span>Tag :</span>
                         <ul>
                             <li><a href="#">Fashion, </a></li>
                             <li><a href="#">Furniture,</a></li>
                             <li><a href="#">Electronic</a></li>
                         </ul>
-                    </div>
+                    </div> -->
                     <div class="pro-details-social">
                         <ul>
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -1009,6 +1006,43 @@
     </div>
 </div>
 <!-- Modal end -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+function addToCart(prodId){
+          console.log(prodId);
+          $.ajax({
+              url:'/addtocart',
+              data:{
+                  productId:prodId
+              },
+              method:'post',
+              success:(res)=>{
+                  if (res) {
+                      swal.fire({
+                          position:'center',
+                          icon:'success',
+                          title:'your product added to cart',
+                          showConfirmButton: false,
+                          timer:1000
+                      })
+                  }else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Item already exist',
+                           
+                          
+                        })
+
+                    }
+              }
+          })
+         
+      }
+</script>
 
 
 

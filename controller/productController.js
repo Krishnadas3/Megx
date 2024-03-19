@@ -215,37 +215,28 @@ const productupdate = async (req, res) => {
 }
 
 const editproduct = async (req, res) => {
-
     console.log('hi');
     try {
-        const id = req.query.id
+        const id = req.query.id;
         console.log(id);
         if (id) {
-
             await Product.updateOne({ _id: id }, {
                 $set: {
-
-
                     productName: req.body.ProductName,
                     category: req.body.Category,
                     price: req.body.Price,
                     description: req.body.Description,
-
+                    images: req.files.map(file => file.filename) 
                 }
-            })
-
-
-            res.redirect('/admin/productlist')
-
+            });
+            res.redirect('/admin/productlist');
         } else {
             console.log('else');
         }
     } catch (error) {
         console.log(error.message);
     }
-
-
-}
+};
 
 
 
