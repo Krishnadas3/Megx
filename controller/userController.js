@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const user = require('../models/users')
 const nodemailer = require('nodemailer')
-const Product = require('../controller/productController')
 const Products = require('../models/product');
+const { default: mongoose } = require('mongoose');
 const twilio = require('twilio')
 require("dotenv").config()
 
@@ -17,7 +17,7 @@ let homepage = async (req, res) => {
     try {
         const isAuthenticated = req.cookies.jwt !== undefined;
         let products = await Products.find()
-        res.render('user/index', { isAuthenticated }),{products};
+        res.render('user/index', { isAuthenticated }), { products };
     } catch (error) {
         console.error('failed to get home:', error);
         res.status(500).send('internal server error');
@@ -31,7 +31,7 @@ let homepage = async (req, res) => {
 let shopepage = async (req, res) => {
     try {
         let products = await Products.find();
-        console.log('here products',products);
+        console.log('here products', products);
         res.render('user/shop', { products });
     } catch (error) {
         console.error('failed to get home:', error)
@@ -41,7 +41,7 @@ let shopepage = async (req, res) => {
 
 let productdetailpage = async (req, res) => {
     try {
-        let productId = req.query.id; 
+        let productId = req.query.id;
         // console.log('this is productdi ',productId); 
         let product = await Products.findOne({ _id: productId });
         console.log(product);
@@ -195,9 +195,6 @@ const succesGoogleLogin = async (req, res) => {
             res.render('user/login', { error: 'User is blocked' });
         }
 
-        // req.session.user = newUser
-        // res.status(200).render('user/index')
-
         const token = jwt.sign({
             id: newUser._id,
             name: newUser.name,
@@ -248,8 +245,6 @@ let myaccountgetpage = async (req, res) => {
 // USER LOGOUT
 
 let userLogout = (req, res) => {
-    // if (!req.session.user) {
-    // User is already logged out, redirect to a page with a message
 
     res.clearCookie('jwt')
     console.log('user logout ');
@@ -262,16 +257,6 @@ let userLogout = (req, res) => {
     //   `;
     //     return res.send(alertScript);
     res.redirect("/login");
-
-    // }
-
-    // req.session.destroy((err) => {
-    //     if (err) {
-    //         console.error("Error destroying session:", err);
-    //         return res.status(500).send("Internal Server Error");
-    //     }
-    //     console.log("User logged out");
-    // });
 };
 
 
@@ -477,7 +462,76 @@ const loginverifyotp = async (req, res) => {
 // *********************end****************************
 
 
+const AddTowishlist = async (req, res) => {
+    try {
 
+        const productId = req.body.productId;
+        const userId = req.user.id;
+
+        // Check if the product already exists in the user's wishlist
+        const exist = await user.findOne({ _id: userId, 'whishlist.productId': productId });
+
+        if (exist) {
+            console.log('Product already exists in the wishlist');
+            return res.json({ status: false });
+        } else {
+            // Fetch the product details
+            const product = await Products.findOne({ _id: productId });
+
+            const result = await user.updateOne(
+                { _id: userId },
+                { $push: { whishlist: { product: product._id } } }
+            );
+
+            if (result) {
+                console.log('Product added to wishlist');
+                return res.json({ status: true });
+            } else {
+                console.log('Failed to add product to wishlist');
+                return res.json({ status: false });
+            }
+
+        }
+
+    } catch (error) {
+        console.error("Error in addToWishlist:", error.message);
+        return res.status(500).json({ error: "Internal server error" });
+    }
+};
+
+const loadwhislist = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        console.log("here got the user id ", userId);
+        // const User = true
+        const userData = await user.findOne({ _id: userId }).populate('whishlist.product').exec()
+
+        console.log(userData);
+        res.render('user/whishlist', { userData })
+    } catch (error) {
+        console.log(error.message);
+        res.render('500')
+    }
+}
+
+
+const deletewhishlist = async(req,res) =>{
+    try {
+        console.log('form deletewhishlist');
+        const userId = req.user.id
+        const deleteProId = req.body.productId
+        console.log(deleteProId);
+
+        const deletewhishlist = await user.findByIdAndUpdate({_id:userId},{$pull:{whishlist:{product:deleteProId}}})
+
+        if(deletewhishlist){
+            res.json({success:true})
+        }
+    } catch (error) {
+        console.log(error.message);
+        res.render('500')
+    }
+}
 
 
 
@@ -500,4 +554,7 @@ module.exports = {
     loginverifyotp,
     shopepage,
     productdetailpage,
+    AddTowishlist,
+    loadwhislist,
+    deletewhishlist
 }

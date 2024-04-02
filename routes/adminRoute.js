@@ -3,11 +3,9 @@ const express = require('express')
 const router = express.Router()
 const adminController = require('../controller/adminController')
 const productController = require('../controller/productController')
-// const adminController = require('../controller/adminController')
 const categoryController = require('../controller/catgorieController')
 const adminAuth = require('../middleware/adminjwt')
 const admin = require('../models/admin')
-// const upload = require('../config/multer');
 require('dotenv').config();
 const path = require('path')
 
@@ -27,12 +25,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
+// login 
 
 router.get('/adminlogin',adminController.logingetpage)
 router.post('/admin/login',adminController.loginPostpage)
 router.get('/admin/dashboard',adminAuth,adminController.dashboardpage)
 
-// router.get('/admin/customers',adminController.userList)
+//customerlist
+
 router.get('/admin/customerslist',adminAuth,adminController.customerslist)
 router.post('/blockuser',adminController.blockUser)
 
@@ -41,18 +41,21 @@ router.post('/blockuser',adminController.blockUser)
 router.get('/admin/categorielist',adminAuth,categoryController.categorieList)
 router.get('/admin/addCategory',adminAuth,categoryController.addCategory)
 router.post('/admin/addCategory',adminAuth,categoryController.submitAddCategory)
-// router.get('/admin/categoriesedit/:id',adminAuth,adminController.editCategory)
-// router.post('/admin/editCategory/:id',adminAuth,adminController.submitEditCategory)
 router.post('/deleteCategory/:id',adminAuth,categoryController.deleteCategory)
+router.get('/admin/categoriesedit/:id',adminAuth,categoryController. editCategory)
+// router.post('/admin/editCategory/:id',adminAuth,categoryController.submitEditCategory)
 
 //subcatgroy management 
 
-// router.get('/admin/subcategories',adminController.subCategoryList)
-// router.get('/admin/addsubcategory',adminController.addSubCategory)
-// router.post('/admin/addsubcategory',adminController.submitAddSubCategory)
-// router.get('/admin/editsubcategory',adminController.editSubCategory)
-// router.post('/admin/editsubcategory',adminController.editSubCategory)
-// router.post('/admin/deletesubcategory',adminController.deleteSubCategory)
+router.get('/admin/subcategories',adminAuth,categoryController.subCategoryList)
+router.get('/admin/addsubcategory',adminAuth,categoryController.addSubCategory)
+router.post('/admin/addsubcategory',adminAuth, categoryController.submitAddSubCategory);
+
+router.get('/admin/editsubcategory', adminAuth, categoryController.editSubCategory);
+router.post('/admin/editsubcategory/:id', adminAuth, categoryController.submitEditSubCategory);
+
+router.post('/admin/deletesubcategory/:id',adminAuth, categoryController.deleteSubCategory);
+
 
 
 // router.get('/admin/customerdetail',adminController.customerdetailpage)
@@ -62,19 +65,17 @@ router.post('/deleteCategory/:id',adminAuth,categoryController.deleteCategory)
 // router.get('/admin/categoriesedit/:id',adminController.editCategory);
 // router.post('/admin/categoriesedit/:id',adminController.submitEditCategory);
 
+
+//product deails
+
 router.get('/admin/productlist',productController.productlistpage)
 router.get('/admin/productadd',productController.productaddpage)
 router.post('/admin/addProduct',upload.array('image',4),productController.addproductSubmit)
-// admin_route.post('/add-product',upload.array('image', 4), product_Controller.addproduct)
 router.get('/admin/productgrid',productController.productgridpage)
-// router.get('/admin/productedit',productController.producteditpage)
 router.delete('/admin/deleteproduct',productController.deleteProduct)
 router.get('/admin/productedit/:id', productController.productupdate);
 router.post('/admin/productupdate',upload.array('image',4), productController.editproduct);
 
-
-// router.get('/admin/productpage:/id',auth.islogin, product_Controller.productupdate)
-// router.post('/productupdate', product_Controller.editproduct)
 
 
 // router.post('/admin/logout',adminController.adminLogout)
