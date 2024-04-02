@@ -22,30 +22,39 @@ const loginSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    cart: [{
+    // cart: [{
 
-        productId: {
+    //     productId: {
+    //         type: mongoose.Types.ObjectId,
+    //         ref: 'Product',
+    //         required: true
+    //     },
+    //     Price: {
+    //         type: Number,
+    //     },
+    //     qty: {
+            
+    //         type: Number,
+    //         required: true
+    //     },
+    //     productTotalprice: {
+    //         type: Number,
+    //         required: true
+    //     }
+    // }],
+    whishlist: [{
+        product: {
             type: mongoose.Types.ObjectId,
             ref: 'Product',
-            required: true
-        },
-        Price: {
-            type: Number,
-        },
-        qty: {
-            
-            type: Number,
-            required: true
-        },
-        productTotalprice: {
-            type: Number,
-            required: true
+            requried: true
         }
-    }]
+    }], wallet:{
+        type:Number,
+    }
 
 });
 
 // Collection part
 const user = mongoose.model('user', loginSchema); // Changed the model name to 'User' for better clarity
 
-module.exports = user; // Exporting the model
+module.exports = user;

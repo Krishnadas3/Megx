@@ -11,6 +11,16 @@ const categorySchema = new mongoose.Schema({
     products: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product' // Assuming you have a 'Product' model
+    }],
+    subCategory: [{
+        subCategoryName: {
+            type: String,
+            required: true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
     }]
 });
 
