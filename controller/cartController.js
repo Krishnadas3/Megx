@@ -102,33 +102,35 @@ let ListCart = async (req, res) => {
 
 
 
-const deleteCartProduct = async (req, res) => {
-    try {
-        console.log('form deletecartlist');
-        const userId = req.user.id;
-        console.log('here got the userId', userId);
-        const deleteProId = req.body.productId;
-        console.log('here got the productId', deleteProId);
 
-        const deletecart = await Cart.findOneAndUpdate(
-            { userId: userId },
-            { $pull: { products: { productId: deleteProId } } }
-        );
 
-        console.log("here got the deletecart ", deletecart);
+// const deleteCartProduct = async (req, res) => {
+//     try {
+//         console.log('form deletecartlist');
+//         const userId = req.user.id;
+//         console.log('here got the userId', userId);
+//         const deleteProId = req.body.productId;
+//         console.log('here got the productId', deleteProId);
 
-        if (deletecart) {
-            // Successful deletion
-            res.json({ success: true });
-        } else {
-            // Cart not found or product not found in the cart
-            res.status(404).json({ error: 'Cart or Product not found' });
-        }
-    } catch (error) {
-        console.log(error.message);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-};
+//         const deletecart = await Cart.findOneAndUpdate(
+//             { userId: userId },
+//             { $pull: { products: { productId: deleteProId } } }
+//         );
+
+//         console.log("here got the deletecart ", deletecart);
+
+//         if (deletecart) {
+//             // Successful deletion
+//             res.json({ success: true });
+//         } else {
+//             // Cart not found or product not found in the cart
+//             res.status(404).json({ error: 'Cart or Product not found' });
+//         }
+//     } catch (error) {
+//         console.log(error.message);
+//         res.status(500).json({ error: 'Internal Server Error' });
+//     }
+// };
 
 
 
@@ -136,6 +138,7 @@ const deleteCartProduct = async (req, res) => {
 module.exports = {
     AddToCart,
     // cartquantityupdation,
+    // cartquantityupdation,
     ListCart,
-    deleteCartProduct
+    // deleteCartProduct
 }
