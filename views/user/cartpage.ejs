@@ -398,13 +398,14 @@
                                                             <td class="product-price-cart"><span class="amount">$<%=
                                                                         product.price %></span></td>
 
-                                                            <td class="product-quantity">
-                                                                <div class="cart-plus-minus">
-                                                                    <input class="cart-plus-minus-box" type="text"
-                                                                        name="qtybutton" value="2">
-                                                                </div>
-                                                            </td>
-                                                            <td class="product-subtotal">$110.00</td>
+                                                                        <td class="product-quantity">
+                                                                            <div class="cart-plus-minus">
+                                                                                <input class="cart-plus-minus-box" type="text"
+                                                                                    name="qtybutton" value="2">
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="product-subtotal">$110.00</td>
+
                                                             <td class="product-remove">
                                                                 <a href="#"
                                                                     onclick="deleteCartProduct('<%= product._id %>')"><i
@@ -603,10 +604,9 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-        <script>
-
+       
         </script>
+
         <script>
             function deleteCartProduct(proid) {
                 console.log(proid);

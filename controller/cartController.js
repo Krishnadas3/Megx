@@ -70,18 +70,35 @@ const AddToCart = async (req, res) => {
 
 let ListCart = async (req, res) => {
     try {
-        // Fetch all products
-        let products = await Product.find();
-        console.log('products', products); // Corrected variable name
+        const userId = req.user.id;
+        const cart = await Cart.findOne({ userId: userId }).populate('products.productId');
 
-        // Render the cart page with the fetched products
-        res.render('user/cartpage', { products });
+        // console.log("cart is here",cart);
+
+        if (!cart || cart.products.length === 0) {
+            // console.log("vannu kazhinju ");
+            return res.render('user/cartpage', { products: [] });
+        }
+
+        const productsInCart = cart.products.map(item => ({
+            _id: item.productId._id,
+            images: item.productId.images,
+            productName: item.productId.productName,
+            price: item.price,
+            qty: item.qty,
+            subtotal: item.productTotalprice
+        }));
+
+        console.log("ivide kittti ellammmm");
+
+        res.render('user/cartpage', { products: productsInCart });
     } catch (error) {
         console.log(error.message);
         console.log('error from list cart');
         res.render('500');
     }
 };
+
 
 
 
@@ -113,9 +130,7 @@ const deleteCartProduct = async (req, res) => {
     }
 };
 
-const qunantityupdation = async (req,res) =>{
-    
-}
+
 
 
 module.exports = {

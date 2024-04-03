@@ -18,7 +18,7 @@ const cartSchema = new mongoose.Schema({
         },
         qty: {
             type: Number,
-            required: true,default:1
+            required: true,
         },
         productTotalprice: {
             type: Number,
