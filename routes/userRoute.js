@@ -47,7 +47,7 @@ router.post('/deletewhishlist',userAuth, userController.deletewhishlist)
 // cart
 router.post('/addtocart',userAuth,cartController.AddToCart)
 router.get('/cartpage',userAuth,cartController.ListCart)
-router.post('/deletecartproduct',userAuth, cartController.deleteCartProduct)
+// router.post('/deletecartproduct',userAuth, cartController.deleteCartProduct)
 
 // router.post('/changequantity',userAuth, cartController.cartquantityupdation)
 
