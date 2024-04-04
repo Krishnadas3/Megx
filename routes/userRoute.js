@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controller/userController')
 const cartController = require('../controller/cartController')
+const wishlist = require('../controller/wishlist')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const userAuth = require('../middleware/usejwt')
@@ -39,16 +40,17 @@ router.get('/productdetail',userController.productdetailpage)
 
 
 //wishlist 
-router.post('/addtowhishlist', userAuth, userController.AddTowishlist)
-router.get('/wishlist', userAuth, userController.loadwhislist)
-router.post('/deletewhishlist',userAuth, userController.deletewhishlist)
+router.post('/addtowhishlist', userAuth,wishlist.addWishlist)
+router.get('/wishlist', userAuth, wishlist.loadwhislist)
+router.post('/remove_wishlist',userAuth,wishlist.remove_from_wishlist);
+router.post('/add_to_cart',userAuth,wishlist.add_to_cart);
 
 
 // cart
 router.post('/addtocart',userAuth,cartController.AddToCart)
 router.get('/cartpage',userAuth,cartController.ListCart)
-// router.post('/deletecartproduct',userAuth, cartController.deleteCartProduct)
 
+// router.post('/deletecartproduct',userAuth, cartController.deleteCartProduct)
 // router.post('/changequantity',userAuth, cartController.cartquantityupdation)
 
 module.exports = router 

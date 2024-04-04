@@ -12,19 +12,21 @@ require("dotenv").config()
 require('dotenv').config()
 
 //  home page display 
-
 let homepage = async (req, res) => {
     try {
+        // Check if the user is authenticated
         const isAuthenticated = req.cookies.jwt !== undefined;
-        let products = await Products.find()
-        res.render('user/index', { isAuthenticated }), { products };
+
+        // Fetch products from the database
+        let products = await Products.find();
+
+        // Render the 'user/index' view with isAuthenticated and products data
+        res.render('user/index', { isAuthenticated, products });
     } catch (error) {
-        console.error('failed to get home:', error);
-        res.status(500).send('internal server error');
+        console.error('Failed to get home:', error);
+        res.status(500).send('Internal server error');
     }
 }
-
-
 // shope pagee
 
 
@@ -462,76 +464,7 @@ const loginverifyotp = async (req, res) => {
 // *********************end****************************
 
 
-const AddTowishlist = async (req, res) => {
-    try {
 
-        const productId = req.body.productId;
-        const userId = req.user.id;
-
-        // Check if the product already exists in the user's wishlist
-        const exist = await user.findOne({ _id: userId, 'whishlist.productId': productId });
-
-        if (exist) {
-            console.log('Product already exists in the wishlist');
-            return res.json({ status: false });
-        } else {
-            // Fetch the product details
-            const product = await Products.findOne({ _id: productId });
-
-            const result = await user.updateOne(
-                { _id: userId },
-                { $push: { whishlist: { product: product._id } } }
-            );
-
-            if (result) {
-                console.log('Product added to wishlist');
-                return res.json({ status: true });
-            } else {
-                console.log('Failed to add product to wishlist');
-                return res.json({ status: false });
-            }
-
-        }
-
-    } catch (error) {
-        console.error("Error in addToWishlist:", error.message);
-        return res.status(500).json({ error: "Internal server error" });
-    }
-};
-
-const loadwhislist = async (req, res) => {
-    try {
-        const userId = req.user.id;
-        console.log("here got the user id ", userId);
-        // const User = true
-        const userData = await user.findOne({ _id: userId }).populate('whishlist.product').exec()
-
-        console.log(userData);
-        res.render('user/whishlist', { userData })
-    } catch (error) {
-        console.log(error.message);
-        res.render('500')
-    }
-}
-
-
-const deletewhishlist = async(req,res) =>{
-    try {
-        console.log('form deletewhishlist');
-        const userId = req.user.id
-        const deleteProId = req.body.productId
-        console.log(deleteProId);
-
-        const deletewhishlist = await user.findByIdAndUpdate({_id:userId},{$pull:{whishlist:{product:deleteProId}}})
-
-        if(deletewhishlist){
-            res.json({success:true})
-        }
-    } catch (error) {
-        console.log(error.message);
-        res.render('500')
-    }
-}
 
 
 
@@ -554,7 +487,5 @@ module.exports = {
     loginverifyotp,
     shopepage,
     productdetailpage,
-    AddTowishlist,
-    loadwhislist,
-    deletewhishlist
+ 
 }
