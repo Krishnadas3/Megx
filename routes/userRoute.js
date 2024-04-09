@@ -37,6 +37,7 @@ router.get('/failure', userController.failureGooglelogin);
 //shop 
 router.get('/shop',userController.shopepage)
 router.get('/productdetail',userController.productdetailpage)
+router.get('/shop/:id',userController.loadbycategory)
 
 
 //wishlist 

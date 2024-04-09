@@ -28,7 +28,14 @@ app.use(session({
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'views')));
-app.use(express.static('public'));
+app.use(express.static('public', {
+    // Specify MIME type for CSS files
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.css')) {
+        res.setHeader('Content-Type', 'text/css');
+      }
+    }
+  }));
 app.use(cookieParser())
 
 

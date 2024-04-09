@@ -4,8 +4,10 @@ const jwt = require('jsonwebtoken')
 const user = require('../models/users')
 const nodemailer = require('nodemailer')
 const Products = require('../models/product');
+const Category = require('../models/category');
 const { default: mongoose } = require('mongoose');
-const twilio = require('twilio')
+const twilio = require('twilio');
+const Product = require('../models/product');
 require("dotenv").config()
 
 
@@ -33,13 +35,51 @@ let homepage = async (req, res) => {
 let shopepage = async (req, res) => {
     try {
         let products = await Products.find();
-        console.log('here products', products);
-        res.render('user/shop', { products });
+        // console.log('hey is remoe',products);
+        let category = await Category.find()
+        const user = true
+        // console.log('here kittti makkaleeee', category);
+        res.render('user/shop', { products,category ,user});
     } catch (error) {
         console.error('failed to get home:', error)
         res.status(500).send('internal server error')
     }
 }
+
+
+const loadbycategory = async(req,res) =>{
+    console.log("hey this is wrong");
+    try {
+        const user = true
+
+        // console.log("hey this is wrong");
+
+    const cat_id = req.params.id
+    console.log("here got the cat id ",cat_id);
+
+    const category = await Category.find({})
+    
+    const cat_name = await Category.findOne({_id: cat_id})
+
+    const categoryname = cat_name.categoryName
+
+    console.log('hey here got the category ',categoryname);
+
+    const products = await Products.find({category:categoryname})
+ 
+    console.log('hey here got the category ',products);
+
+    res.render('user/shop',{products,categoryname,user,category})
+    } catch (error) {
+        res.render('500');
+        console.log(error.message); 
+    }
+}
+
+
+
+
+
 
 let productdetailpage = async (req, res) => {
     try {
@@ -487,5 +527,5 @@ module.exports = {
     loginverifyotp,
     shopepage,
     productdetailpage,
- 
+    loadbycategory
 }
