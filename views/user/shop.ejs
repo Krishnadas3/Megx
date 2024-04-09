@@ -10,21 +10,21 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.png">
     
     <!-- CSS
 	============================================ -->
    
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <!-- Icon Font CSS -->
-    <link rel="stylesheet" href="assets/css/icons.min.css">
+    <link rel="stylesheet" href="/assets/css/icons.min.css">
     <!-- Plugins CSS -->
-    <link rel="stylesheet" href="assets/css/plugins.css">
+    <link rel="stylesheet" href="/assets/css/plugins.css">
     <!-- Main Style CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <!-- Modernizer JS -->
-    <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
 <body>
@@ -371,106 +371,75 @@
                                 <p>Showing 1–12 of 20 result</p>
                             </div>
                             <div class="shop-tab nav">
-                                <a class="active" href="#shop-1" data-toggle="tab">
+                                <!-- <a class="active" href="#shop-1" data-toggle="tab">
                                     <i class="fa fa-table"></i>
-                                </a>
-                                <a href="#shop-2" data-toggle="tab">
+                                </a> -->
+                                <!-- <a href="#shop-2" data-toggle="tab">
                                     <i class="fa fa-list-ul"></i>
-                                </a>
+                                </a> -->
                             </div>
                         </div>
                         <div class="shop-bottom-area mt-35">
                             <div class="tab-content jump">
-                                <div id="shop-1" class="tab-pane active">
-                                    <div class="row">
-                                        
-                                        <% if(products.length > 0) { %>
-                                            <% for(let i = 0; i < products.length; i++) { %>
-
-                                                <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
-                                                    <div class="product-wrap mb-25 scroll-zoom">
-                                                        <div class="product-img">
-                                                            <a href="/productdetail?id=<%= products[i]._id %>">
-                                                               
-                                                                <img class="default-img"  src="/img/<%= products[i].images[0] %>" alt="">
-                                                                <img class="hover-img" src="/img/<%= products[i].images[1] %>" alt="">
-                                                            </a>
-                                                            <div class="product-action">
-                                                                <div class="pro-same-action pro-wishlist">
-                                                                    <a title="Wishlist" href="#"><i class="pe-7s-like"></i></a>
-                                                                </div>
-                                                                <div class="pro-same-action pro-cart">
-                                                                    <a title="Add To Cart" href="/cartpage"><i class="pe-7s-cart"></i> Add to cart</a>
-                                                                </div>
-                                                                <div class="pro-same-action pro-quickview">
-                                                                    <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                                            class="pe-7s-look"></i></a>
-                                                                </div>
+                                <div class="row">
+                                    <% if(products.length > 0) { %>
+                                        <% for(let i = 0; i < products.length; i++) { %>
+                                
+                                            <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
+                                                <div class="product-wrap mb-25 scroll-zoom">
+                                                    <div class="product-img">
+                                                        <a href="/productdetail?id=<%= products[i]._id %>">
+                                                            <img class="default-img"  src="/img/<%= products[i].images[0] %>" alt="">
+                                                            <img class="hover-img" src="/img/<%= products[i].images[1] %>" alt="">
+                                                        </a>
+                                                        <div class="product-action">
+                                                            <div class="pro-same-action pro-wishlist">
+                                                                <a title="Wishlist" href="#"><i class="pe-7s-like"></i></a>
                                                             </div>
-                                                        </div>
-                                                        <div class="product-content text-center">
-                                                            <h3><a href=""> <%= products[i].productName %> </a></h3>
-                                                            <div class="product-price">
-                                                                <span>₹ <%= products[i].price %></span>
+                                                            <div class="pro-same-action pro-cart">
+                                                                <a title="Add To Cart" href="/cartpage"><i class="pe-7s-cart"></i> Add to cart</a>
+                                                            </div>
+                                                            <div class="pro-same-action pro-quickview">
+                                                                <a title="Quick View" href="#" data-toggle="modal" data-target="#exampleModal"><i class="pe-7s-look"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="product-content text-center">
+                                                        <h3><a href=""> <%= products[i].productName %> </a></h3>
+                                                        <div class="product-price">
+                                                            <span>₹ <%= products[i].price %></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            <% } %>
-                                        <% } else { %>
-                                            <div class="col-12">
-                                                <p>No products available.</p>
                                             </div>
                                         <% } %>
-                                    </div>
+                                    <% } else { %>
+                                        <div class="col-12">
+                                            <p>No products available.</p>
+                                        </div>
+                                    <% } %>
                                 </div>
-                            </div>
-                            <div class="pro-pagination-style text-center mt-30">
-                                <!-- <ul>
-                                    <li><a class="prev" href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                                    <li><a class="active" href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a class="next" href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                                </ul> -->
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="sidebar-style mr-30">
                             <div class="sidebar-widget">
-                                <!-- <h4 class="pro-sidebar-title">Search </h4> -->
-                                <div class="pro-sidebar-search mb-50 mt-25">
-                                    <!-- <form class="pro-sidebar-search-form" action="#">
-                                        <input type="text" placeholder="Search here...">
-                                        <button>
-                                            <i class="pe-7s-search"></i>
-                                        </button>
-                                    </form> -->
-                                </div>
-                            </div>
-                            <div class="sidebar-widget">
-                                <h4 class="pro-sidebar-title">Refine By </h4>
+                                <h4 class="pro-sidebar-title"><a href="/shop">Category</a></h4>
                                 <div class="sidebar-widget-list mt-30">
                                     <ul>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox"> <a href="#">Shirts<span>4</span> </a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">Sweatshirts<span>4</span></a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">Tees<span>4</span>
-                                                </a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
+                                        <% if (category.length > 0) { %>
+                                            <% for (let i = 0; i < category.length; i++) { %>
+                                                <li>
+                                                    <div class="sidebar-widget-list-left">
+                                                        <input type="checkbox">
+                                                        <a href="/shop/<%= category[i]._id %>"><%= category[i].categoryName %></a>
+                                                        <!-- <span class="checkmark"></span> -->
+                                                    </div>
+                                                </li>
+                                            
+                                            <% } %>
+                                        <% } %>
                                     </ul>
                                 </div>
                             </div>
@@ -483,7 +452,7 @@
                                     <div id="slider-range"></div>
                                 </div>
                             </div>
-                            <div class="sidebar-widget mt-50">
+                            <!-- <div class="sidebar-widget mt-50">
                                 <h4 class="pro-sidebar-title">Colour </h4>
                                 <div class="sidebar-widget-list mt-20">
                                     <ul>
@@ -513,7 +482,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="sidebar-widget mt-40">
                                 <h4 class="pro-sidebar-title">Size </h4>
                                 <div class="sidebar-widget-list mt-20">
@@ -807,17 +776,17 @@
 ============================================ -->
 
         <!-- jQuery JS -->
-        <script src="assets/js/vendor/jquery-v3.4.1.min.js"></script>
+        <script src="/assets/js/vendor/jquery-v3.4.1.min.js"></script>
         <!-- Popper JS -->
-        <script src="assets/js/popper.min.js"></script>
+        <script src="/assets/js/popper.min.js"></script>
         <!-- Bootstrap JS -->
-        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="/assets/js/bootstrap.min.js"></script>
         <!-- Plugins JS -->
-        <script src="assets/js/plugins.js"></script>
+        <script src="/assets/js/plugins.js"></script>
         <!-- Ajax Mail -->
-        <script src="assets/js/ajax-mail.js"></script>
+        <script src="/assets/js/ajax-mail.js"></script>
         <!-- Main JS -->
-        <script src="assets/js/main.js"></script>
+        <script src="/assets/js/main.js"></script>
 
     </body>
 

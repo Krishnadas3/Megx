@@ -4,40 +4,82 @@ const jwt = require('jsonwebtoken')
 const user = require('../models/users')
 const nodemailer = require('nodemailer')
 const Products = require('../models/product');
+const Category = require('../models/category');
 const { default: mongoose } = require('mongoose');
-const twilio = require('twilio')
+const twilio = require('twilio');
+const Product = require('../models/product');
 require("dotenv").config()
 
 
 require('dotenv').config()
 
 //  home page display 
-
 let homepage = async (req, res) => {
     try {
+        // Check if the user is authenticated
         const isAuthenticated = req.cookies.jwt !== undefined;
-        let products = await Products.find()
-        res.render('user/index', { isAuthenticated }), { products };
+
+        // Fetch products from the database
+        let products = await Products.find();
+
+        // Render the 'user/index' view with isAuthenticated and products data
+        res.render('user/index', { isAuthenticated, products });
     } catch (error) {
-        console.error('failed to get home:', error);
-        res.status(500).send('internal server error');
+        console.error('Failed to get home:', error);
+        res.status(500).send('Internal server error');
     }
 }
-
-
 // shope pagee
 
 
 let shopepage = async (req, res) => {
     try {
         let products = await Products.find();
-        console.log('here products', products);
-        res.render('user/shop', { products });
+        // console.log('hey is remoe',products);
+        let category = await Category.find()
+        const user = true
+        // console.log('here kittti makkaleeee', category);
+        res.render('user/shop', { products,category ,user});
     } catch (error) {
         console.error('failed to get home:', error)
         res.status(500).send('internal server error')
     }
 }
+
+
+const loadbycategory = async(req,res) =>{
+    console.log("hey this is wrong");
+    try {
+        const user = true
+
+        // console.log("hey this is wrong");
+
+    const cat_id = req.params.id
+    console.log("here got the cat id ",cat_id);
+
+    const category = await Category.find({})
+    
+    const cat_name = await Category.findOne({_id: cat_id})
+
+    const categoryname = cat_name.categoryName
+
+    console.log('hey here got the category ',categoryname);
+
+    const products = await Products.find({category:categoryname})
+ 
+    console.log('hey here got the category ',products);
+
+    res.render('user/shop',{products,categoryname,user,category})
+    } catch (error) {
+        res.render('500');
+        console.log(error.message); 
+    }
+}
+
+
+
+
+
 
 let productdetailpage = async (req, res) => {
     try {
@@ -462,76 +504,7 @@ const loginverifyotp = async (req, res) => {
 // *********************end****************************
 
 
-const AddTowishlist = async (req, res) => {
-    try {
 
-        const productId = req.body.productId;
-        const userId = req.user.id;
-
-        // Check if the product already exists in the user's wishlist
-        const exist = await user.findOne({ _id: userId, 'whishlist.productId': productId });
-
-        if (exist) {
-            console.log('Product already exists in the wishlist');
-            return res.json({ status: false });
-        } else {
-            // Fetch the product details
-            const product = await Products.findOne({ _id: productId });
-
-            const result = await user.updateOne(
-                { _id: userId },
-                { $push: { whishlist: { product: product._id } } }
-            );
-
-            if (result) {
-                console.log('Product added to wishlist');
-                return res.json({ status: true });
-            } else {
-                console.log('Failed to add product to wishlist');
-                return res.json({ status: false });
-            }
-
-        }
-
-    } catch (error) {
-        console.error("Error in addToWishlist:", error.message);
-        return res.status(500).json({ error: "Internal server error" });
-    }
-};
-
-const loadwhislist = async (req, res) => {
-    try {
-        const userId = req.user.id;
-        console.log("here got the user id ", userId);
-        // const User = true
-        const userData = await user.findOne({ _id: userId }).populate('whishlist.product').exec()
-
-        console.log(userData);
-        res.render('user/whishlist', { userData })
-    } catch (error) {
-        console.log(error.message);
-        res.render('500')
-    }
-}
-
-
-const deletewhishlist = async(req,res) =>{
-    try {
-        console.log('form deletewhishlist');
-        const userId = req.user.id
-        const deleteProId = req.body.productId
-        console.log(deleteProId);
-
-        const deletewhishlist = await user.findByIdAndUpdate({_id:userId},{$pull:{whishlist:{product:deleteProId}}})
-
-        if(deletewhishlist){
-            res.json({success:true})
-        }
-    } catch (error) {
-        console.log(error.message);
-        res.render('500')
-    }
-}
 
 
 
@@ -554,7 +527,5 @@ module.exports = {
     loginverifyotp,
     shopepage,
     productdetailpage,
-    AddTowishlist,
-    loadwhislist,
-    deletewhishlist
+    loadbycategory
 }

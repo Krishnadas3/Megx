@@ -22,35 +22,13 @@ const loginSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    // cart: [{
-
-    //     productId: {
-    //         type: mongoose.Types.ObjectId,
-    //         ref: 'Product',
-    //         required: true
-    //     },
-    //     Price: {
-    //         type: Number,
-    //     },
-    //     qty: {
-            
-    //         type: Number,
-    //         required: true
-    //     },
-    //     productTotalprice: {
-    //         type: Number,
-    //         required: true
-    //     }
-    // }],
-    whishlist: [{
+    wishlist: [{
         product: {
-            type: mongoose.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
-            requried: true
+            required: true
         }
-    }], wallet:{
-        type:Number,
-    }
+    }],
 
 });
 

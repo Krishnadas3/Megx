@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
+
     productName:{type:String},
     description:{type:String},
     price:{type:String},
@@ -9,9 +10,12 @@ const productSchema = new mongoose.Schema({
     stockQuantity:{type:String},
     addedOn:{type:Date,default:Date.now},
     images:{type:Array},
-    category:{
-       type:String
-    }
+    // category:{
+    //    type: mongoose.Schema.Types.ObjectId,
+    //    ref: 'Category',
+    //    required: true
+    // }
+    category: {type:String}
     
 });
 

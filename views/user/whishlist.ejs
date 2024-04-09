@@ -360,53 +360,65 @@
     <div class="cart-main-area pt-90 pb-100">
         <div class="container">
             <h3 class="cart-page-title">Your cart items</h3>
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <form action="#">
-                        <div class="table-content table-responsive cart-table-content">
-                            <% if(userData.whishlist.length==0) {%>
-                                <h3>Ooops there's nothing in your wishlist</h3>
-                                <%}else{ %>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Image</th>
-                                                <th>Product Name</th>
-                                                <th>Price</th>
-                                                <!-- <th>Qty</th>
-                                    <th>Subtotal</th> -->
-                                                <th>Add To Cart</th>
-                                                <th>action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <% userData.whishlist.forEach((whishlist,index)=> {%>
-                                                <tr>
 
-                                                    <td class="product-thumbnail"><a
-                                                            href="/productdetail?id=<%= whishlist.product._id %>"><img
-                                                                style="height: 100px;"
-                                                                src="/img/<%=whishlist.product.images[0] %> "
-                                                                alt="..." /></a></td>
-                                                    <td class="product-name"><a
-                                                            href="/productdetail?id=<%= whishlist.product._id %>">
-                                                            <%= whishlist.product.productName %>
-                                                        </a></td>
-                                                    <td class="product-price-cart"><span class="amount">
-                                                            <%= whishlist.product.price%>
-                                                        </span></td>
-                                                    <td class="product-wishlist-cart"><a href="#">add to cart</a></td>
-                                                    <td class="product-remove"><a onclick="deletewishlist('<%= whishlist.product._id %>')"><i class="fa fa-times"></i></a></td>
-                                                </tr>
-                                                <%})%>
-                                        </tbody>
-                                    </table>
+            <div class="row">
+                <% if (wishlist && wishlist.length> 0) { %>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                        <form action="#">
+                            <div class="table-content table-responsive cart-table-content">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Product Name</th>
+                                            <th>Price</th>
+                                            <th>Add To Cart</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (let i=0; i < wishlist.length; i++) { %>
+                                            <tr>
+                                                <td class="product-thumbnail">
+                                                    <a href="">
+                                                        <img style="height: 100px;"
+                                                            src="/product_img/<%= wishlist[i].product.images[0] %>"
+                                                            alt="" />
+                                                    </a>
+                                                </td>
+                                                <td class="product-name">
+                                                    <a href="">
+                                                        <%= wishlist[i].product.productName %>
+                                                    </a>
+                                                </td>
+                                                <td class="product-price-cart">
+                                                    <span class="amount">₹<%= wishlist[i].product.price %></span>
+                                                </td>
+                                                <td class="product-wishlist-cart">
+                                                    <a href="" onclick="addToCart('<%= wishlist[i].product._id %>')">Add
+                                                        to Cart</a>
+                                                </td>
+                                                <td class="product-remove">
+                                                    <a onclick="deleteWish('<%= wishlist[i].product._id %>')"><i
+                                                            class="fa fa-times"></i></a>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                    <% } else { %>
+                        <div class="col-lg-12">
+                            <p>No items in the wishlist.</p>
                         </div>
                         <% } %>
-                    </form>
-                </div>
             </div>
+
+
         </div>
+    </div>
     </div>
     <footer class="footer-area bg-gray pt-100 pb-70">
         <div class="container">
@@ -644,10 +656,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    
-        function deletewishlist(proid) {
-            console.log(proid)
+    <script>
+        function deleteWish(proid) {
+
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You wan't to delete!",
@@ -659,7 +670,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/deletewhishlist",
+                        url: "/remove_wishlist",
                         data: {
                             productId: proid
                         },
@@ -667,16 +678,17 @@
                         success: (response) => {
                             console.log("waoring")
 
-                            $('#wishlist-container').load(window.location.href + ' #wishlist-container');
+                            $('#reloadDiv').load('/wishlist #reloadDiv')
                             console.log(response);
                             Swal.fire({
                                 title: 'deleted!',
                                 text: 'Your deleted',
                                 icon: 'success',
-                                showConfirmButton: false,
-                                timer: 1000
+                                showConfirmButton: false
                             })
-
+                            //  setTimeout(()=>{
+                            //     location.reload()
+                            //  },1000);
 
                         }
 
@@ -685,7 +697,36 @@
             })
         }
 
-</script>
+
+        function addToCart(proid) {
+
+            $.ajax({
+                url: "/add_to_cart",
+                data: {
+                    productId: proid
+                },
+                method: 'post',
+                success: (response) => {
+                    console.log("waoring")
+
+                    $('#reloadDiv').load('/wishlist #reloadDiv')
+                    console.log(response);
+                    Swal.fire({
+                        title: 'added',
+                        text: 'iteam in your cart ',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                    //  setTimeout(()=>{
+                    //     location.reload()
+                    //  },1000);
+
+                }
+
+            })
+        }
+    </script>
 
 
 

@@ -442,9 +442,11 @@
                         <div class="pro-details-cart btn-hover" onclick="addToCart('<%= product._id %>')">
                             <a href="#">Add To Cart</a>
                         </div>
-                        <div class="pro-details-wishlist" onclick="addToWishlist('<%= product._id%>')">
+
+                        <div class="pro-details-wishlist" onclick="addToWishlist('<%= product._id %>')">
                             <a href="#"><i class="fa fa-heart-o"></i></a>
                         </div>
+                        
                         <div class="pro-details-compare">
                             <a href="#"><i class="pe-7s-shuffle"></i></a>
                         </div>
@@ -1045,38 +1047,43 @@ function addToCart(prodId){
 </script>
 
 <script>
-    
-    function addToWishlist(prodId) {
-        console.log(prodId);
+
+   function addToWishlist(proid) {
+    console.log("hey");
     $.ajax({
-        url: '/addtowhishlist',
+        
+        
+        
+        url: '/addtowhishlist  ',
         data: {
-            productId: prodId
+            productId: proid
         },
         method: 'post',
-        success:(res)=>{
-                  if (res) {
-                      swal.fire({
-                          position:'center',
-                          icon:'success',
-                          title:'your product added to wishlist',
-                          showConfirmButton: false,
-                          timer:1000
-                      })
-                  }else{
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Item already exist',
-                           
-                          
-                        })
-
-                    }
-              }
-          })
-         
-      }
+        success: (response) => {
+            if (response.exist) {
+                Swal.fire({
+                    title: 'Already Exist',
+                    text: 'Product Already in Wishlist',
+                    icon: 'info',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            } else {
+                Swal.fire({
+                    title: 'Added',
+                    text: 'Product added to Wishlist',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+            // Handle error here
+        }
+    });
+}
 
 </script>
 
