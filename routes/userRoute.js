@@ -3,6 +3,7 @@ const router = express.Router()
 const userController = require('../controller/userController')
 const cartController = require('../controller/cartController')
 const wishlist = require('../controller/wishlist')
+const userprofile = require('../controller/userprofile')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const userAuth = require('../middleware/usejwt')
@@ -27,7 +28,6 @@ router.post('/loginotp',userController.loginrequestsotp)
 router.post('/loginotpdone',userAuth,userController.loginverifyotp)
 router.get('/logout',userAuth,userController.userLogout)
 router.get('/',userController.loadAuth)
-router.get('/myaccount',userController.myaccountgetpage)
 router.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 router.get('/auth/google/callback',passport.authenticate('google', {successRedirect: '/success',failureRedirect: '/failure',}));
 router.get('/success', userController.succesGoogleLogin);
@@ -37,8 +37,13 @@ router.get('/failure', userController.failureGooglelogin);
 //shop 
 router.get('/shop',userController.shopepage)
 router.get('/productdetail',userController.productdetailpage)
+
+//Pagination
+
 router.get('/shop/:id',userController.loadbycategory)
 
+//about
+router.get('/about',userController.aboutpage)
 
 //wishlist 
 router.post('/addtowhishlist', userAuth,wishlist.addWishlist)
@@ -50,8 +55,18 @@ router.post('/add_to_cart',userAuth,wishlist.add_to_cart);
 // cart
 router.post('/addtocart',userAuth,cartController.AddToCart)
 router.get('/cartpage',userAuth,cartController.ListCart)
+router.post('/deletecartproduct',userAuth, cartController.deleteCartProduct)
+router.post('/changequantity',userAuth, cartController.cartquantityupdation)
 
-// router.post('/deletecartproduct',userAuth, cartController.deleteCartProduct)
-// router.post('/changequantity',userAuth, cartController.cartquantityupdation)
+//checout
+router.get('/checkout',userAuth, userController.loadcheckout)
+
+//userprofile
+router.get('/myaccount',userAuth,userprofile.myaccountgetpage)
+router.post('/add_address',userAuth,userprofile.add_address);
+router.get('/address',userAuth,userprofile.showAddress)
+router.post('/edit-address',userAuth, userprofile.edit_address);
+router.post('/delete_address',userAuth,userprofile.deleteAddress);
+
 
 module.exports = router 

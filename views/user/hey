@@ -48,3 +48,164 @@ Answer: D. Ipratropium and Tiotropium
 
 
 
+<div class="billing-back-btn">
+                                            <div class="billing-back">
+                                                <a href="#"><i class="fa fa-arrow-up"></i> back</a>
+                                            </div>
+                                            <div class="billing-btn">
+                                                <button type="submit">Continue</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default single-my-account">
+                            <div class="panel-heading my-account-title">
+                                <h3 class="panel-title"><span>2 .</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-2">Change your password </a></h3>
+                            </div>
+                            <div id="my-account-2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="myaccount-info-wrapper">
+                                        <div class="account-info-wrapper">
+                                            <h4>Change Password</h4>
+                                            <h5>Your Password</h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="billing-info">
+                                                    <label>Password</label>
+                                                    <input type="password">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="billing-info">
+                                                    <label>Password Confirm</label>
+                                                    <input type="password">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="billing-back-btn">
+                                            <div class="billing-back">
+                                                <a href="#"><i class="fa fa-arrow-up"></i> back</a>
+                                            </div>
+                                            <div class="billing-btn">
+                                                <button type="submit">Continue</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default single-my-account">
+                            <div class="panel-heading my-account-title">
+                                <h3 class="panel-title"><span>3 .</span> <a data-toggle="collapse" data-parent="#faq" href="#my-account-3">Modify your address book entries   </a></h3>
+                            </div>
+                            <div id="my-account-3" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="myaccount-info-wrapper">
+                                        <div class="account-info-wrapper">
+                                            <h4>Address Book Entries</h4>
+                                        </div>
+                                        <div class="entries-wrapper">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                    <div class="entries-info text-center">
+                                                        <p>Farhana hayder (shuvo) </p>
+                                                        <p>hastech </p>
+                                                        <p> Road#1 , Block#c </p>
+                                                        <p> Rampura. </p>
+                                                        <p>Dhaka </p>
+                                                        <p>Bangladesh </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                    <div class="entries-edit-delete text-center">
+                                                        <a class="edit" href="#">Edit</a>
+                                                        <a href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="billing-back-btn">
+                                            <div class="billing-back">
+                                                <a href="#"><i class="fa fa-arrow-up"></i> back</a>
+                                            </div>
+                                            <div class="billing-btn">
+                                                <button type="submit">Continue</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default single-my-account">
+                            <div class="panel-heading my-account-title">
+                                <h3 class="panel-title"><span>4 .</span> <a href="wishlist.html">Modify your wish list   </a></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+
+<div class="entries-wrapper">
+                                                <div class="row">
+                                                    <% userAddressData.userAddresses.forEach(address=> { %>
+                                                    <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                        <div class="entries-info text-center">
+                                                            <p>House Address: <%= address.houseAddress %></p>
+                                                            <p>State: <%= address.state %></p>
+                                                            <p>City: <%= address.cityName %></p>
+                                                            <p>Landmark: <%= address.landMark %></p>
+                                                            <p>Pincode: <%= address.pincode %></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                        <div class="entries-edit-delete text-center">
+                                                            <a class="edit" href="#">Edit</a>
+                                                            <a href="#">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                    <% }); %>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <div class="entries-wrapper">
+                                                <% if(User[0].address.length>0 ){
+                                                    User[0].address.forEach((x,index)=>{ %>
+                                                    <%console.log(index)%>
+                                                <div class="row">
+                                                    
+                                                            <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                                <div class="entries-info text-center">
+                                                                    <p>Full Name:<%= x.name %>  </p>
+                                                                    <p>Phone Number:<%= x.number %> </p>
+                                                                    <p>Pincode:<%= x.pincode %> </p>
+                                                                    <p>State: <%= x.state %></p>
+                                                                    <p>District:<%= x.district %></p>
+                                                                    <p>Town: <%= x.street %></p>
+                                                                    <!-- <p>Place Name: </p> -->
+                                                                    <p>House No: <%= x.building %></p>
+                                                                </div>
+                                                            </div>

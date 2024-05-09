@@ -5,41 +5,44 @@ const user = require('../models/users')
 const nodemailer = require('nodemailer')
 const Products = require('../models/product');
 const Category = require('../models/category');
+const Address = require('../models/addressModel');
 const { default: mongoose } = require('mongoose');
 const twilio = require('twilio');
 const Product = require('../models/product');
+const { response } = require('express');
 require("dotenv").config()
-
-
 require('dotenv').config()
 
 //  home page display 
 let homepage = async (req, res) => {
     try {
-        // Check if the user is authenticated
         const isAuthenticated = req.cookies.jwt !== undefined;
-
-        // Fetch products from the database
         let products = await Products.find();
-
-        // Render the 'user/index' view with isAuthenticated and products data
         res.render('user/index', { isAuthenticated, products });
     } catch (error) {
         console.error('Failed to get home:', error);
         res.status(500).send('Internal server error');
     }
 }
-// shope pagee
+
+let aboutpage = async (req, res) => {
+    try {
+        const isAuthenticated = req.cookies.jwt !== undefined;
+        res.render('user/about',);
+    } catch (error) {
+        console.error('Failed to get home:', error);
+        res.status(500).send('Internal server error');
+    }
+}
 
 
 let shopepage = async (req, res) => {
     try {
+        const isAuthenticated = req.cookies.jwt !== undefined;
         let products = await Products.find();
-        // console.log('hey is remoe',products);
         let category = await Category.find()
         const user = true
-        // console.log('here kittti makkaleeee', category);
-        res.render('user/shop', { products,category ,user});
+        res.render('user/shop', { products, category, user, isAuthenticated });
     } catch (error) {
         console.error('failed to get home:', error)
         res.status(500).send('internal server error')
@@ -47,60 +50,47 @@ let shopepage = async (req, res) => {
 }
 
 
-const loadbycategory = async(req,res) =>{
+const loadbycategory = async (req, res) => {
     console.log("hey this is wrong");
     try {
-        const user = true
+        const isAuthenticated = req.cookies.jwt !== undefined;
+        const cat_id = req.params.id
+        console.log("here got the cat id ", cat_id);
 
-        // console.log("hey this is wrong");
+        const category = await Category.find({})
 
-    const cat_id = req.params.id
-    console.log("here got the cat id ",cat_id);
+        const cat_name = await Category.findOne({ _id: cat_id })
 
-    const category = await Category.find({})
-    
-    const cat_name = await Category.findOne({_id: cat_id})
+        const categoryname = cat_name.categoryName
 
-    const categoryname = cat_name.categoryName
+        console.log('hey here got the category ', categoryname);
 
-    console.log('hey here got the category ',categoryname);
+        const products = await Products.find({ category: categoryname })
 
-    const products = await Products.find({category:categoryname})
- 
-    console.log('hey here got the category ',products);
+        console.log('hey here got the category ', products);
 
-    res.render('user/shop',{products,categoryname,user,category})
+        res.render('user/shop', { products, categoryname, user, category, isAuthenticated })
     } catch (error) {
         res.render('500');
-        console.log(error.message); 
+        console.log(error.message);
     }
 }
-
-
-
-
-
 
 let productdetailpage = async (req, res) => {
     try {
         let productId = req.query.id;
-        // console.log('this is productdi ',productId); 
+        const isAuthenticated = req.cookies.jwt !== undefined;
         let product = await Products.findOne({ _id: productId });
         console.log(product);
-        res.render('user/productdetail', { product });
+        res.render('user/productdetail', { product, isAuthenticated });
     } catch (error) {
         console.error('Failed to connect:', error);
         res.status(500).send('Internal server error');
     }
 }
-
-
-
 const loadAuth = (req, res) => [
     res.render('auth')
 ]
-
-// user signup page display 
 
 let signupGetpage = async (req, res) => {
     try {
@@ -111,43 +101,29 @@ let signupGetpage = async (req, res) => {
     }
 }
 
-
-
 // use signup here 
-
-
 let signupPostpage = async (req, res) => {
     try {
         const password = req.body.password;
-
         if (!password) {
             return res.status(400).json({ message: 'Password is required' });
         }
-
         const hashedPassword = await bcrypt.hash(password, 10);
-
         const data = new user({
             name: req.body.username,
             email: req.body.email,
             phonenumber: req.body.phonenumber,
             password: hashedPassword,
         });
-
         console.log(data);
-
         const userdata = await data.save();
         console.log(userdata);
-
-        // No JWT code here
-
         res.redirect('/login?signupSuccess=true');
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-
-
 
 // user login page display 
 
@@ -165,11 +141,7 @@ let logiGetpage = async (req, res) => {
         res.status(500).send('intenal server error')
     }
 }
-
-
 //  user login route
-
-
 const loginPostpage = async (req, res) => {
     try {
         const foundUser = await user.findOne({ email: req.body.email });
@@ -208,10 +180,7 @@ const loginPostpage = async (req, res) => {
     }
 };
 
-
-
 // google verification here 
-
 const succesGoogleLogin = async (req, res) => {
     try {
         if (!req.user)
@@ -272,12 +241,9 @@ const failureGooglelogin = (req, res) => {
 }
 
 
-
-
-
-let myaccountgetpage = async (req, res) => {
+let loadcheckout = async (req, res) => {
     try {
-        res.render('user/myaccount')
+        res.render('user/checkout')
     } catch (error) {
         console.error('failed to get login page', error)
         res.status(500).send('intenal server error')
@@ -501,7 +467,8 @@ const loginverifyotp = async (req, res) => {
 };
 
 
-// *********************end****************************
+
+
 
 
 
@@ -517,7 +484,6 @@ module.exports = {
     loadAuth,
     succesGoogleLogin,
     failureGooglelogin,
-    myaccountgetpage,
     userLogout,
     forgotpasspage,
     forgetEmailPostpage,
@@ -527,5 +493,7 @@ module.exports = {
     loginverifyotp,
     shopepage,
     productdetailpage,
-    loadbycategory
+    loadbycategory,
+    aboutpage,
+    loadcheckout
 }

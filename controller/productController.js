@@ -100,17 +100,17 @@ const addproductSubmit = async (req, res) => {
           const category = await category.find({})
           res.render('add-product',{message:'please fill the field', category })
       }else{
-          console.log("inn ekse");
+        //   console.log("inn ekse");
           const images = []
           console.log(req.files);
           for (file of req.files) {
               images.push(file.filename)
           }
-          console.log(images);
-          console.log(productData,'product data');
+        //   console.log(images);
+        //   console.log(productData,'product data');
           let { Price, Stock, Description,category} = productData;
         const product = req.body.ProductName
-        const stockQuantity = req.body.stockQuantity
+        const stockQuantity = req.body.Stock
         console.log(product,'this will print name');
           const Newproduct = new Product({
   
