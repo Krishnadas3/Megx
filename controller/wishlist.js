@@ -3,20 +3,23 @@ const Product = require('../models/product')
 
 const loadwhislist = async (req, res) => {
     try {
+        const isAuthenticated = req.cookies.jwt !== undefined;
+
         const userId = req.user.id;
 
         console.log("User ID:", userId);
 
         // Find the user by ID and populate the wishlist field
         const user = await User.findOne({ _id: userId }).populate('wishlist.product');
-
+        
         console.log("User:", user);
 
-        const wishlist = user.wishlist;
+
+        const wishlist = user.wishlist.filter(item => item.product);
 
         console.log('kittiii makkaleeeee',wishlist);
 
-        res.render('user/whishlist', { wishlist, user });
+        res.render('user/whishlist', { wishlist, user,isAuthenticated });
     } catch (error) {
         console.error('Error:', error);
         res.render('500');

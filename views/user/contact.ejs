@@ -28,45 +28,8 @@
 </head>
 
 <body>
-<header class="header-area header-in-container clearfix">
-    <div class="header-top-area">
-        <div class="container">
-            <div class="header-top-wap">
-                <div class="language-currency-wrap">
-                    <div class="same-language-currency language-style">
-                        <a href="#">English <i class="fa fa-angle-down"></i></a>
-                        <div class="lang-car-dropdown">
-                            <ul>
-                                <li><a href="#">Arabic </a></li>
-                                <li><a href="#">Bangla </a></li>
-                                <li><a href="#">Hindi  </a></li>
-                                <li><a href="#">Spanish </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="same-language-currency use-style">
-                        <a href="#">USD  <i class="fa fa-angle-down"></i></a>
-                        <div class="lang-car-dropdown">
-                            <ul>
-                                <li><a href="#">Taka (BDT) </a></li>
-                                <li><a href="#">Riyal (SAR) </a></li>
-                                <li><a href="#">Rupee (INR)  </a></li>
-                                <li><a href="#">Dirham (AED) </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="same-language-currency">
-                        <p>Call Us 3965410</p>
-                    </div>
-                </div>
-                <div class="header-offer">
-                    <p>Free delivery on order over <span>$200</span></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="header-bottom sticky-bar header-res-padding">
-        <div class="container">
+    <header class="header-area header-padding-1 sticky-bar header-res-padding clearfix">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-xl-2 col-lg-2 col-md-6 col-4">
                     <div class="logo">
@@ -80,8 +43,8 @@
                         <nav>
                             <ul>
                                 <li><a href="/">Home <i class="fa fa-angle-down"></i></a>
-                                    <ul class="mega-menu mega-menu-padding">
-                                        <!-- <li>
+                                    <!-- <ul class="mega-menu mega-menu-padding">
+                                        <li>
                                             <ul>
                                                 <li class="mega-menu-title"><a href="#">Demo Group 01</a></li>
                                                 <li><a href="/">Home 1 – Fashion</a></li>
@@ -128,11 +91,11 @@
                                                 <li><a href="index-32.html">Home 32 – Valentine Day</a></li>
                                                 <li><a href="index-33.html">Home 33 – Medical Equipment</a></li>
                                             </ul>
-                                        </li> -->
-                                    </ul>
+                                        </li>
+                                    </ul> -->
                                 </li>
                                 <li><a href="/shop"> Shop <i class="fa fa-angle-down"></i> </a>
-                                    <ul class="mega-menu">
+                                    <!-- <ul class="mega-menu">
                                         <li>
                                             <ul>
                                                 <li class="mega-menu-title"><a href="#">shop layout</a></li>
@@ -162,16 +125,27 @@
                                         </li>
                                         <li>
                                             <ul>
-                                                <li class="mega-menu-img"><a href="/shop"></a></li>
+                                                <li class="mega-menu-img"><a href="/shop"><img src="assets/img/banner/banner-12.png" alt=""></a></li>
                                             </ul>
                                         </li>
-                                    </ul>
+                                    </ul> -->
                                 </li>
-                              
-                              
-                                
-                                <li><a href="/about"> About </a></li>
-                                <li><a href="/contact"> Contact</a></li>
+                                <!-- <li><a href="/shop">Collection</a></li> -->
+                                <!-- <li><a href="#"> Pages <i class="fa fa-angle-down"></i></a> -->
+                                    <!-- <ul class="submenu">
+                                        <li><a href="about.html">about us</a></li>
+                                        <li><a href="/cartpage">cart page</a></li>
+                                        <li><a href="/checkout">checkout </a></li>
+                                        <li><a href="/wishlist">wishlist </a></li>
+                                        <li><a href="/myaccount">my account</a></li>
+                                        <li><a href="login-register.html">login / register </a></li>
+                                        <li><a href="contact.html">contact us </a></li>
+                                        <li><a href="404.html">404 page </a></li>
+                                    </ul> -->
+                                </li>
+                                <!--  -->
+                                <li><a href="about.html"> About </a></li>
+                                <li><a href="contact.html"> Contact</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -191,15 +165,20 @@
                             <a class="account-satting-active" href="#"><i class="pe-7s-user-female"></i></a>
                             <div class="account-dropdown">
                                 <ul>
-                                    <li><a href="login-register.html">Login</a></li>
-                                    <li><a href="login-register.html">Register</a></li>
-                                    <li><a href="wishlist.html">Wishlist  </a></li>
-                                    <li><a href="my-account.html">my account</a></li>
+                                    <% if (isAuthenticated) { %>
+    
+                                        <li><a href="/wishlist">Wishlist</a></li>
+                                        <li><a href="/myaccount">My Account</a></li>
+                                        <li><a href="/logout">Logout</a></li>
+                                        <% } else { %>
+                                            <li><a href="/login">Login</a></li>
+                                            <li><a href="/signup">Register</a></li>
+                                            <% } %>
                                 </ul>
                             </div>
                         </div>
                         <div class="same-style header-wishlist">
-                            <a href="wishlist.html"><i class="pe-7s-like"></i></a>
+                            <a href="/wishlist"><i class="pe-7s-like"></i></a>
                         </div>
                         <div class="same-style cart-wrap">
                             <button class="icon-cart">
@@ -240,8 +219,8 @@
                                     <h4>Total : <span class="shop-total">$260.00</span></h4>
                                 </div>
                                 <div class="shopping-cart-btn btn-hover text-center">
-                                    <a class="default-btn" href="cart-page.html">view cart</a>
-                                    <a class="default-btn" href="checkout.html">checkout</a>
+                                    <a class="default-btn" href="/cartpage">view cart</a>
+                                    <a class="default-btn" href="/checkout">checkout</a>
                                 </div>
                             </div>
                         </div>
@@ -253,7 +232,7 @@
                     <nav id="mobile-menu-active">
                         <ul class="menu-overflow">
                             <li><a href="/">HOME</a>
-                                <!-- <ul>
+                                <ul>
                                     <li><a href="#">Demo Group 01</a>
                                         <ul>
                                             <li><a href="/">Home 1 – Fashion</a></li>
@@ -299,7 +278,7 @@
                                             <li><a href="index-33.html">Home 33 – Medical Equipment</a></li>
                                         </ul>
                                     </li>
-                                </ul> -->
+                                </ul>
                             </li>
                             <li><a href="/shop">Shop</a>
                                 <ul>
@@ -316,7 +295,7 @@
                                             <li><a href="shop-list-fw-2col.html">list 2 column  full wide</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="/productdetail">product details</a>
+                                    <li><a href="#">product details</a>
                                         <ul>
                                             <li><a href="product-details.html">tab style 1</a></li>
                                             <li><a href="product-details-2.html">tab style 2</a></li>
@@ -330,15 +309,37 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li><a href="/about">About us</a></li>
-                            <li><a href="/contact">Contact</a></li>
+                            <li><a href="/shop">Collection</a></li>
+                            <li><a href="#">Pages</a>
+                                <ul>
+                                    <li><a href="about.html">about us</a></li>
+                                    <li><a href="/cartpage">cart page</a></li>
+                                    <li><a href="/checkout">checkout </a></li>
+                                    <li><a href="/wishlist">wishlist </a></li>
+                                    <li><a href="/myaccount">my account</a></li>
+                                    <li><a href="login-register.html">login / register </a></li>
+                                    <li><a href="contact.html">contact us </a></li>
+                                    <li><a href="404.html">404 page </a></li>
+                                </ul>
+                            </li>
+                            <li><a href="blog.html">Blog</a>
+                                <ul>
+                                    <li><a href="blog.html">blog standard</a></li>
+                                    <li><a href="blog-no-sidebar.html">blog no sidebar</a></li>
+                                    <li><a href="blog-right-sidebar.html">blog right sidebar</a></li>
+                                    <li><a href="blog-details.html">blog details 1</a></li>
+                                    <li><a href="blog-details-2.html">blog details 2</a></li>
+                                    <li><a href="blog-details-3.html">blog details 3</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="about.html">About us</a></li>
+                            <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </nav>
                 </div>
             </div>
         </div>
-    </div>
-</header>
+    </header>
 <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
     <div class="container">
         <div class="breadcrumb-content text-center">
