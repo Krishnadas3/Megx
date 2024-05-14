@@ -100,7 +100,7 @@ a.meanmenu-reveal{display:none}
 .mean-container .mean-nav ul li li li li li a{width:50%;padding:1em 25%}
 .mean-container .mean-nav ul li a:hover {
   background: #f8f8f8 none repeat scroll 0 0;
-  color: #a749ff;
+  color: #000;
 }
 .mean-container .mean-nav ul li a.mean-expand{
 	width:26px;
@@ -881,7 +881,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 .slinky-theme-default .next:hover::after {
-    color: #a749ff;
+    color: #000;
 }
 
 
@@ -895,7 +895,7 @@ button.ui-button::-moz-focus-inner {
     font-size: 33px;
     line-height: 20px;
     padding: 7px 1px;
-background-color: #a749ff;
+background-color: #000;
 }
 
 .slinky-theme-default .back:hover::before {

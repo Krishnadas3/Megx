@@ -4,10 +4,9 @@ const user = require('../models/users');
 
 
 const add_address = async (req, res) => {
-    console.log("heyee");
     try {
         const userId = req.user.id;
-        // console.log("hey here got the ",userId);
+        console.log("hey here got the ",userId);
         if(req.body.name.trim()!= "" && req.body.number.trim() !="" && 
         req.body.pincode.trim() !="" &&  req.body.state.trim() !="" && 
         req.body.place.trim() !=""   &&  req.body.street.trim() !=""  
@@ -26,8 +25,8 @@ const add_address = async (req, res) => {
                     }
                 }
             })
-        //     console.log('Product already exists in the cart');
-        // return res.json({ status: false });
+            console.log('Address already exists in the Profi');
+        return res.json({ status: false });
         }
         res.redirect('/myaccount');
     } catch (error) {
@@ -36,31 +35,11 @@ const add_address = async (req, res) => {
     }
 }
 
-
-// const addresspage = async (req, res) => {
-//     try {
-//         const isAuthenticated = req.cookies.jwt !== undefined;
-//         const userId = req.user.id;
-        
-//         const userData = await user.findOne({ _id: userId });
-//         // console.log("here didnt get the ",userData);
-//         res.render('user/address', { isAuthenticated, userData });
-
-//     } catch (error) {
-//         console.error('Failed to get login page', error);
-//         // res.status(500).send('Internal server error');
-//     }
-// };
-
-
 const showAddress = async (req, res) => {
     try {
         const isAuthenticated = req.cookies.jwt !== undefined;
         const id = req.user.id;
-        // const id = req.session.user._id
         const User = await user.find({ _id: id })
-        // const User = await user.findOne({ _id: id });
-
         if (!User) {
             return res.render('500');
         }
@@ -71,7 +50,6 @@ const showAddress = async (req, res) => {
         res.render('500');
     }
 }
-
 
 const edit_address = async (req, res) => {
     try {
@@ -114,37 +92,26 @@ const edit_address = async (req, res) => {
     }
 }
 
-
 const deleteAddress = async (req, res) => {
-
     try {
-
-
         const id = req.user.id
         const address = req.body.address
         const data = await user.updateOne({ _id: id }, { $pull: { address: { _id: address } } })
-
         res.json({ success: true })
-
     } catch (error) {
         res.render('500');
         console.log(error.message);
     }
 }
 
-
 const myaccountgetpage = async (req, res) => {
     try {
         const isAuthenticated = req.cookies.jwt !== undefined;
         const userId = req.user.id;
-        
         const userData = await user.findOne({ _id: userId });
-        // console.log("here didnt get the ",userData);
         res.render('user/myaccount', { isAuthenticated, userData });
-
     } catch (error) {
         console.error('Failed to get login page', error);
-        // res.status(500).send('Internal server error');
     }
 };
 

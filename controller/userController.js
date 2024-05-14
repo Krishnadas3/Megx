@@ -1,8 +1,8 @@
 
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const user = require('../models/users')
 const nodemailer = require('nodemailer')
+const user = require('../models/users')
 const Products = require('../models/product');
 const Category = require('../models/category');
 const Address = require('../models/addressModel');
@@ -76,18 +76,55 @@ const loadbycategory = async (req, res) => {
     }
 }
 
+const sortproudct = async (req, res) => {
+    try {
+        const isAuthenticated = req.cookies.jwt !== undefined;
+        let category = await Category.find()
+        const sortBy = req.query.sortBy || 'nameAtoZ';
+        let sortQuery = {};
+        switch (sortBy) {
+            case 'priceLowToHigh':
+                sortQuery = { price: 1 };
+                break;
+            case 'priceHighToLow':
+                sortQuery = { price: -1 };
+                break;
+            case 'nameAtoZ':
+                sortQuery = { productName: 1 };
+                break;
+            case 'nameZtoA':
+                sortQuery = { productName: -1 };
+                break;
+            default:
+                sortQuery = {};
+        }
+        const products = await Products.find({}).sort(sortQuery);
+        res.render('user/shop', { products,isAuthenticated,category });
+    } catch (error) {
+        console.error('Error sorting products:', error);
+        res.status(500).send('Internal Server Error');
+    }
+};
+
+
+
 let productdetailpage = async (req, res) => {
     try {
         let productId = req.query.id;
         const isAuthenticated = req.cookies.jwt !== undefined;
+        let products = await Products.find();
         let product = await Products.findOne({ _id: productId });
         console.log(product);
-        res.render('user/productdetail', { product, isAuthenticated });
+        res.render('user/productdetail', { product, isAuthenticated,products });
     } catch (error) {
         console.error('Failed to connect:', error);
         res.status(500).send('Internal server error');
     }
 }
+
+
+
+
 const loadAuth = (req, res) => [
     res.render('auth')
 ]
@@ -241,14 +278,7 @@ const failureGooglelogin = (req, res) => {
 }
 
 
-let loadcheckout = async (req, res) => {
-    try {
-        res.render('user/checkout')
-    } catch (error) {
-        console.error('failed to get login page', error)
-        res.status(500).send('intenal server error')
-    }
-}
+
 
 // USER LOGOUT
 
@@ -495,5 +525,6 @@ module.exports = {
     productdetailpage,
     loadbycategory,
     aboutpage,
-    loadcheckout
+    sortproudct
+    // loadcheckout
 }

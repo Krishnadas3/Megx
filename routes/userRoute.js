@@ -4,6 +4,7 @@ const userController = require('../controller/userController')
 const cartController = require('../controller/cartController')
 const wishlist = require('../controller/wishlist')
 const userprofile = require('../controller/userprofile')
+const order = require('../controller/ordercontroller')
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const userAuth = require('../middleware/usejwt')
@@ -41,6 +42,7 @@ router.get('/productdetail',userController.productdetailpage)
 //Pagination
 
 router.get('/shop/:id',userController.loadbycategory)
+router.get('/sortProducts',userController.sortproudct)
 
 //about
 router.get('/about',userController.aboutpage)
@@ -58,8 +60,8 @@ router.get('/cartpage',userAuth,cartController.ListCart)
 router.post('/deletecartproduct',userAuth, cartController.deleteCartProduct)
 router.post('/changequantity',userAuth, cartController.cartquantityupdation)
 
-//checout
-router.get('/checkout',userAuth, userController.loadcheckout)
+//checkout
+router.get('/checkout',userAuth, order.loadcheckout)
 
 //userprofile
 router.get('/myaccount',userAuth,userprofile.myaccountgetpage)

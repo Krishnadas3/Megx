@@ -4,6 +4,7 @@ const Product = require('../models/product')
 const { find } = require('../models/admin');
 const Categorie = require('../models/category');
 
+
 require('dotenv').config()
 
 
@@ -119,7 +120,8 @@ const addproductSubmit = async (req, res) => {
               price: Price,
               description: Description,
               category: category,
-              images: images
+              images: images,
+              size: req.body.size,
   
           })
           console.log('here the newprodcut show',Newproduct);
@@ -226,7 +228,8 @@ const editproduct = async (req, res) => {
                     category: req.body.Category,
                     price: req.body.Price,
                     description: req.body.Description,
-                    images: req.files.map(file => file.filename) 
+                    images: req.files.map(file => file.filename) ,
+                    size: req.body.size,
                 }
             });
             res.redirect('/admin/productlist');
@@ -237,6 +240,47 @@ const editproduct = async (req, res) => {
         console.log(error.message);
     }
 };
+
+const sort = async (req, res) => {
+    try {
+        let user;
+        if (req.user.id) {
+            user = true;
+        } else {
+            user = false;
+        }
+
+        const sort_value = req.query.value
+
+        const category = await Categorie.find({});
+
+        if(sort_value == "az"){
+
+            const product = await Product.find({}).sort({ product_name: -1 });
+            res.render("shop", { product, user });
+
+        }else if(sort_value== "za"){
+
+            const product = await Product.find({}).sort({ product_name: -1 });
+            res.render("shop", { product, user });
+
+        }else if(sort_value == "high"){
+
+            const product = await Product.find({}).sort({ product_name: -1 });
+            res.render("shop", { product, user });
+
+        }else if(sort_value == "low"){
+
+            const product = await Product.find({}).sort({ product_name: -1 });
+            res.render("shop", { product, user ,category });
+        }
+        
+    } catch (error) {
+        res.render('500');
+        console.log(error.message);
+    }
+};
+
 
 
 
