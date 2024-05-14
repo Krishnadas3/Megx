@@ -166,15 +166,15 @@
                             <a class="account-satting-active" href="#"><i class="pe-7s-user-female"></i></a>
                             <div class="account-dropdown">
                                 <ul>
-                                    <% if (isAuthenticated) { %>
+                                    
     
                                         <li><a href="/wishlist">Wishlist</a></li>
                                         <li><a href="/myaccount">My Account</a></li>
                                         <li><a href="/logout">Logout</a></li>
-                                        <% } else { %>
+                                        
                                             <li><a href="/login">Login</a></li>
                                             <li><a href="/signup">Register</a></li>
-                                            <% } %>
+                                            
                                 </ul>
                             </div>
                         </div>
@@ -434,7 +434,7 @@
                                 </div>
                                 <h5>Total products <span id="cartTotalPrice">$<%= cartTotalPrice %></span></h5>
                                 <h4 class="grand-totall-title">Grand Total <span id="grandTotalPrice"><%= cartTotalPrice %></span></h4>
-                                <a href="#">Proceed to Checkout</a>
+                                <a href="/checkout">Proceed to Checkout</a>
                             </div>
                         </div>
 

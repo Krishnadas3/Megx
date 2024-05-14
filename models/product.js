@@ -10,6 +10,10 @@ const productSchema = new mongoose.Schema({
     stockQuantity:{type:String},
     addedOn:{type:Date,default:Date.now},
     images:{type:Array},
+    size: [{
+        type: String,
+        required: true
+    }],
     // category:{
     //    type: mongoose.Schema.Types.ObjectId,
     //    ref: 'Category',

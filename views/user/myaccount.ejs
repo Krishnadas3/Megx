@@ -865,7 +865,7 @@
                 if (response.status) {
                     Swal.fire({
                         title: 'Added!',
-                        text: 'Your address Added',
+                        text: response.message,
                         icon: 'success',
                         showConfirmButton: false,
                         timer: 1000
@@ -883,6 +883,7 @@
         });
     });
 });
+
     </script>
 
 

@@ -4,10 +4,6 @@ const categorie = require('../models/category')
 let categorieList = async (req, res) => {
     try {
         let category = await categorie.find()
-        // if(!Admin){
-        //     res.status(400).send('admin not found')
-        // } 
-        // let category = Admin[0].category.map(category => category)
         res.render('admin/categorielist',{category})
     } catch (error) {
         console.error('failed to get categorieist', error)
@@ -155,21 +151,22 @@ let deleteSubCategory = async (req,res) => {
 
 let editSubCategory = async(req,res) =>{
 
-    // let subCategoryId = req.params.id
-    // console.log("subCategoryId : ",subCategoryId);
-    // try {
-    //     let admin = await categorie.findOne()
-    //     if(!admin){
-    //         res.status(400).send('admin not found')
-    //     }
-    //     let subCategory = admin.subCategory.find(cat => cat.id == subCategoryId)
+    let subCategoryId = req.params.id
+    console.log("subCategoryId : ",subCategoryId);
+    try {
+        let admin = await categorie.findOne()
+        if(!admin){
+            res.status(400).send('admin not found')
+        }
+        let subCategory = admin.subCategory.find(cat => cat.id == subCategoryId)
 
-    //     if(!admin){
-    //         res.status(400).send('admi not found')
-    //     }
-    // } catch (error) {
-        
-    // }
+        if(!admin){
+            res.status(400).send('admi not found')
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error')
+    }
     res.render('admin/subCategory-edit')
 }
 
@@ -188,7 +185,6 @@ let submitEditSubCategory = async (req,res) => {
             res.status(400).send('Category Not Found')
         }else{
             admin.subCategory[subCategoryInd].subCategoryName = subCategoryName ; 
-            // if i add more things to edit in category i can change it here...
             await admin.save()
             res.redirect('/admin/subcategories');
         }
@@ -196,6 +192,18 @@ let submitEditSubCategory = async (req,res) => {
         res.status(500).send('Internal Server Error')
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 module.exports = {

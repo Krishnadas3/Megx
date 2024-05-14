@@ -191,21 +191,284 @@ Answer: D. Ipratropium and Tiotropium
 
 
 
-                                            <div class="entries-wrapper">
-                                                <% if(User[0].address.length>0 ){
-                                                    User[0].address.forEach((x,index)=>{ %>
-                                                    <%console.log(index)%>
-                                                <div class="row">
-                                                    
-                                                            <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                                                <div class="entries-info text-center">
-                                                                    <p>Full Name:<%= x.name %>  </p>
-                                                                    <p>Phone Number:<%= x.number %> </p>
-                                                                    <p>Pincode:<%= x.pincode %> </p>
-                                                                    <p>State: <%= x.state %></p>
-                                                                    <p>District:<%= x.district %></p>
-                                                                    <p>Town: <%= x.street %></p>
-                                                                    <!-- <p>Place Name: </p> -->
-                                                                    <p>House No: <%= x.building %></p>
+                                            const mongoose = require('mongoose');
+                                            const Product = require('./productModel');
+                                            
+                                            const orderSchema = new mongoose.Schema({
+                                                userId: {
+                                                    type: mongoose.Schema.Types.ObjectId,
+                                                    ref: 'User',
+                                                    required: true
+                                                },
+                                                orderId: {
+                                                    type: String,
+                                                    unique: true,
+                                            
+                                                },
+                                                address: {
+                                                    name: {
+                                                        type: String,
+                                                        required: true
+                                                    }, 
+                                                    number: {
+                                                        type: Number,
+                                                        required: true
+                                                    }, 
+                                                    pincode: {
+                                                        type: Number,
+                                                        required: true
+                                                    }, 
+                                                    state: {
+                                                        type: String,
+                                                        required: true
+                                                    },
+                                                    district :{
+                                                        type : String ,
+                                                        required: true
+                                                    } ,
+                                                    place: {
+                                                        type: String,
+                                                        required: true
+                                                    }, 
+                                                    street: {
+                                                        type: String,
+                                                        required: true
+                                                    }, 
+                                                    building: {
+                                                        type: String,
+                                                        required: true
+                                                    }, 
+                                                },
+                                                date: {
+                                                    type: Date,
+                                                    default: Date.now()
+                                                },
+                                                
+                                                product: [{
+                                                    productid: {
+                                                        type:  mongoose.Schema.Types.ObjectId,
+                                                        ref: "Product",
+                                                        required: true
+                                            
+                                                    },
+                                                    qty: {
+                                                        type: Number,
+                                                        required: true
+                                                    },
+                                                    singlePrice: {
+                                            
+                                                        type: Number,
+                                                        required: true
+                                                    },
+                                                    singleTotel: {
+                                                        type: Number,
+                                                        required: true
+                                                    },
+                                            
+                                                }],
+                                                totel: {
+                                            
+                                                    type: Number,
+                                                    required: true
+                                                },
+                                            
+                                                discount: {
+                                            
+                                                    type: Number
+                                                },
+                                            
+                                                paymentType: {
+                                            
+                                                    type: String,
+                                                    required: true
+                                                },
+                                            
+                                                status: {
+                                                    type: String,
+                                                    default: "Confirmed"
+                                                }
+                                            
+                                            
+                                            });
+                                            
+                                            const Order = mongoose.model("Order", orderSchema)
+                                            module.exports = Order
+                                            
+                                            
+                                            const Product = require('../models/product');
+                                            const Cart = require('../models/cart')
+                                            const user = require('../models/users');
+                                            // const Order = require('../models/orederModel')
+                                            const Category = require('../models/category')
+                                            const { default: mongoose } = require('mongoose');
+                                            
+                                            let placeorder = async (req, res) => {
+                                                try {
+                                            
+                                                } catch (error) {
+                                            
+                                                }
+                                            }
+                                            
+                                            <div class="Place-order mt-25">
+                                                                    <a type="submit" class="btn-hover"  href="#">Place Order</a>
                                                                 </div>
-                                                            </div>
+
+
+
+
+                                                                <div class="checkout-area pb-80 pt-100">
+                                                                    <div class="container"> 
+                                                                        <div class="row">
+                                                                            <div class="ml-auto mr-auto col-lg-9">
+                                                                                <div class="checkout-wrapper">
+                                                                                    <div id="faq" class="panel-group">
+                                                                                        <div class="panel panel-default single-my-account">
+                                                                                            <div class="panel-body" id="my-account-3"> <!-- Removed the collapse class from here -->
+                                                                                                <div class="myaccount-info-wrapper">
+                                                                                                    <div class="account-info-wrapper">
+                                                                                                        <h4>Address Book Entries</h4>
+                                                                                                    </div>
+                                                                                                    <div class="entries-wrapper">
+                                                                                                        <% if(User[0].address.length>0 ){
+                                                                                                            User[0].address.forEach((x,index)=>{ %>
+                                                                                                            <%console.log(index)%>
+                                                                                                        <div class="row">
+                                                                                    
+                                                                                                                    <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                                                                                        <div class="entries-info text-center">
+                                                                                                                            <p>Full Name:<%= x.name %>  </p>
+                                                                                                                                <p>Phone Number:<%= x.number %> </p>
+                                                                                                                                <p>Pincode:<%= x.pincode %> </p>
+                                                                                                                                <p>State: <%= x.state %></p>
+                                                                                                                                <p>District:<%= x.district %></p>
+                                                                                                                                <p>Town: <%= x.street %></p>
+                                                                                                                                <!-- <p>Place Name: </p> -->
+                                                                                                                                <p>House No: <%= x.building %></p>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                
+                                                                                                               
+                                                            
+                                                                                                                <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                                                                                    <div class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                                                                                                        <div class="entries-edit-delete text-center">
+                                                                                                                            
+                                                                                                                            <a class="edit" href="#" data-toggle="modal" data-target="#editAddressModal" data-bs-target="#add<%= x._id%>">Edit</a>
+                                                                                                                            <a href="#" onclick="delete_address('<%= x._id %>')">Delete</a>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <!-- Modal -->
+                                                                                                                <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+                                                                                                                    <div class="modal-dialog" role="document">
+                                                                                                                        <div class="modal-content">
+                                                                                                                            <div class="modal-header">
+                                                                                                                                <h5 class="modal-title" id="editAddressModalLabel">Edit Address</h5>
+                                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                                                                </button>
+                                                                                                                            </div>
+                                                                                                                            <div class="modal-body">
+                                                            
+                                                                                                                                <form method="post" action="/edit-address" id="editForm">
+                                                                                                                                    <input type="hidden" name="id" value="<%= x._id %>">
+                                                                                                                                    <div class="row">
+                                                            
+                                                                                                                                        <div class="col-sm-6">
+                                                                                                                                            <div class="form-group">
+                                                                                                                                                <label>Full Name</label>
+                                                                                                                                                <input type="text" class="form-control" name="name" value="<%= x.name %>">
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                    
+                                                                                                                                        <div class="col-sm-6">
+                                                                                                                                            <div class="form-group">
+                                                                                                                                                <label>Phone Number</label>
+                                                                                                                                                <input type="text" class="form-control" name="number" value="<%= x.number %>">
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                    
+                                                                                                                                    </div>
+                                                                    
+                                                                                                                                    <div class="row">
+                                                                    
+                                                                                                                                        <div class="col-sm-6">
+                                                                                                                                            <div class="form-group">
+                                                                                                                                                <label>Pincode</label>
+                                                                                                                                                <input type="text" class="form-control" name="pincode" value="<%= x.pincode %>">
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="col-sm-6">
+                                                                                                                                            <div class="form-group">
+                                                                                                                                                <label>State</label>
+                                                                                                                                                <select class="form-control form-select" name="state">
+                                                                                                                                                    <option selected="selected" value="<%= x.state %>" selected="selected"><%= x.state%></option>
+                                                                                                                                                    <option value="Andhra Pradesh">India</option>
+                                                                                                                                                    <option value="Arunachal Pradesh">China</option>
+                                                                                                                                                    <option value="Assam">Vietanam</option>
+                                                                                                                                                    <option value="Bihar">Tokyo</option>
+                                                                                                                                                    <option value="Chhattisgarh">Japan</option>
+                                                                                                                                                    <option value="Goa ">Goa</option>
+                                                                                                                                                    <option value="Gujarat ">China</option>
+                                                                                                                                                    <option value="Haryana ">UK</option>
+                                                                                                                                                    <option value="Himachal Pradesh ">Abu Dhabi</option>
+                                                                                                                                                    <option value="Jharkhand ">USA</option>
+                                                                                                                                                    <option value="Karnataka ">Spain</option>
+                                                                                                                                                    <option value="Kerala ">Kerala</option>
+                                                                                                                                                </select>
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-sm-6">
+                                                                                                                                            <div class="form-group">
+                                                                                                                                                <label>District </label>
+                                                                                                                                                <input type="text" class="form-control"
+                                                                                                                                                    name="district" value="<%= x.district %>">
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="col-sm-6">
+                                                                                                                                            <div class="form-group">
+                                                                                                                                                <label>City / Town </label>
+                                                                                                                                                <input type="text" class="form-control"
+                                                                                                                                                    name="street" value=" <%= x.street %>">
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                    
+                                                                                                                                    <div class="row">
+                                                                                                                                        <div class="col-sm-6">
+                                                                                                                                            <div class="form-group">
+                                                                                                                                                <label>Place name </label>
+                                                                                                                                                <input type="text" class="form-control"
+                                                                                                                                                    name="place" value="<%= x.street %>">
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="col-sm-6">
+                                                                                                                                            <div class="form-group">
+                                                                                                                                                <label>Hosue No / Building Name </label>
+                                                                                                                                                <input type="text" class="form-control"
+                                                                                                                                                    name="building" value="<%= x.building %>">
+                                                                                                                                            </div>
+                                                                                                                                        </div>
+                                                                                                                                    </div>
+                                                                                                                                    <button type="submit" class="btn btn-dark float-end"
+                                                                                                                                        data-bs-dismiss="modal">Save</button>
+                                                                                                                                </form>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            <% })} %>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>

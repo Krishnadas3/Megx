@@ -40,8 +40,8 @@
                         <!-- Menu: Sub menu ul -->
                         <ul class="sub-menu collapse show" id="menu-product">
                             <li><a class="ms-link active" href="/admin/productlist">Product List</a></li>
-                            <li><a class="ms-link" href="/admin/productedit">Product Edit</a></li>
-                            <li><a class="ms-link" href="/admin/productadd">Product Add</a></li>
+                            <!-- <li><a class="ms-link" href="/admin/productedit">Product Edit</a></li> -->
+                            <!-- <li><a class="ms-link" href="/admin/productadd">Product Add</a></li> -->
                         </ul>
                     </li>
                     <li class="collapsed">
@@ -51,8 +51,8 @@
                         <!-- Menu: Sub menu ul -->
                         <ul class="sub-menu collapse" id="categories">
                             <li><a class="ms-link" href="categorie-list.html">Categories List</a></li>
-                            <li><a class="ms-link" href="categories-edit.html">Categories Edit</a></li>
-                            <li><a class="ms-link" href="categories-add.html">Categories Add</a></li>
+                            <!-- <li><a class="ms-link" href="categories-edit.html">Categories Edit</a></li> -->
+                            <!-- <li><a class="ms-link" href="categories-add.html">Categories Add</a></li> -->
                         </ul>
                     </li>
                     <li class="collapsed">
@@ -112,7 +112,9 @@
         
                   <form id="addProduct" action="/admin/addProduct" method="post" enctype="multipart/form-data" onsubmit="validateAndSubmit(event)">
                     <div class="row g-3 mb-3">
+                        <!-- Product Information -->
                         <div class="col-xl-8 col-lg-8">
+                            <!-- Product information card -->
                             <div class="sticky-lg-top card mb-3">
                                 <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
                                     <h6 class="mb-0 fw-bold ">Product information</h6>
@@ -122,23 +124,28 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row g-3 align-items-center">
+                                        <!-- Product Name -->
                                         <div class="col-md-12">
                                             <input type="text" id="productNameInput" name="ProductName" placeholder="Product Name" class="form-control">
                                             <small id="name-error" style="color: red; display: none;">Invalid name</small>
                                         </div>
+                                        <!-- Price -->
                                         <div class="col-md-6">
                                             <input name="Price" type="number" id="priceInput" placeholder="Price" class="form-control">
                                             <small id="price-error" style="color: red; display: none;">Invalid price</small>
                                         </div>
+                                        <!-- Stock Quantity -->
                                         <div class="col-md-6">
                                             <input type="number" name="Stock" id="stockQuantityInput" placeholder="Total Stocks" class="form-control">
                                             <small id="number-error" style="color: red; display: none;">Invalid stock quantity</small>
                                         </div>
+                                        <!-- Description -->
                                         <div class="col-md-12">
                                             <input name="Description" id="descriptionInput" class="col-12 pb-3 form-control" type="text" placeholder="Add Description Here">
                                             <small id="description-error" style="color: red; display: none;">Invalid description</small>
                                         </div>
                                     </div>
+                                    <!-- Images -->
                                     <div class="card my-3">
                                         <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
                                             <h6 class="mb-0 fw-bold ">Images</h6>
@@ -152,8 +159,10 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Category and Size -->
                         <div class="col-xl-4 col-lg-4">
                             <div class="sticky-lg-top mb-4">
+                                <!-- Category -->
                                 <div class="card mb-3">
                                     <div class="categories">
                                         <div class="filter-title">
@@ -177,6 +186,35 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- Size -->
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                      <div class="col-md">
+                                        <label class="col-sm-2 col-form-label" for="basic-default-email">Size</label>
+                                        <div class="form-check form-check-inline mt-3">
+                                          <input class="form-check-input" type="checkbox" name="size" value="XS" />
+                                          <label class="form-check-label" for="inlineCheckbox1">Extra Small</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="checkbox" name="size" value="S" />
+                                          <label class="form-check-label" for="inlineCheckbox2">Small</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="checkbox" name="size" value="M" />
+                                          <label class="form-check-label" for="inlineCheckbox2">Medium</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="checkbox" name="size" value="L" />
+                                          <label class="form-check-label" for="inlineCheckbox2">Large</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                          <input class="form-check-input" type="checkbox" name="size" value="XL" />
+                                          <label class="form-check-label" for="inlineCheckbox2">Extra Large</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <!-- Submit Button -->
                                 <div class="submit">
                                     <button type="submit" class="btn btn-primary btn-set-task w-100 py-2 px-5 text-uppercase">Add Product</button>
                                 </div>
@@ -184,6 +222,7 @@
                         </div>
                     </div>
                 </form>
+                
                 
         
                 </div>

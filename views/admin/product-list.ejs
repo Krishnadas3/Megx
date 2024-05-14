@@ -40,8 +40,8 @@
                         <!-- Menu: Sub menu ul -->
                         <ul class="sub-menu collapse show" id="menu-product">
                             <li><a class="ms-link active" href="/admin/productlist">Product List</a></li>
-                            <li><a class="ms-link" href="/admin/productedit">Product Edit</a></li>
-                            <li><a class="ms-link" href="/admin/productadd">Product Add</a></li>
+                            <!-- <li><a class="ms-link" href="/admin/productedit">Product Edit</a></li> -->
+                            <!-- <li><a class="ms-link" href="/admin/productadd">Product Add</a></li> -->
                         </ul>
                     </li>
                     <li class="collapsed">
@@ -51,8 +51,8 @@
                         <!-- Menu: Sub menu ul -->
                         <ul class="sub-menu collapse" id="categories">
                             <li><a class="ms-link" href="categorie-list.html">Categories List</a></li>
-                            <li><a class="ms-link" href="categories-edit.html">Categories Edit</a></li>
-                            <li><a class="ms-link" href="categories-add.html">Categories Add</a></li>
+                            <!-- <li><a class="ms-link" href="categories-edit.html">Categories Edit</a></li> -->
+                            <!-- <li><a class="ms-link" href="categories-add.html">Categories Add</a></li> -->
                         </ul>
                     </li>
                     <li class="collapsed">
@@ -162,6 +162,11 @@
                                                                                             <p><b>Category:</b> <span
                                                                                                     class="text-primary">
                                                                                                     <%= products[i].category
+                                                                                                        %>
+                                                                                                </span></p>
+                                                                                                <p><b>Size:</b> <span
+                                                                                                    class="text-primary">
+                                                                                                    <%= products[i].size
                                                                                                         %>
                                                                                                 </span></p>
                                                                                         </div>

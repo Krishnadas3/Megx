@@ -360,22 +360,13 @@
                         <div class="shop-top-bar">
                             <div class="select-shoing-wrap">
                                 <div class="shop-select">
-                                    <select>
-                                        <option value="">Sort by newness</option>
-                                        <option value="">A to Z</option>
-                                        <option value=""> Z to A</option>
-                                        <option value="">In stock</option>
+                                    <select id="sortSelect">
+                                        <option value="nameAtoZ">A to Z</option>
+                                        <option value="nameZtoA">Z to A</option>
+                                        <option value="priceHighToLow">High to Low</option>
+                                        <option value="priceLowToHigh">Low to High</option>
                                     </select>
                                 </div>
-                                <p>Showing 1–12 of 20 result</p>
-                            </div>
-                            <div class="shop-tab nav">
-                                <!-- <a class="active" href="#shop-1" data-toggle="tab">
-                                    <i class="fa fa-table"></i>
-                                </a> -->
-                                <!-- <a href="#shop-2" data-toggle="tab">
-                                    <i class="fa fa-list-ul"></i>
-                                </a> -->
                             </div>
                         </div>
                         <div class="shop-bottom-area mt-35">
@@ -431,7 +422,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="sidebar-widget mt-45">
+                            <!-- <div class="sidebar-widget mt-45">
                                 <h4 class="pro-sidebar-title">Filter By Price </h4>
                                 <div class="price-filter mt-10">
                                     <div class="price-slider-amount">
@@ -439,81 +430,8 @@
                                     </div>
                                     <div id="slider-range"></div>
                                 </div>
-                            </div>
-                            <!-- <div class="sidebar-widget mt-50">
-                                <h4 class="pro-sidebar-title">Colour </h4>
-                                <div class="sidebar-widget-list mt-20">
-                                    <ul>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">Green <span>4</span> </a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">Cream <span>4</span> </a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">Blue <span>4</span> </a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">Black <span>4</span> </a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
                             </div> -->
-                            <div class="sidebar-widget mt-40">
-                                <h4 class="pro-sidebar-title">Size </h4>
-                                <div class="sidebar-widget-list mt-20">
-                                    <ul>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">XL</a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">L</a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">SM</a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="sidebar-widget-list-left">
-                                                <input type="checkbox" value=""> <a href="#">XXL</a>
-                                                <span class="checkmark"></span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="sidebar-widget mt-50">
-                                <h4 class="pro-sidebar-title">Tag </h4>
-                                <div class="sidebar-widget-tag mt-25">
-                                    <ul>
-                                        <!-- <li><a href="#">Clothing</a></li> -->
-                                        <!-- <li><a href="#">Accessories</a></li> -->
-                                        <li><a href="#">For Men</a></li>
-                                        <li><a href="#">For Women</a></li>
-                                        <li><a href="#">Unisex</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -726,14 +644,14 @@
                                             <li><a href="#">Electronic</a></li>
                                         </ul>
                                     </div>
-                                    <div class="pro-details-meta">
+                                    <!-- <div class="pro-details-meta">
                                         <span>Tag :</span>
                                         <ul>
                                             <li><a href="#">Fashion, </a></li>
                                             <li><a href="#">Furniture,</a></li>
                                             <li><a href="#">Electronic</a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                     <div class="pro-details-social">
                                         <ul>
                                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -751,9 +669,17 @@
             </div>
         </div>
         <!-- Modal end -->
+        
 
         <!-- JS
 ============================================ -->
+
+<script>
+     document.getElementById('sortSelect').addEventListener('change', function() {
+            const sortBy = this.value;
+            window.location.href = `/sortProducts?sortBy=${sortBy}`;
+        });
+</script>
 
         <!-- jQuery JS -->
         <script src="/assets/js/vendor/jquery-v3.4.1.min.js"></script>

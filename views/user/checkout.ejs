@@ -387,93 +387,75 @@
         <div class="row">
             <div class="col-lg-7">
                 <div class="billing-info-wrap">
+                    <% if(User[0].address.length>0 ){
+                        User[0].address.forEach((x,index)=>{ %>
+                        <%console.log(index)%>
                     <h3>Billing Details</h3>
                     <div class="row">
                         <div class="col-lg-6 col-md-6">
                             <div class="billing-info mb-20">
                                 <label>First Name</label>
-                                <input type="text">
+                                <input type="text" name="name" value="<%= x.name %>">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="billing-info mb-20">
-                                <label>Last Name</label>
-                                <input type="text">
+                                <label>Phone Number</label>
+                                <input type="text" name="number" value="<%= x.number %>">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="billing-info mb-20">
-                                <label>Company Name</label>
-                                <input type="text">
+                                <label>Pincode</label>
+                                <input type="text" name="pincode" value="<%= x.pincode %>">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="billing-select mb-20">
-                                <label>Country</label>
-                                <select>
-                                    <option>Select a country</option>
-                                    <option>Azerbaijan</option>
-                                    <option>Bahamas</option>
-                                    <option>Bahrain</option>
-                                    <option>Bangladesh</option>
-                                    <option>Barbados</option>
+                                <label>State</label>
+                                <select class="form-control form-select" name="state" >
+                                    <option selected="selected" value="<%= x.state %>" selected="selected"><%= x.state%>></option>
+                                    <option value="Andhra Pradesh">India</option>
+                                    <option value="Arunachal Pradesh">China</option>
+                                    <option value="Assam">Vietanam</option>
+                                    <option value="Bihar">Tokyo</option>
+                                    <option value="Chhattisgarh">Japan</option>
+                                    <option value="Goa ">Goa</option>
+                                    <option value="Gujarat ">China</option>
+                                    <option value="Haryana ">UK</option>
+                                    <option value="Himachal Pradesh ">Abu Dhabi</option>
+                                    <option value="Jharkhand ">USA</option>
+                                    <option value="Karnataka ">Spain</option>
+                                    <option value="Kerala ">Kerala</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="billing-info mb-20">
-                                <label>Street Address</label>
-                                <input class="billing-address" placeholder="House number and street name" type="text">
-                                <input placeholder="Apartment, suite, unit etc." type="text">
+                                <label>District</label>
+                                <input name="district" value="<%= x.district %>" type="text" >
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="billing-info mb-20">
                                 <label>Town / City</label>
-                                <input type="text">
+                                <input type="text" name="street" value=" <%= x.street %>">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="billing-info mb-20">
-                                <label>State / County</label>
-                                <input type="text">
+                                <label>Place name</label>
+                                <input type="text" name="place" value="<%= x.street %>">
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="billing-info mb-20">
-                                <label>Postcode / ZIP</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-20">
-                                <label>Phone</label>
-                                <input type="text">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-20">
-                                <label>Email Address</label>
-                                <input type="text">
+                                <label>Hosue No / Building Name</label>
+                                <input type="text" name="building" value="<%= x.building %>">
                             </div>
                         </div>
                     </div>
-                    <div class="checkout-account mb-50">
-                        <input class="checkout-toggle2" type="checkbox">
-                        <span>Create an account?</span>
-                    </div>
-                    <div class="checkout-account-toggle open-toggle2 mb-30">
-                        <input placeholder="Email address" type="email">
-                        <input placeholder="Password" type="password">
-                        <button class="btn-hover checkout-btn" type="submit">register</button>
-                    </div>
-                    <div class="additional-info-wrap">
-                        <h4>Additional information</h4>
-                        <div class="additional-info">
-                            <label>Order notes</label>
-                            <textarea placeholder="Notes about your order, e.g. special notes for delivery. " name="message"></textarea>
-                        </div>
-                    </div>
+                    <% })} %>
                     <div class="checkout-account mt-25">
                         <input class="checkout-toggle" type="checkbox">
                         <span>Ship to a different address?</span>
@@ -483,69 +465,64 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-20">
                                     <label>First Name</label>
-                                    <input type="text">
+                                    <input type="text" name="name">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-20">
-                                    <label>Last Name</label>
-                                    <input type="text">
+                                    <label>Phone Number</label>
+                                    <input type="text" name="number">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-info mb-20">
-                                    <label>Company Name</label>
-                                    <input type="text">
+                                    <label>Pincode</label>
+                                    <input type="text" name="pincode">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-select mb-20">
-                                    <label>Country</label>
-                                    <select>
-                                        <option>Select a country</option>
-                                        <option>Azerbaijan</option>
-                                        <option>Bahamas</option>
-                                        <option>Bahrain</option>
-                                        <option>Bangladesh</option>
-                                        <option>Barbados</option>
+                                    <label>State</label>
+                                    <select class="form-control form-select" name="state">
+                                        <option selected="selected" value="" selected="selected"></option>
+                                        <option value="Andhra Pradesh">India</option>
+                                        <option value="Arunachal Pradesh">China</option>
+                                        <option value="Assam">Vietanam</option>
+                                        <option value="Bihar">Tokyo</option>
+                                        <option value="Chhattisgarh">Japan</option>
+                                        <option value="Goa ">Goa</option>
+                                        <option value="Gujarat ">China</option>
+                                        <option value="Haryana ">UK</option>
+                                        <option value="Himachal Pradesh ">Abu Dhabi</option>
+                                        <option value="Jharkhand ">USA</option>
+                                        <option value="Karnataka ">Spain</option>
+                                        <option value="Kerala ">Kerala</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-info mb-20">
-                                    <label>Street Address</label>
-                                    <input class="billing-address" placeholder="House number and street name" type="text">
-                                    <input placeholder="Apartment, suite, unit etc." type="text">
+                                    <label>District</label>
+                                    <!-- <input class="billing-address" placeholder="House number and street name" type="text"> -->
+                                    <input placeholder="Apartment, suite, unit etc." type="text" name="district">
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-info mb-20">
                                     <label>Town / City</label>
-                                    <input type="text">
+                                    <input type="text" name="street">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-20">
-                                    <label>State / County</label>
-                                    <input type="text">
+                                    <label>Place name</label>
+                                    <input type="text" name="place">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-20">
-                                    <label>Postcode / ZIP</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-20">
-                                    <label>Phone</label>
-                                    <input type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-20">
-                                    <label>Email Address</label>
-                                    <input type="text">
+                                    <label>Hosue No / Building Name</label>
+                                    <input type="text" name="building">
                                 </div>
                             </div>
                         </div>
@@ -556,6 +533,7 @@
                 <div class="your-order-area">
                     <h3>Your order</h3>
                     <div class="your-order-wrap gray-bg-4">
+                        
                         <div class="your-order-product-info">
                             <div class="your-order-top">
                                 <ul>
@@ -563,54 +541,44 @@
                                     <li>Total</li>
                                 </ul>
                             </div>
+                            
                             <div class="your-order-middle">
+                                <% products.forEach(product => { %>
                                 <ul>
-                                    <li><span class="order-middle-left">Product Name  X  1</span> <span class="order-price">$329 </span></li>
-                                    <li><span class="order-middle-left">Product Name  X  1</span> <span class="order-price">$329 </span></li>
-                                </ul>
+                                    <li><span class="order-middle-left"><%= product.productName %></span> <span class="order-price">$<%= product.productTotalprice %></span></li>
+                                </ul>   
+                                <% }); %>                 
                             </div>
+                            
                             <div class="your-order-bottom">
                                 <ul>
                                     <li class="your-order-shipping">Shipping</li>
                                     <li>Free shipping</li>
                                 </ul>
                             </div>
+                            
                             <div class="your-order-total">
                                 <ul>
                                     <li class="order-total">Total</li>
-                                    <li>$329</li>
+                                    <li><%= cartTotalPrice %></li>
                                 </ul>
                             </div>
                         </div>
+                        
                         <div class="payment-method">
                             <div class="payment-accordion element-mrg">
                                 <div class="panel-group" id="accordion">
                                     <div class="panel payment-accordion">
-                                        <div class="panel-heading" id="method-one">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#method1">
-                                                    Direct bank transfer
-                                                </a>
-                                            </h4>
-                                        </div>
-                                        <div id="method1" class="panel-collapse collapse show">
-                                            <div class="panel-body">
-                                                <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="panel payment-accordion">
                                         <div class="panel-heading" id="method-two">
                                             <h4 class="panel-title">
-                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#method2">
+                                                <a type="" class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#method2">
                                                     Check payments
                                                 </a>
                                             </h4>
                                         </div>
                                         <div id="method2" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="panel payment-accordion">
@@ -621,18 +589,13 @@
                                                 </a>
                                             </h4>
                                         </div>
-                                        <div id="method3" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="Place-order mt-25">
-                        <a class="btn-hover" href="#">Place Order</a>
+                        <a type="submit" class="btn-hover"  href="#">Place Order</a>
                     </div>
                 </div>
             </div>
