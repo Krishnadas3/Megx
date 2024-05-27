@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Product = require('./productModel');
+const Product = require('./product');
 
 const orderSchema = new mongoose.Schema({
     userId: {
@@ -73,8 +73,8 @@ const orderSchema = new mongoose.Schema({
         },
 
     }],
-    totel: {
 
+    total: {
         type: Number,
         required: true
     },
@@ -91,10 +91,10 @@ const orderSchema = new mongoose.Schema({
     },
 
     status: {
+
         type: String,
         default: "Confirmed"
     }
-
 
 });
 
