@@ -382,226 +382,294 @@
         </div>
     </div>
 </div>
+
+
+
 <div class="checkout-area pt-95 pb-100">
     <div class="container">
         <div class="row">
+            <form method="post" id="">
             <div class="col-lg-7">
                 <div class="billing-info-wrap">
                     <% if(User[0].address.length>0 ){
                         User[0].address.forEach((x,index)=>{ %>
-                        <%console.log(index)%>
-                    <h3>Billing Details</h3>
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-20">
-                                <label>First Name</label>
-                                <input type="text" name="name" value="<%= x.name %>">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-20">
-                                <label>Phone Number</label>
-                                <input type="text" name="number" value="<%= x.number %>">
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-info mb-20">
-                                <label>Pincode</label>
-                                <input type="text" name="pincode" value="<%= x.pincode %>">
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-select mb-20">
-                                <label>State</label>
-                                <select class="form-control form-select" name="state" >
-                                    <option selected="selected" value="<%= x.state %>" selected="selected"><%= x.state%>></option>
-                                    <option value="Andhra Pradesh">India</option>
-                                    <option value="Arunachal Pradesh">China</option>
-                                    <option value="Assam">Vietanam</option>
-                                    <option value="Bihar">Tokyo</option>
-                                    <option value="Chhattisgarh">Japan</option>
-                                    <option value="Goa ">Goa</option>
-                                    <option value="Gujarat ">China</option>
-                                    <option value="Haryana ">UK</option>
-                                    <option value="Himachal Pradesh ">Abu Dhabi</option>
-                                    <option value="Jharkhand ">USA</option>
-                                    <option value="Karnataka ">Spain</option>
-                                    <option value="Kerala ">Kerala</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-info mb-20">
-                                <label>District</label>
-                                <input name="district" value="<%= x.district %>" type="text" >
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="billing-info mb-20">
-                                <label>Town / City</label>
-                                <input type="text" name="street" value=" <%= x.street %>">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-20">
-                                <label>Place name</label>
-                                <input type="text" name="place" value="<%= x.street %>">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="billing-info mb-20">
-                                <label>Hosue No / Building Name</label>
-                                <input type="text" name="building" value="<%= x.building %>">
-                            </div>
-                        </div>
-                    </div>
-                    <% })} %>
-                    <div class="checkout-account mt-25">
-                        <input class="checkout-toggle" type="checkbox">
-                        <span>Ship to a different address?</span>
-                    </div>
-                    <div class="different-address open-toggle mt-30">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-20">
-                                    <label>First Name</label>
-                                    <input type="text" name="name">
+                            <%console.log(index)%>
+                            
+                        <% })} %>
+
+                        <!-- Address Selection Form -->
+                        <form method="post" id="address_selection_form">
+                            <h3>Select Address</h3>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="billing-info mb-20">
+                                        <label for="address_select">Select Address</label>
+                                        <select id="address_select" name="selected_address" class="form-control form-select" required>
+                                            <% if(User[0].address.length>0 ){
+                                                User[0].address.forEach((x,index)=>{ %>
+                                                    <option value="<%= index %>">
+                                                        <%= x.name %> - <%= x.street %>, <%= x.district %>, <%= x.state %>, <%= x.pincode %> , <%= x.number %>
+                                                    </option>
+                                                <% })} %>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-20">
-                                    <label>Phone Number</label>
-                                    <input type="text" name="number">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-info mb-20">
-                                    <label>Pincode</label>
-                                    <input type="text" name="pincode">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-select mb-20">
-                                    <label>State</label>
-                                    <select class="form-control form-select" name="state">
-                                        <option selected="selected" value="" selected="selected"></option>
-                                        <option value="Andhra Pradesh">India</option>
-                                        <option value="Arunachal Pradesh">China</option>
-                                        <option value="Assam">Vietanam</option>
-                                        <option value="Bihar">Tokyo</option>
-                                        <option value="Chhattisgarh">Japan</option>
-                                        <option value="Goa ">Goa</option>
-                                        <option value="Gujarat ">China</option>
-                                        <option value="Haryana ">UK</option>
-                                        <option value="Himachal Pradesh ">Abu Dhabi</option>
-                                        <option value="Jharkhand ">USA</option>
-                                        <option value="Karnataka ">Spain</option>
-                                        <option value="Kerala ">Kerala</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-info mb-20">
-                                    <label>District</label>
-                                    <!-- <input class="billing-address" placeholder="House number and street name" type="text"> -->
-                                    <input placeholder="Apartment, suite, unit etc." type="text" name="district">
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="billing-info mb-20">
-                                    <label>Town / City</label>
-                                    <input type="text" name="street">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-20">
-                                    <label>Place name</label>
-                                    <input type="text" name="place">
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="billing-info mb-20">
-                                    <label>Hosue No / Building Name</label>
-                                    <input type="text" name="building">
-                                </div>
-                            </div>
+                        
+                        <!-- End Address Selection Form -->
+
+                        <div class="billing-btn">
+                            <button type="button" class="btn btn-dark" data-toggle="modal"
+                                data-target="#addAddressModal">
+                                Add Address
+                            </button>
                         </div>
-                    </div>
+
+                        
+                    <!-- Different Address Form -->
+                    <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog"
+                                                aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="addAddressModalLabel">Add
+                                                                Address</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form method="post" action="/add_address" id="add">
+
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-6">
+
+                                                                        <div class="form-group">
+                                                                            <label>Full Name</label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="name">
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="col-sm-6">
+
+                                                                        <div class="form-group">
+                                                                            <label>Phone Number</label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="number">
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-6">
+
+                                                                        <div class="form-group">
+                                                                            <label>Pincode</label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="pincode">
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="col-sm-6">
+
+                                                                        <div class="form-group">
+                                                                            <label>State</label>
+                                                                            <select class="form-control form-select"
+                                                                                name="state">
+                                                                                <option selected="selected">
+
+                                                                                </option>
+                                                                                <option value="Andhra Pradesh">India</option>
+                                                                                        <option value="Arunachal Pradesh">China</option>
+                                                                                        <option value="Assam">Vietanam</option>
+                                                                                        <option value="Bihar">Tokyo</option>
+                                                                                        <option value="Chhattisgarh">Japan</option>
+                                                                                        <option value="Goa ">Goa</option>
+                                                                                        <option value="Gujarat ">China</option>
+                                                                                        <option value="Haryana ">UK</option>
+                                                                                        <option value="Himachal Pradesh ">Abu Dhabi</option>
+                                                                                        <option value="Jharkhand ">USA</option>
+                                                                                        <option value="Karnataka ">Spain</option>
+                                                                                        <option value="Kerala ">Kerala</option>
+                                                                            </select>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-6">
+
+                                                                        <div class="form-group">
+                                                                            <label>District </label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="district" value="">
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="col-sm-6">
+
+                                                                        <div class="form-group">
+                                                                            <label>City / Town </label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="street">
+                                                                        </div>
+
+                                                                    </div>
+
+
+
+                                                                </div>
+
+                                                                <div class="row">
+
+                                                                    <div class="col-sm-6">
+
+                                                                        <div class="form-group">
+                                                                            <label>Place name </label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="place">
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="col-sm-6">
+
+                                                                        <div class="form-group">
+                                                                            <label>Hosue No / Building Name </label>
+                                                                            <input type="text" class="form-control"
+                                                                                name="building">
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+
+
+
+                                                                <button type="submit" class="btn btn-dark float-end"
+                                                                    data-bs-dismiss="modal">Save</button>
+
+
+
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                    <!-- End Different Address Form -->
                 </div>
             </div>
             <div class="col-lg-5">
-                <div class="your-order-area">
-                    <h3>Your order</h3>
-                    <div class="your-order-wrap gray-bg-4">
-                        
-                        <div class="your-order-product-info">
-                            <div class="your-order-top">
-                                <ul>
-                                    <li>Product</li>
-                                    <li>Total</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="your-order-middle">
-                                <% products.forEach(product => { %>
-                                <ul>
-                                    <li><span class="order-middle-left"><%= product.productName %></span> <span class="order-price">$<%= product.productTotalprice %></span></li>
-                                </ul>   
-                                <% }); %>                 
-                            </div>
-                            
-                            <div class="your-order-bottom">
-                                <ul>
-                                    <li class="your-order-shipping">Shipping</li>
-                                    <li>Free shipping</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="your-order-total">
-                                <ul>
-                                    <li class="order-total">Total</li>
-                                    <li><%= cartTotalPrice %></li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="payment-method">
-                            <div class="payment-accordion element-mrg">
-                                <div class="panel-group" id="accordion">
-                                    <div class="panel payment-accordion">
-                                    </div>
-                                    <div class="panel payment-accordion">
-                                        <div class="panel-heading" id="method-two">
-                                            <h4 class="panel-title">
-                                                <a type="" class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#method2">
-                                                    Check payments
-                                                </a>
-                                            </h4>
+                <form id="checkout_form"  action="/place_order" method="post">
+                    <div class="your-order-area">
+                        <h3>Your order</h3>
+        <div class="your-order-wrap gray-bg-4">
+            <div class="your-order-product-info">
+                <div class="your-order-top">
+                    <ul>
+                        <li>Product</li>
+                        <li>Total</li>
+                    </ul>
+                </div>
+                <div class="your-order-middle">
+                    <% products.forEach((product, index) => { %>
+                        <ul>
+                            <li>
+                                <span class="order-middle-left"><%= product.productName %></span>
+                                <span class="order-price">$<%= product.productTotalprice %></span>
+                                <input type="hidden" name="productId" value="<%= product._id %>">
+                                <input type="hidden" name="qty" value="<%= product.qty %>">
+                                <input type="hidden" name="singleTotel" value="<%= product.productTotalprice %>">
+                                <input type="hidden" name="price" value="<%= product.price %>">
+                            </li>
+                        </ul>
+                    <% }); %>                 
+                </div>
+                                
+                                <div class="your-order-bottom">
+                                    <ul>
+                                        <li class="your-order-shipping">Shipping</li>
+                                        <li>Free shipping</li>
+                                    </ul>
+                                </div>
+                                <div class="your-order-total">
+                                    <ul>
+                                        <li class="order-total">Total</li>
+                                        <li><%= cartTotalPrice %></li>
+                                        <input type="hidden" name="total" id="total" value="<%= cartTotalPrice %>">
+                                    </ul>
+                                </div>
+                            </div> 
+                            <div class="payment-method">
+                                <div class="widget-title">
+                                    <h5>Please Choose your payment method</h5>
+                                </div>
+                                <br>
+        
+                                <div class="d-flex mb-4">
+                                    <div class="flex-grow-1 ms-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment_method" id="flexRadioDefault2" checked required  value="UPI">
+                                            <label class="form-check-label" for="flexRadioDefault2">UPI</label>
                                         </div>
-                                        <div id="method2" class="panel-collapse collapse">
+                                        <br>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment_method" value="COD" required>
+                                            <label class="form-check-label" for="flexRadioDefault1">COD</label>
+                                        </div>
+                                        <br>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="payment_method" id="flexRadioDefault1" value="WALLET" required>
+                                            <label class="form-check-label" for="flexRadioDefault1">Wallet</label>
                                         </div>
                                     </div>
-                                    <div class="panel payment-accordion">
-                                        <div class="panel-heading" id="method-three">
-                                            <h4 class="panel-title">
-                                                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#method3">
-                                                    Cash on delivery
-                                                </a>
-                                            </h4>
-                                        </div>
-                                    </div>
+                                
                                 </div>
                             </div>
+                            <div class="billing-info mb-20">
+                                <label for="address_select">Select Address</label>
+                                <select id="address_select" name="user" class="form-control form-select" required>
+                                    <% if (User[0].address.length > 0) {
+                                        User[0].address.forEach((x, index) => { %>
+                                            <option value="<%= index %>">
+                                                <%= x.name %> - <%= x.street %>, <%= x.district %>, <%= x.state %>, <%= x.pincode %>
+                                            </option>
+                                        <% });
+                                    } %>
+                                </select>
+                            </div>
                         </div>
+                        <div class="Place-order mt-25">
+                            <button type="submit" class="btn btn-dark">Place Order</button>
+                        </div>
+                        <!-- <div class="Place-order mt-25">
+                            <a type="submit" class="btn-hover"  href="#">Place Order</a>
+                        </div> -->
                     </div>
-                    <div class="Place-order mt-25">
-                        <a type="submit" class="btn-hover"  href="#">Place Order</a>
-                    </div>
-                </div>
+                </form>
+                </form>
             </div>
+            
         </div>
     </div>
 </div>
+
+
+
+
+
 <footer class="footer-area bg-gray pt-100 pb-70">
     <div class="container">
         <div class="row">
@@ -687,14 +755,179 @@
     </div>
 </footer>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+   $(document).ready(function() {
+    $('#checkout_form').submit((x) => {
+        x.preventDefault();
+        console.log("Form submitted");
+
+        $.ajax({
+            url: "/place_order",
+            method: "post",
+            data: $('#checkout_form').serialize(),
+            success: (response) => {
+                console.log("AJAX request successful");
+                console.log(response);
+
+                if (response.status) {
+                    console.log("Order placed successfully, redirecting...");
+                    location.href = "/order_success";
+                } else if (response.viewRazorpay) {
+                    console.log("Initiating Razorpay payment");
+                    razorpayPayment(response.order);
+                } else if (response.wallet === false) {
+                    console.log("Insufficient wallet balance");
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Wallet has insufficient balance!',
+                        showConfirmButton: false,
+                        timer: 5000
+                    });
+                }
+            },
+            error: (error) => {
+                console.error('Error placing order:', error);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Failed to place order!',
+                    showConfirmButton: true
+                });
+            }
+        });
+    });
+});
 
 
+</script>
+
+<script>
+    $(document).ready(function () {
+    $('#add').submit(function (event) {
+        event.preventDefault(); // Prevent default form submit action
+        var formData = $(this).serialize(); // Serialize form data
+        console.log(formData);
+        $.ajax({
+            type: 'POST',
+            url: '/add_address',
+            data: formData,
+            success: function (response) {
+                if (response.status) {
+                    // If address added successfully, show success message
+                    $('#reloadDiv').load('/checkout #reloadDiv', function() {
+                        Swal.fire({
+                            title: 'Added!',
+                            text: 'Your address has been added.',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                } else {
+                    // If there's an error, show the error message received from the server
+                    Swal.fire({
+                        title: 'Error!',
+                        text: response.message,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong. Please try again later.',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        });
+    });
+});
+
+function walletPayment() {
+
+}
+function razorpayPayment(order) {
+    var options = {
+        "key": "rzp_test_qZcUWE6G8eHzSR", // Enter the Key ID generated from the Dashboard
+        "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        "currency": "INR",
+        "name": "Ego.ft", //your business name
+        "description": "Test Transaction",
+        "image": "/userr/img/logos/ego.png",
+        "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+        "handler": function (response) {
+            // alert(response.razorpay_payment_id);
+            // alert(response.razorpay_order_id);
+            // alert(response.razorpay_signature)
+            console.log(+'dfdsfs');
+            verifyPayment(response, order)
+        },
+        "prefill": {
+            "name": "Sharath kumar A", //your customer's name
+            "email": "sharathkannanakz@gmail.com",
+            "contact": "9000090000"
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#3399cc"
+        },
+        "modal": {
+            escape: false,
+            onDismiss: () => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Payment failed.',
+                })
+
+            }
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+}
+function verifyPayment(payment, order) {
+    console.log('from verifyPayment');
+    $.ajax({
+        url: '/verify-payment',
+        data: {
+            payment,
+            order
+        }, method: 'post',
+        success: (response) => {
+
+            if (response.status) {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'payment failed',
+                    showConfirmButton: false,
+                    timer: 5000
+                })
+            } else {
+               
+                location.href = "/order_success"
+            }
+        }
+    })
+}
+
+</script>
 
 
-
-
-
-
+</script>
 <!-- JS
 ============================================ -->
 

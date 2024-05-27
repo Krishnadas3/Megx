@@ -32,8 +32,10 @@
     "passport": "^0.7.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
+    "razorpay": "^2.9.3",
     "sweetalert2": "^11.10.6",
-    "twilio": "^4.23.0"
+    "twilio": "^4.23.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "nodemon": "3.0.3"
