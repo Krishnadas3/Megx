@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from demo.hasthemes.com/flone-preview/flone/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Feb 2024 10:35:46 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,10 +12,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-    
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
     <!-- CSS
 	============================================ -->
-   
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <!-- Icon Font CSS -->
@@ -30,9 +32,10 @@
 <body>
     <!doctype html>
     <html class="no-js" lang="zxx">
-    
-    
+
+
     <!-- Mirrored from demo.hasthemes.com/flone-preview/flone/index-8.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Feb 2024 10:34:58 GMT -->
+
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -41,10 +44,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Favicon -->
         <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-        
+
         <!-- CSS
         ============================================ -->
-       
+
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <!-- Icon Font CSS -->
@@ -56,7 +59,7 @@
         <!-- Modernizer JS -->
         <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
     </head>
-    
+
     <body>
         <header class="header-area header-padding-1 sticky-bar header-res-padding clearfix">
             <div class="container-fluid">
@@ -162,7 +165,7 @@
                                     </li>
                                     <!-- <li><a href="/shop">Collection</a></li> -->
                                     <!-- <li><a href="#"> Pages <i class="fa fa-angle-down"></i></a> -->
-                                        <!-- <ul class="submenu">
+                                    <!-- <ul class="submenu">
                                             <li><a href="about.html">about us</a></li>
                                             <li><a href="/cartpage">cart page</a></li>
                                             <li><a href="/checkout">checkout </a></li>
@@ -181,7 +184,7 @@
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-6 col-8">
-                           <div class="header-right-wrap">
+                        <div class="header-right-wrap">
                             <div class="same-style header-search">
                                 <a class="search-active" href="#"><i class="pe-7s-search"></i></a>
                                 <div class="search-content">
@@ -189,14 +192,14 @@
                                         <input type="text" placeholder="Search" />
                                         <button class="button-search"><i class="pe-7s-search"></i></button>
                                     </form>
-                                </div> 
+                                </div>
                             </div>
                             <div class="same-style account-satting">
                                 <a class="account-satting-active" href="#"><i class="pe-7s-user-female"></i></a>
                                 <div class="account-dropdown">
                                     <ul>
                                         <% if (isAuthenticated) { %>
-        
+
                                             <li><a href="/wishlist">Wishlist</a></li>
                                             <li><a href="/myaccount">My Account</a></li>
                                             <li><a href="/logout">Logout</a></li>
@@ -284,7 +287,7 @@
                                                 <li><a href="index-13.html">Home 13 – Cosmetic</a></li>
                                                 <li><a href="index-14.html">Home 14 – Christmas</a></li>
                                                 <li><a href="index-15.html">Home 15 – Fruit</a></li>
-                                                <li><a href="index-16.html">Home 16 –  Black Friday</a></li>
+                                                <li><a href="index-16.html">Home 16 – Black Friday</a></li>
                                                 <li><a href="index-17.html">Home 17 – Flower</a></li>
                                                 <li><a href="index-18.html">Home 18 – Book</a></li>
                                                 <li><a href="index-19.html">Home 19 – Fashion</a></li>
@@ -322,7 +325,7 @@
                                                 <li><a href="shop-right-sidebar.html">Grid right sidebar</a></li>
                                                 <li><a href="shop-list.html">list 1 column box </a></li>
                                                 <li><a href="shop-list-fw.html">list 1 column full wide </a></li>
-                                                <li><a href="shop-list-fw-2col.html">list 2 column  full wide</a></li>
+                                                <li><a href="shop-list-fw-2col.html">list 2 column full wide</a></li>
                                             </ul>
                                         </li>
                                         <li><a href="#">product details</a>
@@ -370,582 +373,616 @@
                 </div>
             </div>
         </header>
-<div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
-    <div class="container">
-        <div class="breadcrumb-content text-center">
-            <ul>
-                <li>
-                    <a href="/">Home</a>
-                </li>
-                <li class="active"><a href="/checkout"></a>Checkout </li>
-            </ul>
+        <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <ul>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li class="active"><a href="/checkout"></a>Checkout </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
 
 
-<div class="checkout-area pt-95 pb-100">
-    <div class="container">
-        <div class="row">
-            <form method="post" id="">
-            <div class="col-lg-7">
-                <div class="billing-info-wrap">
-                    <% if(User[0].address.length>0 ){
-                        User[0].address.forEach((x,index)=>{ %>
-                            <%console.log(index)%>
-                            
-                        <% })} %>
+        <div class="checkout-area pt-95 pb-100">
+            <div class="container">
+                <div class="row">
+                    <form method="post" id="">
+                        <div class="col-lg-7">
+                            <div class="billing-info-wrap">
+                                <% if(User[0].address.length>0 ){
+                                    User[0].address.forEach((x,index)=>{ %>
+                                    <%console.log(index)%>
 
-                        <!-- Address Selection Form -->
-                        <form method="post" id="address_selection_form">
-                            <h3>Select Address</h3>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="billing-info mb-20">
-                                        <label for="address_select">Select Address</label>
-                                        <select id="address_select" name="selected_address" class="form-control form-select" required>
-                                            <% if(User[0].address.length>0 ){
-                                                User[0].address.forEach((x,index)=>{ %>
-                                                    <option value="<%= index %>">
-                                                        <%= x.name %> - <%= x.street %>, <%= x.district %>, <%= x.state %>, <%= x.pincode %> , <%= x.number %>
-                                                    </option>
-                                                <% })} %>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        
-                        <!-- End Address Selection Form -->
+                                        <% })} %>
 
-                        <div class="billing-btn">
-                            <button type="button" class="btn btn-dark" data-toggle="modal"
-                                data-target="#addAddressModal">
-                                Add Address
-                            </button>
-                        </div>
-
-                        
-                    <!-- Different Address Form -->
-                    <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog"
-                                                aria-labelledby="addAddressModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="addAddressModalLabel">Add
-                                                                Address</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form method="post" action="/add_address" id="add">
-
-                                                                <div class="row">
-
-                                                                    <div class="col-sm-6">
-
-                                                                        <div class="form-group">
-                                                                            <label>Full Name</label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="name">
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div class="col-sm-6">
-
-                                                                        <div class="form-group">
-                                                                            <label>Phone Number</label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="number">
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="row">
-
-                                                                    <div class="col-sm-6">
-
-                                                                        <div class="form-group">
-                                                                            <label>Pincode</label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="pincode">
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div class="col-sm-6">
-
-                                                                        <div class="form-group">
-                                                                            <label>State</label>
-                                                                            <select class="form-control form-select"
-                                                                                name="state">
-                                                                                <option selected="selected">
-
-                                                                                </option>
-                                                                                <option value="Andhra Pradesh">India</option>
-                                                                                        <option value="Arunachal Pradesh">China</option>
-                                                                                        <option value="Assam">Vietanam</option>
-                                                                                        <option value="Bihar">Tokyo</option>
-                                                                                        <option value="Chhattisgarh">Japan</option>
-                                                                                        <option value="Goa ">Goa</option>
-                                                                                        <option value="Gujarat ">China</option>
-                                                                                        <option value="Haryana ">UK</option>
-                                                                                        <option value="Himachal Pradesh ">Abu Dhabi</option>
-                                                                                        <option value="Jharkhand ">USA</option>
-                                                                                        <option value="Karnataka ">Spain</option>
-                                                                                        <option value="Kerala ">Kerala</option>
-                                                                            </select>
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="row">
-
-                                                                    <div class="col-sm-6">
-
-                                                                        <div class="form-group">
-                                                                            <label>District </label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="district" value="">
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div class="col-sm-6">
-
-                                                                        <div class="form-group">
-                                                                            <label>City / Town </label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="street">
-                                                                        </div>
-
-                                                                    </div>
-
-
-
-                                                                </div>
-
-                                                                <div class="row">
-
-                                                                    <div class="col-sm-6">
-
-                                                                        <div class="form-group">
-                                                                            <label>Place name </label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="place">
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                    <div class="col-sm-6">
-
-                                                                        <div class="form-group">
-                                                                            <label>Hosue No / Building Name </label>
-                                                                            <input type="text" class="form-control"
-                                                                                name="building">
-                                                                        </div>
-
-                                                                    </div>
-
-                                                                </div>
-
-
-
-                                                                <button type="submit" class="btn btn-dark float-end"
-                                                                    data-bs-dismiss="modal">Save</button>
-
-
-
-                                                            </form>
+                                            <!-- Address Selection Form -->
+                                            <form method="post" id="address_selection_form">
+                                                <h3>Select Address</h3>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="billing-info mb-20">
+                                                            <label for="address_select">Select Address</label>
+                                                            <select id="address_select" name="selected_address"
+                                                                class="form-control form-select" required>
+                                                                <% if(User[0].address.length>0 ){
+                                                                    User[0].address.forEach((x,index)=>{ %>
+                                                                    <option value="<%= index %>">
+                                                                        <%= x.name %> - <%= x.street %>, <%= x.district
+                                                                                    %>, <%= x.state %>, <%= x.pincode %>
+                                                                                            , <%= x.number %>
+                                                                    </option>
+                                                                    <% })} %>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <!-- End Address Selection Form -->
+
+                                                <div class="billing-btn">
+                                                    <button type="button" class="btn btn-dark" data-toggle="modal"
+                                                        data-target="#addAddressModal">
+                                                        Add Address
+                                                    </button>
+                                                </div>
+
+
+                                                <!-- Different Address Form -->
+                                                <div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog"
+                                                    aria-labelledby="addAddressModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="addAddressModalLabel">Add
+                                                                    Address</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form method="post" action="/add_address" id="add">
+
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-6">
+
+                                                                            <div class="form-group">
+                                                                                <label>Full Name</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="name">
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <div class="col-sm-6">
+
+                                                                            <div class="form-group">
+                                                                                <label>Phone Number</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="number">
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-6">
+
+                                                                            <div class="form-group">
+                                                                                <label>Pincode</label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="pincode">
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <div class="col-sm-6">
+
+                                                                            <div class="form-group">
+                                                                                <label>State</label>
+                                                                                <select class="form-control form-select"
+                                                                                    name="state">
+                                                                                    <option selected="selected">
+
+                                                                                    </option>
+                                                                                    <option value="Andhra Pradesh">India
+                                                                                    </option>
+                                                                                    <option value="Arunachal Pradesh">
+                                                                                        China</option>
+                                                                                    <option value="Assam">Vietanam
+                                                                                    </option>
+                                                                                    <option value="Bihar">Tokyo</option>
+                                                                                    <option value="Chhattisgarh">Japan
+                                                                                    </option>
+                                                                                    <option value="Goa ">Goa</option>
+                                                                                    <option value="Gujarat ">China
+                                                                                    </option>
+                                                                                    <option value="Haryana ">UK</option>
+                                                                                    <option value="Himachal Pradesh ">
+                                                                                        Abu Dhabi</option>
+                                                                                    <option value="Jharkhand ">USA
+                                                                                    </option>
+                                                                                    <option value="Karnataka ">Spain
+                                                                                    </option>
+                                                                                    <option value="Kerala ">Kerala
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-6">
+
+                                                                            <div class="form-group">
+                                                                                <label>District </label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="district" value="">
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <div class="col-sm-6">
+
+                                                                            <div class="form-group">
+                                                                                <label>City / Town </label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="street">
+                                                                            </div>
+
+                                                                        </div>
+
+
+
+                                                                    </div>
+
+                                                                    <div class="row">
+
+                                                                        <div class="col-sm-6">
+
+                                                                            <div class="form-group">
+                                                                                <label>Place name </label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="place">
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <div class="col-sm-6">
+
+                                                                            <div class="form-group">
+                                                                                <label>Hosue No / Building Name </label>
+                                                                                <input type="text" class="form-control"
+                                                                                    name="building">
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+
+
+
+                                                                    <button type="submit" class="btn btn-dark float-end"
+                                                                        data-bs-dismiss="modal">Save</button>
+
+
+
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Different Address Form -->
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <form id="checkout_form" action="/place_order" method="post">
+                                <div class="your-order-area">
+                                    <h3>Your order</h3>
+                                    <div class="your-order-wrap gray-bg-4">
+                                        <div class="your-order-product-info">
+                                            <div class="your-order-top">
+                                                <ul>
+                                                    <li>Product</li>
+                                                    <li>Total</li>
+                                                </ul>
                                             </div>
-                    <!-- End Different Address Form -->
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <form id="checkout_form"  action="/place_order" method="post">
-                    <div class="your-order-area">
-                        <h3>Your order</h3>
-        <div class="your-order-wrap gray-bg-4">
-            <div class="your-order-product-info">
-                <div class="your-order-top">
-                    <ul>
-                        <li>Product</li>
-                        <li>Total</li>
-                    </ul>
-                </div>
-                <div class="your-order-middle">
-                    <% products.forEach((product, index) => { %>
-                        <ul>
-                            <li>
-                                <span class="order-middle-left"><%= product.productName %></span>
-                                <span class="order-price">$<%= product.productTotalprice %></span>
-                                <input type="hidden" name="productId" value="<%= product._id %>">
-                                <input type="hidden" name="qty" value="<%= product.qty %>">
-                                <input type="hidden" name="singleTotel" value="<%= product.productTotalprice %>">
-                                <input type="hidden" name="price" value="<%= product.price %>">
-                            </li>
-                        </ul>
-                    <% }); %>                 
-                </div>
-                                
-                                <div class="your-order-bottom">
-                                    <ul>
-                                        <li class="your-order-shipping">Shipping</li>
-                                        <li>Free shipping</li>
-                                    </ul>
-                                </div>
-                                <div class="your-order-total">
-                                    <ul>
-                                        <li class="order-total">Total</li>
-                                        <li><%= cartTotalPrice %></li>
-                                        <input type="hidden" name="total" id="total" value="<%= cartTotalPrice %>">
-                                    </ul>
-                                </div>
-                            </div> 
-                            <div class="payment-method">
-                                <div class="widget-title">
-                                    <h5>Please Choose your payment method</h5>
-                                </div>
-                                <br>
-        
-                                <div class="d-flex mb-4">
-                                    <div class="flex-grow-1 ms-3">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment_method" id="flexRadioDefault2" checked required  value="UPI">
-                                            <label class="form-check-label" for="flexRadioDefault2">UPI</label>
+                                            <div class="your-order-middle">
+                                                <% products.forEach((product, index)=> { %>
+                                                    <ul>
+                                                        <li>
+                                                            <span class="order-middle-left">
+                                                                <%= product.productName %>
+                                                            </span>
+                                                            <span class="order-price">$<%= product.productTotalprice %>
+                                                                    </span>
+                                                            <input type="hidden" name="productId"
+                                                                value="<%= product._id %>">
+                                                            <input type="hidden" name="qty" value="<%= product.qty %>">
+                                                            <input type="hidden" name="singleTotel"
+                                                                value="<%= product.productTotalprice %>">
+                                                            <input type="hidden" name="price"
+                                                                value="<%= product.price %>">
+                                                        </li>
+                                                    </ul>
+                                                    <% }); %>
+                                            </div>
+
+                                            <div class="your-order-bottom">
+                                                <ul>
+                                                    <li class="your-order-shipping">Shipping</li>
+                                                    <li>Free shipping</li>
+                                                </ul>
+                                            </div>
+                                            <div class="your-order-total">
+                                                <ul>
+                                                    <li class="order-total">Total</li>
+                                                    <li>
+                                                        <%= cartTotalPrice %>
+                                                    </li>
+                                                    <input type="hidden" name="total" id="total"
+                                                        value="<%= cartTotalPrice %>">
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <br>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment_method" value="COD" required>
-                                            <label class="form-check-label" for="flexRadioDefault1">COD</label>
+                                        <div class="payment-method">
+                                            <div class="widget-title">
+                                                <h5>Please Choose your payment method</h5>
+                                            </div>
+                                            <br>
+
+                                            <div class="d-flex mb-4">
+                                                <div class="flex-grow-1 ms-3">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="payment_method" id="flexRadioDefault2" checked
+                                                            required value="UPI">
+                                                        <label class="form-check-label"
+                                                            for="flexRadioDefault2">UPI</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="payment_method" value="COD" required>
+                                                        <label class="form-check-label"
+                                                            for="flexRadioDefault1">COD</label>
+                                                    </div>
+                                                    <br>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="payment_method" id="flexRadioDefault1" value="WALLET"
+                                                            required>
+                                                        <label class="form-check-label"
+                                                            for="flexRadioDefault1">Wallet</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
-                                        <br>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="payment_method" id="flexRadioDefault1" value="WALLET" required>
-                                            <label class="form-check-label" for="flexRadioDefault1">Wallet</label>
+                                        <div class="billing-info mb-20">
+                                            <label for="address_select">Select Address</label>
+                                            <select id="address_select" name="user" class="form-control form-select"
+                                                required>
+                                                <% if (User[0].address.length> 0) {
+                                                    User[0].address.forEach((x, index) => { %>
+                                                    <option value="<%= index %>">
+                                                        <%= x.name %> - <%= x.street %>, <%= x.district %>, <%= x.state
+                                                                        %>, <%= x.pincode %>
+                                                    </option>
+                                                    <% }); } %>
+                                            </select>
                                         </div>
                                     </div>
-                                
-                                </div>
-                            </div>
-                            <div class="billing-info mb-20">
-                                <label for="address_select">Select Address</label>
-                                <select id="address_select" name="user" class="form-control form-select" required>
-                                    <% if (User[0].address.length > 0) {
-                                        User[0].address.forEach((x, index) => { %>
-                                            <option value="<%= index %>">
-                                                <%= x.name %> - <%= x.street %>, <%= x.district %>, <%= x.state %>, <%= x.pincode %>
-                                            </option>
-                                        <% });
-                                    } %>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="Place-order mt-25">
-                            <button type="submit" class="btn btn-dark">Place Order</button>
-                        </div>
-                        <!-- <div class="Place-order mt-25">
+                                    <div class="Place-order mt-25">
+                                        <button type="submit" class="btn btn-dark">Place Order</button>
+                                    </div>
+                                    <!-- <div class="Place-order mt-25">
                             <a type="submit" class="btn-hover"  href="#">Place Order</a>
                         </div> -->
-                    </div>
-                </form>
-                </form>
-            </div>
-            
-        </div>
-    </div>
-</div>
-
-
-
-
-
-<footer class="footer-area bg-gray pt-100 pb-70">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-2 col-md-4 col-sm-4">
-                <div class="copyright mb-30">
-                    <div class="footer-logo">
-                        <a href="/">
-                            <img alt="" src="assets/img/logo/logo.png">
-                        </a>
-                    </div>
-                    <p>© 2020 <a href="#">Flone</a>.<br> All Rights Reserved</p>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4">
-                <div class="footer-widget mb-30 ml-30">
-                    <div class="footer-title">
-                        <h3>ABOUT US</h3>
-                    </div>
-                    <div class="footer-list">
-                        <ul>
-                            <li><a href="about.html">About us</a></li>
-                            <li><a href="#">Store location</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                            <li><a href="#">Orders tracking</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-4 col-sm-4">
-                <div class="footer-widget mb-30 ml-50">
-                    <div class="footer-title">
-                        <h3>USEFUL LINKS</h3>
-                    </div>
-                    <div class="footer-list">
-                        <ul>
-                            <li><a href="#">Returns</a></li>
-                            <li><a href="#">Support Policy</a></li>
-                            <li><a href="#">Size guide</a></li>
-                            <li><a href="#">FAQs</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-6 col-sm-6">
-                <div class="footer-widget mb-30 ml-75">
-                    <div class="footer-title">
-                        <h3>FOLLOW US</h3>
-                    </div>
-                    <div class="footer-list">
-                        <ul>
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">Youtube</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="footer-widget mb-30 ml-70">
-                    <div class="footer-title">
-                        <h3>SUBSCRIBE</h3>
-                    </div>
-                    <div class="subscribe-style">
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <div id="mc_embed_signup" class="subscribe-form">
-                            <form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank" name="mc-embedded-subscribe-form" method="post" action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
-                                <div id="mc_embed_signup_scroll" class="mc-form">
-                                    <input class="email" type="email" required="" placeholder="Enter your email here.." name="EMAIL" value="">
-                                    <div class="mc-news" aria-hidden="true">
-                                        <input type="text" value="" tabindex="-1" name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef">
-                                    </div>
-                                    <div class="clear">
-                                        <input id="mc-embedded-subscribe" class="button" type="submit" name="subscribe" value="Subscribe">
-                                    </div>
                                 </div>
                             </form>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+
+
+
+
+        <footer class="footer-area bg-gray pt-100 pb-70">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="copyright mb-30">
+                            <div class="footer-logo">
+                                <a href="/">
+                                    <img alt="" src="assets/img/logo/logo.png">
+                                </a>
+                            </div>
+                            <p>© 2020 <a href="#">Flone</a>.<br> All Rights Reserved</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="footer-widget mb-30 ml-30">
+                            <div class="footer-title">
+                                <h3>ABOUT US</h3>
+                            </div>
+                            <div class="footer-list">
+                                <ul>
+                                    <li><a href="about.html">About us</a></li>
+                                    <li><a href="#">Store location</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                    <li><a href="#">Orders tracking</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="footer-widget mb-30 ml-50">
+                            <div class="footer-title">
+                                <h3>USEFUL LINKS</h3>
+                            </div>
+                            <div class="footer-list">
+                                <ul>
+                                    <li><a href="#">Returns</a></li>
+                                    <li><a href="#">Support Policy</a></li>
+                                    <li><a href="#">Size guide</a></li>
+                                    <li><a href="#">FAQs</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="footer-widget mb-30 ml-75">
+                            <div class="footer-title">
+                                <h3>FOLLOW US</h3>
+                            </div>
+                            <div class="footer-list">
+                                <ul>
+                                    <li><a href="#">Facebook</a></li>
+                                    <li><a href="#">Twitter</a></li>
+                                    <li><a href="#">Instagram</a></li>
+                                    <li><a href="#">Youtube</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <div class="footer-widget mb-30 ml-70">
+                            <div class="footer-title">
+                                <h3>SUBSCRIBE</h3>
+                            </div>
+                            <div class="subscribe-style">
+                                <p>Get E-mail updates about our latest shop and special offers.</p>
+                                <div id="mc_embed_signup" class="subscribe-form">
+                                    <form id="mc-embedded-subscribe-form" class="validate" novalidate="" target="_blank"
+                                        name="mc-embedded-subscribe-form" method="post"
+                                        action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef">
+                                        <div id="mc_embed_signup_scroll" class="mc-form">
+                                            <input class="email" type="email" required=""
+                                                placeholder="Enter your email here.." name="EMAIL" value="">
+                                            <div class="mc-news" aria-hidden="true">
+                                                <input type="text" value="" tabindex="-1"
+                                                    name="b_6bbb9b6f5827bd842d9640c82_05d85f18ef">
+                                            </div>
+                                            <div class="clear">
+                                                <input id="mc-embedded-subscribe" class="button" type="submit"
+                                                    name="subscribe" value="Subscribe">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</footer>
+        </footer>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-   $(document).ready(function() {
-    $('#checkout_form').submit((x) => {
-        x.preventDefault();
-        console.log("Form submitted");
+        <script>
 
-        $.ajax({
-            url: "/place_order",
-            method: "post",
-            data: $('#checkout_form').serialize(),
-            success: (response) => {
-                console.log("AJAX request successful");
-                console.log(response);
+            $(document).ready(function () {
+                $('#checkout_form').submit((x) => {
+                    x.preventDefault();
+                    console.log("Form submitted");
 
-                if (response.status) {
-                    console.log("Order placed successfully, redirecting...");
-                    location.href = "/order_success";
-                } else if (response.viewRazorpay) {
-                    console.log("Initiating Razorpay payment");
-                    razorpayPayment(response.order);
-                } else if (response.wallet === false) {
-                    console.log("Insufficient wallet balance");
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'error',
-                        title: 'Wallet has insufficient balance!',
-                        showConfirmButton: false,
-                        timer: 5000
+                    $.ajax({
+                        url: "/place_order",
+                        method: "post",
+                        data: $('#checkout_form').serialize(),
+                        success: (response) => {
+                            console.log("AJAX request successful");
+                            console.log(response);
+
+                            if (response.status) {
+                                console.log("Order placed successfully, redirecting...");
+                                location.href = "/order_success";
+                            } else if (response.viewRazorpay) {
+                                console.log("Initiating Razorpay payment");
+                                razorpayPayment(response.order);
+                            } else if (response.wallet === false) {
+                                console.log("Insufficient wallet balance");
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'error',
+                                    title: 'Wallet has insufficient balance!',
+                                    showConfirmButton: false,
+                                    timer: 5000
+                                });
+                            }
+                        },
+                        error: (error) => {
+                            console.error('Error placing order:', error);
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'Failed to place order!',
+                                showConfirmButton: true
+                            });
+                        }
                     });
-                }
-            },
-            error: (error) => {
-                console.error('Error placing order:', error);
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'Failed to place order!',
-                    showConfirmButton: true
                 });
+            });
+
+            function razorpayPayment(order) {
+                console.log("Initiating Razorpay Payment");
+
+                var options = {
+                    "key": "rzp_test_fGrz4BSIvTyUhX", // Replace with your Razorpay Key ID
+                    "amount": order.amount, // Amount is in currency subunits. Default currency is INR.
+                    "currency": "INR",
+                    "name": "Megx", // Your business name
+                    "description": "Test Transaction",
+                    "image": "assets/img/logo/logo.png",
+                    "order_id": order.id, // This is the order ID obtained in the response
+                    "handler": function (response) {
+                        console.log('Payment successful', response);
+                        verifyPayment(response, order);
+                    },
+                    "prefill": {
+                        "name": "Sharath kumar A", // Customer's name
+                        "email": "sharathkannanakz@gmail.com",
+                        "contact": "9000090000"
+                    },
+                    "notes": {
+                        "address": "Razorpay Corporate Office"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
+                    },
+                    "modal": {
+                        escape: false,
+                        onDismiss: () => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Payment failed.',
+                            });
+                        }
+                    }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
             }
-        });
-    });
-});
+            function verifyPayment(payment, order) {
+                console.log('from verifyPayment');
+                $.ajax({
+                    url: '/verify-payment',
+                    data: {
+                        payment,
+                        order
+                    }, method: 'post',
+                    success: (response) => {
+
+                        if (response.status) {
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'error',
+                                title: 'payment failed',
+                                showConfirmButton: false,
+                                timer: 5000
+                            })
+                        } else {
+
+                            location.href = "/order_success"
+                        }
+                    }
+                })
+            }
 
 
-</script>
+        </script>
 
-<script>
-    $(document).ready(function () {
-    $('#add').submit(function (event) {
-        event.preventDefault(); // Prevent default form submit action
-        var formData = $(this).serialize(); // Serialize form data
-        console.log(formData);
-        $.ajax({
-            type: 'POST',
-            url: '/add_address',
-            data: formData,
-            success: function (response) {
-                if (response.status) {
-                    // If address added successfully, show success message
-                    $('#reloadDiv').load('/checkout #reloadDiv', function() {
-                        Swal.fire({
-                            title: 'Added!',
-                            text: 'Your address has been added.',
-                            icon: 'success',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+        <script>
+            $(document).ready(function () {
+                $('#add').submit(function (event) {
+                    event.preventDefault(); // Prevent default form submit action
+                    var formData = $(this).serialize(); // Serialize form data
+                    console.log(formData);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/add_address',
+                        data: formData,
+                        success: function (response) {
+                            if (response.status) {
+                                // If address added successfully, show success message
+                                $('#reloadDiv').load('/checkout #reloadDiv', function () {
+                                    Swal.fire({
+                                        title: 'Added!',
+                                        text: 'Your address has been added.',
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                });
+                            } else {
+                                // If there's an error, show the error message received from the server
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: response.message,
+                                    icon: 'error',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle error response
+                            console.error(xhr.responseText);
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Something went wrong. Please try again later.',
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
                     });
-                } else {
-                    // If there's an error, show the error message received from the server
-                    Swal.fire({
-                        title: 'Error!',
-                        text: response.message,
-                        icon: 'error',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            },
-            error: function (xhr, status, error) {
-                // Handle error response
-                console.error(xhr.responseText);
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Something went wrong. Please try again later.',
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 1500
                 });
-            }
-        });
-    });
-});
-
-function walletPayment() {
-
-}
-function razorpayPayment(order) {
-    var options = {
-        "key": "rzp_test_qZcUWE6G8eHzSR", // Enter the Key ID generated from the Dashboard
-        "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-        "currency": "INR",
-        "name": "Ego.ft", //your business name
-        "description": "Test Transaction",
-        "image": "/userr/img/logos/ego.png",
-        "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-        "handler": function (response) {
-            // alert(response.razorpay_payment_id);
-            // alert(response.razorpay_order_id);
-            // alert(response.razorpay_signature)
-            console.log(+'dfdsfs');
-            verifyPayment(response, order)
-        },
-        "prefill": {
-            "name": "Sharath kumar A", //your customer's name
-            "email": "sharathkannanakz@gmail.com",
-            "contact": "9000090000"
-        },
-        "notes": {
-            "address": "Razorpay Corporate Office"
-        },
-        "theme": {
-            "color": "#3399cc"
-        },
-        "modal": {
-            escape: false,
-            onDismiss: () => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Payment failed.',
-                })
-
-            }
-        }
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
-}
-function verifyPayment(payment, order) {
-    console.log('from verifyPayment');
-    $.ajax({
-        url: '/verify-payment',
-        data: {
-            payment,
-            order
-        }, method: 'post',
-        success: (response) => {
-
-            if (response.status) {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'payment failed',
-                    showConfirmButton: false,
-                    timer: 5000
-                })
-            } else {
-               
-                location.href = "/order_success"
-            }
-        }
-    })
-}
-
-</script>
+            });
 
 
-</script>
-<!-- JS
+
+        </script>
+
+
+        </script>
+        <!-- JS
 ============================================ -->
 
-<!-- jQuery JS -->
-<script src="assets/js/vendor/jquery-v3.4.1.min.js"></script>
-<!-- Popper JS -->
-<script src="assets/js/popper.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="assets/js/bootstrap.min.js"></script>
-<!-- Plugins JS -->
-<script src="assets/js/plugins.js"></script>
-<!-- Ajax Mail -->
-<script src="assets/js/ajax-mail.js"></script>
-<!-- Main JS -->
-<script src="assets/js/main.js"></script>
+        <!-- jQuery JS -->
+        <script src="assets/js/vendor/jquery-v3.4.1.min.js"></script>
+        <!-- Popper JS -->
+        <script src="assets/js/popper.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="assets/js/bootstrap.min.js"></script>
+        <!-- Plugins JS -->
+        <script src="assets/js/plugins.js"></script>
+        <!-- Ajax Mail -->
+        <script src="assets/js/ajax-mail.js"></script>
+        <!-- Main JS -->
+        <script src="assets/js/main.js"></script>
 
-</body>
+    </body>
 
 
-<!-- Mirrored from demo.hasthemes.com/flone-preview/flone/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Feb 2024 10:35:46 GMT -->
-</html>
+    <!-- Mirrored from demo.hasthemes.com/flone-preview/flone/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 11 Feb 2024 10:35:46 GMT -->
+
+    </html>

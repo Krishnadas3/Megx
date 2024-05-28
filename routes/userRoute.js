@@ -64,7 +64,7 @@ router.post('/changequantity',userAuth, cartController.cartquantityupdation)
 router.get('/checkout',userAuth, order.loadcheckout)
 router.post('/place_order',userAuth,order.place_order)
 router.get('/order_success',userAuth,order.order_success);
-router.post('/verify-payment', order.verify_payment);
+router.post('/verify-payment',userAuth, order.verify_payment);
 
 
 //userprofile

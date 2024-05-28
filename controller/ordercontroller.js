@@ -10,9 +10,12 @@ const { name } = require('ejs');
 require("dotenv").config();
 
 
-const instance = new Razorpay({
-    key_id: 'YOUR_KEY_ID',
-    key_secret: 'YOUR_KEY_SECRET'
+var instance = new Razorpay({
+
+  key_id: process.env.KEY_ID,
+
+  key_secret: process.env.KEY_SECRET,
+
 });
 
 let loadcheckout = async (req, res) => {
@@ -126,11 +129,12 @@ const place_order = async (req, res) => {
 
       const neworderData = await order.save();
 
-      console.log("hey  here got the neworderData",neworderData);
+      // console.log("hey  here got the neworderData",neworderData);
 
       if (req.body.payment_method == "COD") {
         res.json({ status: true });
       } 
+
       
       else if (req.body.payment_method == "UPI") {
         let options = {
@@ -138,6 +142,8 @@ const place_order = async (req, res) => {
             currency: "INR",
             receipt: "" + neworderData._id,
         };
+
+        console.log("Creating Razorpay order with options:", options);
 
         instance.orders.create(options, (err, order) => {
             if (err) {
@@ -161,38 +167,49 @@ const place_order = async (req, res) => {
 
 
 const verify_payment = async (req, res) => {
-    try {
-      const id = req.user.id;
-  
-      console.log("hey here got the id ",id);
-      const latestOrder = await Order.findOne().sort({ date: -1 });
-  
-      const upadateOrder = await Order.updateOne(
-        { orderId: latestOrder.orderId },
-        { $set: { status: "Confirmed" } }
-      );
+  try {
 
-      const details = req.body;
-  
-      let hmac = crypto.createHmac("sha256", process.env.KEY_SECRET);
-      hmac.update(
-        details["payment[razorpay_order_id]"] +
-        "|" +
-        details["payment[razorpay_payment_id]"]
-      );
-      hmac = hmac.digest("hex");
-      if (hmac == details["payment[razorpay_signature]"]) {
-        res.json({ status: true });
-      } else {
-        res.json({ failed: true });
-      }
-    } catch (error) {
-  
-      res.render('500');
-      console.log(error.message);
-  
+    const id = req.user.id;
+
+    console.log("hey here got the id ",id);
+
+    const latestOrder = await Order.findOne().sort({ date: -1 });
+
+    console.log("hey here got the latestOrder ",latestOrder);
+
+    const upadateOrder = await Order.updateOne(
+      { orderId: latestOrder.orderId },
+      { $set: { status: "Confirmed" } }
+    );
+
+    console.log("ivide upadateoruder",upadateOrder);
+
+    const details = req.body;
+
+    console.log("hey njn details",details);
+
+    let hmac = crypto.createHmac("sha256", process.env.KEY_SECRET);
+    console.log("heey",hmac);
+    hmac.update(
+      details["payment[razorpay_order_id]"] +
+      "|" +
+      details["payment[razorpay_payment_id]"]
+    );
+    hmac = hmac.digest("hex");
+    if (hmac == details["payment[razorpay_signature]"]) {
+      res.json({ status: true });
+    } else {
+      res.json({ failed: true });
     }
-  };
+  } catch (error) {
+
+    res.render('500');
+    console.log(error.message);
+
+  }
+  
+};
+
 
 
 //   const ordersuccess = async (req, res) => {
@@ -239,7 +256,7 @@ const cancel_order = async (req, res) => {
       if (orderdata.paymentType == "UPI") {
         const refund = await user.updateOne(
           { _id: userid },
-          { $inc: { wallet: orderdata.totel } }
+          { $inc: { wallet: orderdata.total } }
         );
       }
   
