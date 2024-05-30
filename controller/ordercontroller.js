@@ -5,8 +5,10 @@ const Order = require('../models/orederModel')
 const Category = require('../models/category')
 const uuid = require("uuid");
 const Razorpay = require("razorpay");
+const crypto = require("crypto");
 const { default: mongoose } = require('mongoose');
 const { name } = require('ejs');
+const { stat } = require('fs');
 require("dotenv").config();
 
 
@@ -211,67 +213,6 @@ const verify_payment = async (req, res) => {
 };
 
 
-
-//   const ordersuccess = async (req, res) => {
-//     try {
-//       const user = req.session.user;
-//       const userdata = await User.findOne({ _id: user });
-  
-//       const removeing = await User.updateOne(
-//         { _id: user },
-//         { $set: { cart: [], cartTotel: 0 } }
-//       );
-  
-//       const order = await Order.findOne().sort({ date: -1 }).populate({ path: 'product', populate: { path: 'productid', model: 'Product' } })
-  
-     
-//       for (let i = 0; i < order.product.length; i++) {
-//         await Product.updateOne(
-//           { _id: order.product[i].productid },
-//           { $inc: { quantity: -order.product[i].qty } }
-//         );
-//       }
-  
-//       const category = await Category.find();
-//       res.render("order_success", { user, category, order, userdata });
-//     } catch (error) {
-  
-//       res.render('500');
-//       console.log(error.message);
-  
-//     }
-//   };
-  
-
-const cancel_order = async (req, res) => {
-    try {
-      const orderId = req.body.orderId;
-      const userid = req.user.id;
-  
-      const cancel = await Order.updateOne(
-        { _id: orderId },
-        { $set: { status: "Cancelled" } }
-      );
-      const orderdata = await Order.findOne({ _id: orderId });
-      if (orderdata.paymentType == "UPI") {
-        const refund = await user.updateOne(
-          { _id: userid },
-          { $inc: { wallet: orderdata.total } }
-        );
-      }
-  
-      if (cancel) {
-        res.json({ success: true });
-      }
-    } catch (error) {
-      res.render('500');
-      console.log(error.message);
-    }
-  };
-  
-
-
-
 let order_success = async (req, res) => {
   try {
       const isAuthenticated = req.cookies.jwt !== undefined;
@@ -307,6 +248,159 @@ let order_success = async (req, res) => {
   }
 }
 
+
+const load_order = async (req, res) => {
+  try {
+    const order = await Order.find()
+    let User = await user.find();
+    res.render("admin/list-order",{order,User});
+  } catch (error) {
+
+    // res.render('500');
+    console.log(error.message);
+
+  }
+};
+
+
+const cancel_order = async (req, res) => {
+  try {
+    const orderId = req.body.orderId;
+  const userid = req.user.id
+
+  const cancel = await Order.updateOne(
+    { _id: orderId },
+    { $set: { status: "Cancelled" } }
+  );
+  console.log("hey her got the cancel ",cancel);
+  const orderdata = await Order.findOne({ _id: orderId });
+  if (orderdata.paymentType == "UPI") {
+    const refund = await user.updateOne(
+      { _id: userid },
+      { $inc: { wallet: orderdata.total } }
+    );
+  }
+
+  if (cancel) {
+    res.json({ success: true });
+  }
+} catch (error) {
+  res.render('500');
+  console.log(error.message);
+}
+};
+
+
+const show_orderlist = async (req, res) => {
+  try {
+
+    const isAuthenticated = req.cookies.jwt !== undefined;
+
+    const id = req.user.id;
+
+    const User = await user.findOne({ _id: id });
+
+    const orders = await Order.find({ userId: User });
+
+    // const category = await Category.find();
+
+    res.render("user/list-orders", { isAuthenticated,User,orders });
+
+  } catch (error) {
+    res.render('500');
+    console.log(error.message);
+
+  }
+
+};
+  
+
+const view_order_user = async (req, res) => {
+  try {
+    const isAuthenticated = req.cookies.jwt !== undefined;
+
+    const user = true;
+    const order_id = req.query.id;
+
+    // const category = await Category.find();
+
+    const order = await Order.find({ _id: order_id }).populate(
+
+      "product.productid"
+
+    );
+
+    res.render("user/view-order", { isAuthenticated, order, user });
+
+} catch (error) {
+    console.error("Error fetching order:", error.message);
+    res.render('500');
+}
+};
+
+
+const view_order_admin = async (req, res) => {
+  try {
+
+    const user = req.user.id;
+
+    const order_id = req.query.id;
+
+    console.log("ayyoo kitti order_id",order_id);
+
+    const order = await Order.find({ _id: order_id }).populate(
+
+      "product.productid"
+
+    );
+
+    console.log("hey here got the order ",order);
+
+    const user_id = await Order.find()
+
+    res.render("admin/view-order",{order,user_id,user});
+
+  } catch (error) {
+
+    res.render('500');
+    console.log(error.message);
+
+  }
+
+};
+
+  
+
+// admin 
+
+const updateStatus = async (req, res) => {
+  try {
+    const orderId = req.body.order_Id;
+
+    console.log("hey here got the orderId",orderId);
+
+    const status = req.body.status;
+
+    console.log("hey here got thte status ",status);
+
+    const update = await Order.updateOne(
+      { _id: orderId },
+      
+      { $set: { status: status } }
+      
+    );
+   
+    console.log("nammuk kittan update",update);
+
+    res.json({ success: true });
+  } catch (error) {
+    res.render('500');
+    console.log(error.message);
+  }
+};
+
+
+
   
 
 
@@ -315,5 +409,10 @@ module.exports = {
     order_success,
     place_order,
     cancel_order,
-    verify_payment
+    verify_payment,
+    show_orderlist,
+    view_order_user,
+    load_order,
+    updateStatus,
+    view_order_admin
 }

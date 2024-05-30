@@ -67,6 +67,12 @@ router.get('/order_success',userAuth,order.order_success);
 router.post('/verify-payment',userAuth, order.verify_payment);
 
 
+
+router.get('/orders',userAuth, order.show_orderlist);
+router.get('/view-order', userAuth, order.view_order_user);
+router.post('/cancel_order',userAuth, order.cancel_order);
+
+
 //userprofile
 router.get('/myaccount',userAuth,userprofile.myaccountgetpage)
 router.post('/add_address',userAuth,userprofile.add_address);

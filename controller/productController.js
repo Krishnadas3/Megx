@@ -3,6 +3,20 @@ const Product = require('../models/product')
 // const cloudinary = require('../config/cloudinary');
 const { find } = require('../models/admin');
 const Categorie = require('../models/category');
+const multer = require('multer');
+const path = require('path');
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
 
 
 require('dotenv').config()
@@ -90,55 +104,40 @@ let productaddpage  = async(req,res) =>{
 
 
 const addproductSubmit = async (req, res) => {
-
-  try {
-    let productData = req.body
-      
-     
-      // console.log(productname);
-      if (!productData) {
-         console.log();
-          const category = await category.find({})
-          res.render('add-product',{message:'please fill the field', category })
-      }else{
-        //   console.log("inn ekse");
-          const images = []
-          console.log(req.files);
-          for (file of req.files) {
-              images.push(file.filename)
-          }
-        //   console.log(images);
-        //   console.log(productData,'product data');
-          let { Price, Stock, Description,category} = productData;
-        const product = req.body.ProductName
-        const stockQuantity = req.body.Stock
-        console.log(product,'this will print name');
-          const Newproduct = new Product({
-  
-              productName : product,
-              stockQuantity: stockQuantity,
-              price: Price,
-              description: Description,
-              category: category,
-              images: images,
-              size: req.body.size,
-  
-          })
-          console.log('here the newprodcut show',Newproduct);
-              
-      const result = await Newproduct.save()
-   
-      if (result) {
-          res.redirect('/admin/productlist')
-      } 
-              
-      }
-  } catch (error) {
-      console.log(error.message);
-
-  }
-
-}
+    try {
+        let productData = req.body;
+        if (!productData) {
+            const categories = await Category.find({});
+            res.render('add-product', { message: 'please fill the field', categories });
+        } else {
+            const images = [];
+            console.log(req.files);
+            for (const file of req.files) {
+                images.push(file.filename);
+            }
+            let { Price, Stock, Description, category } = productData;
+            const product = req.body.ProductName;
+            const stockQuantity = req.body.Stock;
+            console.log(product, 'this will print name');
+            const NewProduct = new Product({
+                productName: product,
+                stockQuantity: stockQuantity,
+                price: Price,
+                description: Description,
+                category: category,
+                images: images,
+                size: req.body.size,
+            });
+            console.log('here the new product shows', NewProduct);
+            const result = await NewProduct.save();
+            if (result) {
+                res.redirect('/admin/productlist');
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 
 

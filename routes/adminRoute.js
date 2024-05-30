@@ -4,6 +4,7 @@ const router = express.Router()
 const adminController = require('../controller/adminController')
 const productController = require('../controller/productController')
 const categoryController = require('../controller/catgorieController')
+const order_controller  = require('../controller/ordercontroller')
 const adminAuth = require('../middleware/adminjwt')
 const admin = require('../models/admin')
 require('dotenv').config();
@@ -12,6 +13,7 @@ const path = require('path')
 
 
 const multer = require('multer')
+const Order = require('../models/orederModel')
 
 
 const storage = multer.diskStorage({
@@ -71,6 +73,7 @@ router.post('/admin/deletesubcategory/:id',adminAuth, categoryController.deleteS
 router.get('/admin/productlist',productController.productlistpage)
 router.get('/admin/productadd',productController.productaddpage)
 router.post('/admin/addProduct',upload.array('image',4),productController.addproductSubmit)
+// app.post('/add-product', upload.array('image', 12), addproductSubmit);
 router.get('/admin/productgrid',productController.productgridpage)
 router.delete('/admin/deleteproduct',productController.deleteProduct)
 router.get('/admin/productedit/:id', productController.productupdate);
@@ -80,6 +83,11 @@ router.post('/admin/productupdate',upload.array('image',4), productController.ed
 
 // router.post('/admin/logout',adminController.adminLogout)
 router.get('/admin/logout',adminAuth,adminController.adminLogout)
+
+
+router.get('/admin/list-order',adminAuth,order_controller.load_order);
+router.get('/admin/view-order',adminAuth, order_controller.view_order_admin)
+router.post('/admin/update_status',adminAuth, order_controller.updateStatus);
 
 
 // router.post('/blockuser',adminController.blockUser)
