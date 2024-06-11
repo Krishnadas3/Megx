@@ -3,6 +3,20 @@ const Product = require('../models/product')
 // const cloudinary = require('../config/cloudinary');
 const { find } = require('../models/admin');
 const Categorie = require('../models/category');
+const multer = require('multer');
+const path = require('path');
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
 
 
 require('dotenv').config()
@@ -90,55 +104,40 @@ let productaddpage  = async(req,res) =>{
 
 
 const addproductSubmit = async (req, res) => {
-
-  try {
-    let productData = req.body
-      
-     
-      // console.log(productname);
-      if (!productData) {
-         console.log();
-          const category = await category.find({})
-          res.render('add-product',{message:'please fill the field', category })
-      }else{
-        //   console.log("inn ekse");
-          const images = []
-          console.log(req.files);
-          for (file of req.files) {
-              images.push(file.filename)
-          }
-        //   console.log(images);
-        //   console.log(productData,'product data');
-          let { Price, Stock, Description,category} = productData;
-        const product = req.body.ProductName
-        const stockQuantity = req.body.Stock
-        console.log(product,'this will print name');
-          const Newproduct = new Product({
-  
-              productName : product,
-              stockQuantity: stockQuantity,
-              price: Price,
-              description: Description,
-              category: category,
-              images: images,
-              size: req.body.size,
-  
-          })
-          console.log('here the newprodcut show',Newproduct);
-              
-      const result = await Newproduct.save()
-   
-      if (result) {
-          res.redirect('/admin/productlist')
-      } 
-              
-      }
-  } catch (error) {
-      console.log(error.message);
-
-  }
-
-}
+    try {
+        let productData = req.body;
+        if (!productData) {
+            const categories = await Category.find({});
+            res.render('add-product', { message: 'please fill the field', categories });
+        } else {
+            const images = [];
+            console.log(req.files);
+            for (const file of req.files) {
+                images.push(file.filename);
+            }
+            let { Price, Stock, Description, category } = productData;
+            const product = req.body.ProductName;
+            const stockQuantity = req.body.Stock;
+            console.log(product, 'this will print name');
+            const NewProduct = new Product({
+                productName: product,
+                stockQuantity: stockQuantity,
+                price: Price,
+                description: Description,
+                category: category,
+                images: images,
+                size: req.body.size,
+            });
+            console.log('here the new product shows', NewProduct);
+            const result = await NewProduct.save();
+            if (result) {
+                res.redirect('/admin/productlist');
+            }
+        }
+    } catch (error) {
+        console.log(error.message);
+    }
+};
 
 
 
@@ -243,38 +242,50 @@ const editproduct = async (req, res) => {
 
 const sort = async (req, res) => {
     try {
-        let user;
-        if (req.user.id) {
-            user = true;
-        } else {
-            user = false;
-        }
-
-        const sort_value = req.query.value
+        const isAuthenticated = req.cookies.jwt !== undefined;
+        let user = req.user && req.user.id ? true : false;
+        const sort_value = req.query.value;
 
         const category = await Categorie.find({});
 
-        if(sort_value == "az"){
-
-            const product = await Product.find({}).sort({ product_name: -1 });
-            res.render("shop", { product, user });
-
-        }else if(sort_value== "za"){
-
-            const product = await Product.find({}).sort({ product_name: -1 });
-            res.render("shop", { product, user });
-
-        }else if(sort_value == "high"){
-
-            const product = await Product.find({}).sort({ product_name: -1 });
-            res.render("shop", { product, user });
-
-        }else if(sort_value == "low"){
-
-            const product = await Product.find({}).sort({ product_name: -1 });
-            res.render("shop", { product, user ,category });
+        let sortCriteria;
+        switch (sort_value) {
+            case "nameAtoZ":
+                sortCriteria = { productName: 1 }; // Ascending
+                break;
+            case "nameZtoA":
+                sortCriteria = { productName: -1 }; // Descending
+                break;
+            case "priceHighToLow":
+                sortCriteria = { price: -1 }; // Descending
+                break;
+            case "priceLowToHigh":
+                sortCriteria = { price: 1 }; // Ascending
+                break;
+            default:
+                sortCriteria = {};
         }
-        
+
+        const products = await Product.find({}).sort(sortCriteria);
+        res.render("user/shop", { products,isAuthenticated, user, category, category_name: "sort", coupon: [], countpro: '' });
+
+    } catch (error) {
+        res.render('500');
+        console.log(error.message);
+    }
+};
+
+
+const search_product = async (req, res) => {
+    try {
+        const isAuthenticated = req.cookies.jwt !== undefined;
+        let user = req.user && req.user.id ? true : false;
+        const input = req.body.s;
+        const result = new RegExp(input, 'i');
+        const products = await Product.find({ productName: result }).populate('category');
+        console.log("hey here got th ep prdu",products);
+        const category = await Categorie.find();
+        res.render('user/shop', { category,isAuthenticated, products, user, category_name: "search", coupon: [], countpro: '' });
     } catch (error) {
         res.render('500');
         console.log(error.message);
@@ -293,5 +304,7 @@ module.exports = {
     addproductSubmit,
     deleteProduct,
     productupdate,
-     editproduct
+    editproduct,
+    search_product,
+    sort
 }

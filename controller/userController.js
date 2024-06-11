@@ -5,7 +5,9 @@ const nodemailer = require('nodemailer')
 const user = require('../models/users')
 const Products = require('../models/product');
 const Category = require('../models/category');
+const Coupon = require('../models/coupon')
 const Address = require('../models/addressModel');
+let Banner = require('../models/banner');
 const { default: mongoose } = require('mongoose');
 const twilio = require('twilio');
 const Product = require('../models/product');
@@ -18,7 +20,8 @@ let homepage = async (req, res) => {
     try {
         const isAuthenticated = req.cookies.jwt !== undefined;
         let products = await Products.find();
-        res.render('user/index', { isAuthenticated, products });
+        const banner = await Banner.find()
+        res.render('user/index', { isAuthenticated, products,banner });
     } catch (error) {
         console.error('Failed to get home:', error);
         res.status(500).send('Internal server error');
@@ -28,7 +31,7 @@ let homepage = async (req, res) => {
 let aboutpage = async (req, res) => {
     try {
         const isAuthenticated = req.cookies.jwt !== undefined;
-        res.render('user/about',);
+        res.render('user/about',{isAuthenticated});
     } catch (error) {
         console.error('Failed to get home:', error);
         res.status(500).send('Internal server error');
@@ -41,8 +44,10 @@ let shopepage = async (req, res) => {
         const isAuthenticated = req.cookies.jwt !== undefined;
         let products = await Products.find();
         let category = await Category.find()
+        const coupon = await Coupon.find({active : true})
+        const banner = await Banner.find()
         const user = true
-        res.render('user/shop', { products, category, user, isAuthenticated });
+        res.render('user/shop', { products, category, user, isAuthenticated,coupon,banner });
     } catch (error) {
         console.error('failed to get home:', error)
         res.status(500).send('internal server error')
@@ -178,6 +183,7 @@ let logiGetpage = async (req, res) => {
         res.status(500).send('intenal server error')
     }
 }
+
 //  user login route
 const loginPostpage = async (req, res) => {
     try {

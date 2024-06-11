@@ -1,0 +1,219 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>::eBazar:: Products List </title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
+
+    <!--plugin css file -->
+    <link rel="stylesheet" href="/assets/admin/assets/nouislider/nouislider.min.css">
+
+    <!-- project css file  -->
+    <link rel="stylesheet" href="/assets/admin/assets/css/ebazar.style.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+    <div id="ebazar-layout" class="theme-blue">
+
+        <!-- sidebar -->
+        <div class="sidebar px-4 py-4 py-md-4 me-0">
+            <div class="d-flex flex-column h-100">
+                <a href="/admin/dashboard" class="mb-0 brand-icon">
+                    <span class="logo-icon">
+                        <i class="bi bi-bag-check-fill fs-4"></i>
+                    </span>
+                    <span class="logo-text">Megx.ft</span>
+                </a>
+                <ul class="menu-list flex-grow-1 mt-3">
+                    <li><a class="m-link active" href="/admin/dashboard"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
+                    <li><a class="m-link active" href="/admin/productlist"><i class="icofont-truck-loaded fs-5"></i> <span>Products</span></a></li>
+                    <li><a class="m-link active" href="/admin/categorielist"><i class="icofont-chart-flow fs-5"></i> <span>Categories</span></a></li>
+                    <li><a class="m-link active" href="/admin/subcategories"><i class="icofont-chart-flow fs-5"></i> <span>Subcategories</span></a></li>
+                    <li><a class="m-link active" href="/admin/list-order"><i class="icofont-notepad fs-5"></i> <span>Orders</span></a></li>
+                    <li><a class="m-link active" href="/admin/customerslist"><i class="icofont-funky-man fs-5"></i> <span>Customers</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- main body area -->
+        <div class="main px-lg-4 px-md-4">
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4">Sales Report</h4>
+          
+                <!-- Basic Layout & Basic with Icons -->
+                <div class="row">
+                  <!-- Basic Layout -->
+                  <div class="col-xxl">
+                    <div class="card mb-4">
+                      <br>
+                      <div class="card-body">
+                        <form method="post" class="row g-3 needs-validation" novalidate >
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Date from</label>
+                            <div class="col-sm-10">
+                              <input type="date" class="form-control" name="from" id="basic-default-name" placeholder=""
+                                required />
+                              <div class="invalid-feedback">Please Enter Date to</div>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Ending date</label>
+                            <div class="col-sm-10">
+                              <input type="date" class="form-control" name="to" id="basic-default-name" placeholder=""
+                                required />
+                              <div class="invalid-feedback">Please Enter Ending date</div>
+                            </div>
+                          </div>
+          
+                          
+                          <div class="row justify-content-end">
+                            <div class="col-sm-10">
+                              <button type="submit" class="btn btn-primary">submit</button>
+          
+          
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% if(saleData !== ""){ %>
+        
+        
+              <div class="card mb-4" id="invoice">
+                <br>
+                <div class="table-responsive text-nowrap" >
+                  <table class="table" id="example" >
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Product </th>
+                        <th>Payment Method</th>
+                        <th>Total</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+        
+                     <% saleData.forEach((x,index)=> {  %>
+                          
+                        
+        
+                          <tr>
+                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>
+                                <%= index +1 %>
+                              </strong></td>
+                            <td><strong>
+                              <%= x.date.toLocaleDateString() %>
+                              </strong></td>
+                            <td>
+                             
+                              
+                                <% x.product.forEach(product =>{ %>
+                               
+                                  <%= product.productid.product_name %> <br>
+                                  Qty :  <%= product.qty %> <br>
+                                  Price : <%= product.productid.price %>
+                              
+        
+                            <% }) %>
+                            </td>
+                            <td> <%= x.paymentType %> </td>
+                            <td> <%= x.totel %></td>
+                          </tr>
+                          <% }) %>
+                        
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <button type="button" class="btn btn-dark float-end" onclick="invoice()">Save Sales Report</button>
+              <%  } %>
+        
+              
+            
+                <script>
+                      $(document).ready(function () {
+                        $('#example').DataTable({
+                          dom: 'Bfrtip',
+                          buttons: [
+                            'copy', 'print', 'excel', 'csv', 'pdf'
+                          ]
+                        });
+                      });
+        
+                    </script>
+          
+        
+              <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (() => {
+                  'use strict';
+          
+          
+                  const forms = document.querySelectorAll('.needs-validation');
+          
+          
+                  Array.prototype.slice.call(forms).forEach((form) => {
+                    form.addEventListener('submit', (event) => {
+                      if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                      }
+                      form.classList.add('was-validated');
+                    }, false);
+                  });
+                })();
+              </script>
+        
+              <script>
+                function invoice(){
+                  var divToPrint = document.getElementById("invoice");
+                var newWindow = window.open("", "Print Window");
+                newWindow.document.write(divToPrint.outerHTML);
+                newWindow.print();
+                newWindow.close();
+                }
+              </script>
+
+
+
+
+
+
+
+
+
+
+
+            <!-- Jquery Core Js -->
+    <script src="/assets/admin/assets/bundles/libscripts.bundle.js"></script>
+    <!-- Plugin Js -->
+    <script src="/assets/admin/assets/bundles/apexcharts.bundle.js"></script>
+    <script src="/assets/admin/assets/bundles/dataTables.bundle.js"></script>  
+    <!-- Jquery Page Js -->
+    <script src="../js/template.js"></script>
+    <script src="../js/page/index.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1Jr7axGGkwvHRnNfoOzoVRFV3yOPHJEU&amp;callback=myMap"></script>  
+    <script>
+        $('#myDataTable')
+        .addClass( 'nowrap')
+        .dataTable( {
+            responsive: true,
+            columnDefs: [
+                { targets: [-1, -3], className: 'dt-body-right' }
+            ]
+        });
+    </script>
+</body>
+
+<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist//admin/dashboard by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:56:09 GMT -->
+</html> 

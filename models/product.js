@@ -7,18 +7,13 @@ const productSchema = new mongoose.Schema({
     price:{type:String},
     brand:{type:String},
     subCategory:{type:String},
-    stockQuantity:{type:String},
+    stockQuantity: { type: Number },  // Changed from String to Number
     addedOn:{type:Date,default:Date.now},
     images:{type:Array},
     size: [{
         type: String,
         required: true
     }],
-    // category:{
-    //    type: mongoose.Schema.Types.ObjectId,
-    //    ref: 'Category',
-    //    required: true
-    // }
     category: {type:String}
     
 });

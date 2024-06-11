@@ -11,6 +11,10 @@
     <!--plugin css file -->
     <link rel="stylesheet" href="/assets/admin/assets/nouislider/nouislider.min.css">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+<!-- Cropper.js JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
     <!-- project css file  -->
     <link rel="stylesheet" href="/assets/admin/assets/css/ebazar.style.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -27,49 +31,16 @@
                     <span class="logo-icon">
                         <i class="bi bi-bag-check-fill fs-4"></i>
                     </span>
-                    <span class="logo-text">eBazar</span>
+                    <span class="logo-text">Megx.ft</span>
                 </a>
-                <!-- Menu: main ul -->
                 <ul class="menu-list flex-grow-1 mt-3">
-                    <li><a class="m-link" href="/admin/dashboard"><i class="icofont-home fs-5"></i>
-                            <span>Dashboard</span></a></li>
-                    <li class="collapsed">
-                        <a class="m-link active" data-bs-toggle="collapse" data-bs-target="#menu-product" href="#">
-                            <i class="icofont-truck-loaded fs-5"></i> <span>Products</span> <span
-                                class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
-                        <!-- Menu: Sub menu ul -->
-                        <ul class="sub-menu collapse show" id="menu-product">
-                            <li><a class="ms-link active" href="/admin/productlist">Product List</a></li>
-                            <!-- <li><a class="ms-link" href="/admin/productedit">Product Edit</a></li> -->
-                            <!-- <li><a class="ms-link" href="/admin/productadd">Product Add</a></li> -->
-                        </ul>
-                    </li>
-                    <li class="collapsed">
-                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#categories" href="#">
-                            <i class="icofont-chart-flow fs-5"></i> <span>Categories</span> <span
-                                class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
-                        <!-- Menu: Sub menu ul -->
-                        <ul class="sub-menu collapse" id="categories">
-                            <li><a class="ms-link" href="categorie-list.html">Categories List</a></li>
-                            <!-- <li><a class="ms-link" href="categories-edit.html">Categories Edit</a></li> -->
-                            <!-- <li><a class="ms-link" href="categories-add.html">Categories Add</a></li> -->
-                        </ul>
-                    </li>
-                    <li class="collapsed">
-                        <a class="m-link" data-bs-toggle="collapse" data-bs-target="#customers-info" href="#">
-                            <i class="icofont-funky-man fs-5"></i> <span>Customers</span> <span
-                                class="arrow icofont-rounded-down ms-auto text-end fs-5"></span></a>
-                        <!-- Menu: Sub menu ul -->
-                        <ul class="sub-menu collapse" id="customers-info">
-                            <li><a class="ms-link" href="/admin/customerslist">Customers List</a></li>
-                            <li><a class="ms-link" href="customer-detail.html">Customers Details</a></li>
-                        </ul>
-                    </li>
+                    <li><a class="m-link active" href="/admin/dashboard"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
+                    <li><a class="m-link active" href="/admin/productlist"><i class="icofont-truck-loaded fs-5"></i> <span>Products</span></a></li>
+                    <li><a class="m-link active" href="/admin/categorielist"><i class="icofont-chart-flow fs-5"></i> <span>Categories</span></a></li>
+                    <li><a class="m-link active" href="/admin/subcategories"><i class="icofont-chart-flow fs-5"></i> <span>Subcategories</span></a></li>
+                    <li><a class="m-link active" href="/admin/list-order"><i class="icofont-notepad fs-5"></i> <span>Orders</span></a></li>
+                    <li><a class="m-link active" href="/admin/customerslist"><i class="icofont-funky-man fs-5"></i> <span>Customers</span></a></li>
                 </ul>
-                <!-- Menu: menu collepce btn -->
-                <button type="button" class="btn btn-link sidebar-mini-btn text-light">
-                    <span class="ms-2"><i class="icofont-bubble-right"></i></span>
-                </button>
             </div>
         </div>
 
@@ -110,7 +81,7 @@
                     </div>
                   </div> <!-- Row end  -->
         
-                  <form id="addProduct" action="/admin/addProduct" method="post" enctype="multipart/form-data" onsubmit="validateAndSubmit(event)">
+                  <form id="addProduct" action="/admin/addProduct" method="post"  enctype="multipart/form-data" onsubmit="validateAndSubmit(event)">
                     <div class="row g-3 mb-3">
                         <!-- Product Information -->
                         <div class="col-xl-8 col-lg-8">
@@ -148,12 +119,16 @@
                                     <!-- Images -->
                                     <div class="card my-3">
                                         <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                            <h6 class="mb-0 fw-bold ">Images</h6>
+                                            <h6 class="mb-0 fw-bold">Images</h6>
                                         </div>
                                         <div class="card-body">
                                             <div class="row col-12 g-1 align-items-center">
-                                                <input class="col-9" type="file" name="image" multiple accept="image/jpeg,image/png,image/webpeg" />
+                                                <input id="imageInput" class="col-9" type="file" name="image" multiple accept="image/jpeg,image/png,image/webp" />
                                             </div>
+                                            <div class="row col-12 g-1 align-items-center mt-3">
+                                                <img id="imagePreview" style="max-width: 100%; display: none;" />
+                                            </div>
+                                            <button id="cropButton" style="display: none;" class="btn btn-primary mt-3">Crop Image</button>
                                         </div>
                                     </div>
                                 </div>
@@ -230,6 +205,72 @@
         </div>      
 
     </div>
+
+
+
+    <script>
+        let cropper;
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const cropButton = document.getElementById('cropButton');
+    
+        imageInput.addEventListener('change', (event) => {
+            const files = event.target.files;
+            if (files && files.length > 0) {
+                const file = files[0];
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    cropButton.style.display = 'inline-block';
+    
+                    // Destroy the old cropper instance if exists
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+    
+                    // Create a new cropper instance
+                    cropper = new Cropper(imagePreview, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    
+        cropButton.addEventListener('click', () => {
+            if (cropper) {
+                const canvas = cropper.getCroppedCanvas({
+                    width: 400,
+                    height: 400,
+                });
+                canvas.toBlob((blob) => {
+                    // Create a new FormData object
+                    const formData = new FormData();
+                    formData.append('image', blob, 'cropped.jpg');
+    
+                    // You can add additional form data here if needed
+                    // formData.append('otherField', 'value');
+    
+                    // Submit the form data to your server using fetch or XMLHttpRequest
+                    fetch('/your-upload-endpoint', {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        // Redirect to the product list or display a success message
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }, 'image/jpeg');
+            }
+        });
+    </script>
+    
 
     <!-- Jquery Core Js -->    
     <script src="/assets/admin/assets/bundles/libscripts.bundle.js"></script>
@@ -317,7 +358,7 @@
     
         var isValidName = /^[a-zA-Z\s]{3,}$/.test(productNameInput.value);
         var isPriceInput = priceInput.value.length >= 4;
-        var isStockQuantityInput = stockQuantityInput.value.length >= 4;
+        var isStockQuantityInput = stockQuantityInput.value.length >= 2;
         var isDescriptionInput = /^[a-zA-Z\s]{3,}$/.test(descriptionInput.value);
         var isCategorySelected = categorySelect.value !== '';
     

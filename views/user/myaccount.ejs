@@ -134,7 +134,7 @@
                                 <!-- <li><a href="/shop">Collection</a></li> -->
                                 <!-- <li><a href="#"> Pages <i class="fa fa-angle-down"></i></a> -->
                                 <!-- <ul class="submenu">
-                                        <li><a href="about.html">about us</a></li>
+                                        <li><a href="/about">about us</a></li>
                                         <li><a href="/cartpage">cart page</a></li>
                                         <li><a href="/checkout">checkout </a></li>
                                         <li><a href="/wishlist">wishlist </a></li>
@@ -145,8 +145,7 @@
                                     </ul> -->
                                 </li>
                                 <!--  -->
-                                <li><a href="about.html"> About </a></li>
-                                <li><a href="contact.html"> Contact</a></li>
+                                <li><a href="/about"> About </a></li>
                             </ul>
                         </nav>
                     </div>
@@ -184,10 +183,10 @@
                         <div class="same-style cart-wrap">
                             <button class="icon-cart">
                                 <i class="pe-7s-shopbag"></i>
-                                <span class="count-style">02</span>
+                                <!-- <span class="count-style">02</span> -->
                             </button>
                             <div class="shopping-cart-content">
-                                <ul>
+                                <!-- <ul>
                                     <li class="single-shopping-cart">
                                         <div class="shopping-cart-img">
                                             <a href="#"><img alt="" src="assets/img/cart/cart-1.png"></a>
@@ -218,7 +217,7 @@
                                 <div class="shopping-cart-total">
                                     <h4>Shipping : <span>$20.00</span></h4>
                                     <h4>Total : <span class="shop-total">$260.00</span></h4>
-                                </div>
+                                </div> -->
                                 <div class="shopping-cart-btn btn-hover text-center">
                                     <a class="default-btn" href="/cartpage">view cart</a>
                                     <a class="default-btn" href="/checkout">checkout</a>
@@ -313,7 +312,7 @@
                             <li><a href="/shop">Collection</a></li>
                             <li><a href="#">Pages</a>
                                 <ul>
-                                    <li><a href="about.html">about us</a></li>
+                                    <li><a href="/about">about us</a></li>
                                     <li><a href="/cartpage">cart page</a></li>
                                     <li><a href="/checkout">checkout </a></li>
                                     <li><a href="/wishlist">wishlist </a></li>
@@ -333,7 +332,7 @@
                                     <li><a href="blog-details-3.html">blog details 3</a></li>
                                 </ul>
                             </li>
-                            <li><a href="about.html">About us</a></li>
+                            <li><a href="/about">About us</a></li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </nav>
@@ -395,10 +394,19 @@
                                                         <input type="text" value="<%= userData.phonenumber %>">
                                                     </div>
                                                 </div>
+                                                <!-- <div class="col-lg-6 col-md-6">
+                                                    <div class="billing-info">
+                                                        <label>wallet</label>
+                                                        <input type="text" value="<%= userData.wallet %>">
+                                                    </div>
+                                                </div> -->
                                             </div>
                                             <div class="billing-back-btn">
-                                                <div class="billing-back">
-                                                    <a href="#"><i class="fa fa-arrow-up"></i> back</a>
+                                                <div class="reward-points-container">
+                                                    <div class="reward-points">
+                                                        <i class="ti-wallet wallet-icon"></i>
+                                                     <span class="wallet-amount">Wallet:  <%= userData.wallet %></span>
+                                                    </div>
                                                 </div>
                                                 <div class="billing-btn">
                                                     <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -553,59 +561,21 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- <div class="panel panel-default single-my-account">
-                                <div class="panel-heading my-account-title">
-                                    <h3 class="panel-title"><span>3 .</span> <a data-toggle="collapse"
-                                            data-parent="#faq" href="#my-account-3">Modify your address book entries
-                                        </a></h3>
-                                </div>
-                                <div id="my-account-3" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <div class="myaccount-info-wrapper">
-                                            <div class="account-info-wrapper">
-                                                <h4>Address Book Entries</h4>
-                                            </div>
-                                            <div class="entries-wrapper">
-                                                <div class="row">
-
-                                                    <div
-                                                        class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                                        <div class="entries-info text-center">
-                                                            <p>House Address: </p>
-                                                            <p>State: </p>
-                                                            <p>City: </p>
-                                                            <p>Landmark: </p>
-                                                            <p>Pincode: </p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div
-                                                        class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                                        <div
-                                                            class="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                                            <div class="entries-edit-delete text-center">
-                                                                <a class="edit" href="/addresedit">Edit</a>
-                                                                <a href="#">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                             <div class="panel panel-default single-my-account">
                                 <div class="panel-heading my-account-title">
-                                    <h3 class="panel-title"><span>4 .</span> <a href="/address">Modify your Address
+                                    <h3 class="panel-title"><span>3 .</span> <a href="/address">Modify your Address
                                         </a></h3>
                                 </div>
                             </div>
                             <div class="panel panel-default single-my-account">
                                 <div class="panel-heading my-account-title">
                                     <h3 class="panel-title"><span>4 .</span> <a href="/wishlist">Modify your wish list
+                                        </a></h3>
+                                </div>
+                            </div>
+                            <div class="panel panel-default single-my-account">
+                                <div class="panel-heading my-account-title">
+                                    <h3 class="panel-title"><span>4 .</span> <a href="/orders">Modify your Orders
                                         </a></h3>
                                 </div>
                             </div>
@@ -635,7 +605,7 @@
                         </div>
                         <div class="footer-list">
                             <ul>
-                                <li><a href="about.html">About us</a></li>
+                                <li><a href="/about">About us</a></li>
                                 <li><a href="#">Store location</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                                 <li><a href="#">Orders tracking</a></li>
