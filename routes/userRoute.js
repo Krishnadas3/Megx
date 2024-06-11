@@ -4,6 +4,7 @@ const userController = require('../controller/userController')
 const cartController = require('../controller/cartController')
 const wishlist = require('../controller/wishlist')
 const userprofile = require('../controller/userprofile')
+const product_controller  = require('../controller/productController')
 const order = require('../controller/ordercontroller')
 const bodyParser = require('body-parser')
 const passport = require('passport')
@@ -43,6 +44,9 @@ router.get('/productdetail',userController.productdetailpage)
 
 router.get('/shop/:id',userController.loadbycategory)
 router.get('/sortProducts',userController.sortproudct)
+router.post('/search', product_controller.search_product)
+router.get('/sort', product_controller.sort);
+
 
 //about
 router.get('/about',userController.aboutpage)
@@ -71,6 +75,8 @@ router.post('/verify-payment',userAuth, order.verify_payment);
 router.get('/orders',userAuth, order.show_orderlist);
 router.get('/view-order', userAuth, order.view_order_user);
 router.post('/cancel_order',userAuth, order.cancel_order);
+router.post('/retrun_order', order.retrun_order);
+router.post('/apply_coupon',userAuth, order.apply_coupon);
 
 
 //userprofile

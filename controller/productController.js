@@ -242,38 +242,50 @@ const editproduct = async (req, res) => {
 
 const sort = async (req, res) => {
     try {
-        let user;
-        if (req.user.id) {
-            user = true;
-        } else {
-            user = false;
-        }
-
-        const sort_value = req.query.value
+        const isAuthenticated = req.cookies.jwt !== undefined;
+        let user = req.user && req.user.id ? true : false;
+        const sort_value = req.query.value;
 
         const category = await Categorie.find({});
 
-        if(sort_value == "az"){
-
-            const product = await Product.find({}).sort({ product_name: -1 });
-            res.render("shop", { product, user });
-
-        }else if(sort_value== "za"){
-
-            const product = await Product.find({}).sort({ product_name: -1 });
-            res.render("shop", { product, user });
-
-        }else if(sort_value == "high"){
-
-            const product = await Product.find({}).sort({ product_name: -1 });
-            res.render("shop", { product, user });
-
-        }else if(sort_value == "low"){
-
-            const product = await Product.find({}).sort({ product_name: -1 });
-            res.render("shop", { product, user ,category });
+        let sortCriteria;
+        switch (sort_value) {
+            case "nameAtoZ":
+                sortCriteria = { productName: 1 }; // Ascending
+                break;
+            case "nameZtoA":
+                sortCriteria = { productName: -1 }; // Descending
+                break;
+            case "priceHighToLow":
+                sortCriteria = { price: -1 }; // Descending
+                break;
+            case "priceLowToHigh":
+                sortCriteria = { price: 1 }; // Ascending
+                break;
+            default:
+                sortCriteria = {};
         }
-        
+
+        const products = await Product.find({}).sort(sortCriteria);
+        res.render("user/shop", { products,isAuthenticated, user, category, category_name: "sort", coupon: [], countpro: '' });
+
+    } catch (error) {
+        res.render('500');
+        console.log(error.message);
+    }
+};
+
+
+const search_product = async (req, res) => {
+    try {
+        const isAuthenticated = req.cookies.jwt !== undefined;
+        let user = req.user && req.user.id ? true : false;
+        const input = req.body.s;
+        const result = new RegExp(input, 'i');
+        const products = await Product.find({ productName: result }).populate('category');
+        console.log("hey here got th ep prdu",products);
+        const category = await Categorie.find();
+        res.render('user/shop', { category,isAuthenticated, products, user, category_name: "search", coupon: [], countpro: '' });
     } catch (error) {
         res.render('500');
         console.log(error.message);
@@ -292,5 +304,7 @@ module.exports = {
     addproductSubmit,
     deleteProduct,
     productupdate,
-     editproduct
+    editproduct,
+    search_product,
+    sort
 }

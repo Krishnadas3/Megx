@@ -9378,6 +9378,49 @@ a.default-btn {
 }
 
 
+/* Style for the billing-back-btn container */
+.billing-back-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Container for wallet and rewards */
+.reward-points-container {
+  display: flex;
+  gap: 20px; /* Space between wallet and rewards */
+  background-color: #f2f2f2; /* Light blue background */
+  /* border: 1px solid #b3e0ff; Slightly darker border */
+  border-radius:5px; /* Rounded corners */
+  padding: 12px 30px; /* Padding for the container */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); Light shadow for depth */
+}
+
+/* Style for reward points */
+.reward-points {
+  display: flex;
+  align-items: center;
+  font-size: 18px; /* Adjust font size as needed */
+  color: #000; /* Text color */
+}
+
+/* Wallet amount */
+.wallet-amount {
+  font-weight: 500;
+  font-size: 16px; /* Bold text */
+  font-style: cursive;
+}
+
+/* Add address button styling */
+.billing-btn .btn-primary {
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+
+
 .team-wrapper {
   background-color: #f7f7f7; }
   .team-wrapper .team-img {

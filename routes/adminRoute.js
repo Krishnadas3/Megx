@@ -5,6 +5,7 @@ const adminController = require('../controller/adminController')
 const productController = require('../controller/productController')
 const categoryController = require('../controller/catgorieController')
 const order_controller  = require('../controller/ordercontroller')
+const banner = require('../controller/banner');
 const adminAuth = require('../middleware/adminjwt')
 const admin = require('../models/admin')
 require('dotenv').config();
@@ -32,6 +33,9 @@ const upload = multer({ storage: storage })
 router.get('/adminlogin',adminController.logingetpage)
 router.post('/admin/login',adminController.loginPostpage)
 router.get('/admin/dashboard',adminAuth,adminController.dashboardpage)
+
+router.get(' /admin/sales-report', adminAuth , adminController.salesReport );
+router.post('/admin/sales-report' , adminAuth , adminController.showSalesreport );
 
 //customerlist
 
@@ -88,10 +92,24 @@ router.get('/admin/logout',adminAuth,adminController.adminLogout)
 router.get('/admin/list-order',adminAuth,order_controller.load_order);
 router.get('/admin/view-order',adminAuth, order_controller.view_order_admin)
 router.post('/admin/update_status',adminAuth, order_controller.updateStatus);
+router.post('/admin/confirm_return', order_controller.confirm_return)
 
 
-// router.post('/blockuser',adminController.blockUser)
-// router.post('/addCategory',adminController.submitAddCategory)
+router.get('/admin/add-banner', adminAuth, banner.show_banner)
+router.post('/admin/add-banner', adminAuth, upload.single('image'), banner.add_banner)
+router.get('/admin/add-banner', adminAuth, banner.show_banner)
+router.get('/admin/list-banner', adminAuth, banner.show_banner_list)
+router.post('/admin/delete-banner',adminAuth, banner.delete_banner);
+router.post('/admin/edit-banner',adminAuth, banner.edit_banner);
+
+//coupen 
+router.get('/admin/add-coupon',adminAuth, order_controller.load_coupon);
+router.post('/admin/add-coupon', order_controller.add_coupon);
+router.get('/admin/list-coupon', adminAuth, order_controller.list_coupon);
+router.post('/admin/delete-coupon',adminAuth, order_controller.delete_coupon)
+router.get('/admin/edit-coupon', adminAuth, order_controller.edit_coupon);
+router.post('/admin/edit-coupon', order_controller.editing_coupon);
+router.post('/admin/coupon_active', order_controller.coupon_active)
 
 
 module.exports = router

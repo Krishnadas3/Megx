@@ -91,7 +91,7 @@
                             <%= index+1 %>
                           </td>
                           <td><strong>
-                              <%= x.name %>
+                              <%= x.address.name %>
                             </strong></td>
       
                           <td><strong>
@@ -228,26 +228,26 @@ $.ajax({
 })
 }
 
-// function returnOrder(orderId, status) {
-// $.ajax({
-//   url: '/admin/confirm_return',
-//   data: {
-//     order_Id: orderId,
-//     status: status
+function returnOrder(orderId, status) {
+$.ajax({
+  url: '/admin/confirm_return',
+  data: {
+    order_Id: orderId,
+    status: status
 
-//   },
+  },
 
-//   method: 'post',
-//   success: (response) => {
-//     if (response.success) {
+  method: 'post',
+  success: (response) => {
+    if (response.success) {
 
-//       location.href = '/admin/list-order'
+      location.href = '/admin/list-order'
 
-//     }
-//   }
-// })
+    }
+  }
+})
 
-// }
+}
     </script>
 
     <!-- Jquery Core Js -->

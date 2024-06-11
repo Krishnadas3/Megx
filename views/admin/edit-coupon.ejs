@@ -1,0 +1,203 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>::eBazar:: Products List </title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
+
+    <!--plugin css file -->
+    <link rel="stylesheet" href="/assets/admin/assets/nouislider/nouislider.min.css">
+
+    <!-- project css file  -->
+    <link rel="stylesheet" href="/assets/admin/assets/css/ebazar.style.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+    <div id="ebazar-layout" class="theme-blue">
+
+        <!-- sidebar -->
+        <div class="sidebar px-4 py-4 py-md-4 me-0">
+            <div class="d-flex flex-column h-100">
+                <a href="/admin/dashboard" class="mb-0 brand-icon">
+                    <span class="logo-icon">
+                        <i class="bi bi-bag-check-fill fs-4"></i>
+                    </span>
+                    <span class="logo-text">Megx.ft</span>
+                </a>
+                <ul class="menu-list flex-grow-1 mt-3">
+                    <li><a class="m-link active" href="/admin/dashboard"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
+                    <li><a class="m-link active" href="/admin/productlist"><i class="icofont-truck-loaded fs-5"></i> <span>Products</span></a></li>
+                    <li><a class="m-link active" href="/admin/categorielist"><i class="icofont-chart-flow fs-5"></i> <span>Categories</span></a></li>
+                    <li><a class="m-link active" href="/admin/subcategories"><i class="icofont-chart-flow fs-5"></i> <span>Subcategories</span></a></li>
+                    <li><a class="m-link active" href="/admin/list-order"><i class="icofont-notepad fs-5"></i> <span>Orders</span></a></li>
+                    <li><a class="m-link active" href="/admin/customerslist"><i class="icofont-funky-man fs-5"></i> <span>Customers</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- main body area -->
+        <div class="main px-lg-4 px-md-4">
+
+            <!-- Body: Header -->
+            <div class="header">
+                <nav class="navbar py-4">
+                    <div class="container-xxl">
+
+                        <!-- header rightbar icon -->
+                        <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
+
+                            <div class="dropdown zindex-popover">
+                                <a class="nav-link dropdown-toggle pulse" href="#" role="button"
+                                    data-bs-toggle="dropdown">
+                                    <img src="assets/images/flag/GB.png" alt="">
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </nav>
+            </div>
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Coupen/</span> Edit Coupen</h4>
+          
+                <!-- Basic Layout & Basic with Icons -->
+                <div class="row">
+                  <!-- Basic Layout -->
+                  <div class="col-xxl">
+                    <div class="card mb-4">
+                      <br>
+                      <div class="card-body">
+                        <form method="post" class="row g-3 needs-validation" novalidate>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Coupen Name</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="name" id="basic-default-name" placeholder=""
+                                value="<%= coupon[0].coupon_name %>" required />
+                              <div class="invalid-feedback">Please enter Coupen Name</div>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Coupen Description</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="description" id="basic-default-name" placeholder=""
+                                value="<%= coupon[0].description %>" required />
+                              <div class="invalid-feedback">Please Enter Coupen Description</div>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Discount Percentage</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="discount_percentage" id="basic-default-name"
+                                placeholder="no value" value="<%= coupon[0].discountpercentage %>" required />
+                              <div class="invalid-feedback">Please Enter Discount Percentage</div>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">DISCOUNT MINIMUM AMOUNT</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="min_amount" id="basic-default-name"
+                                placeholder="no value" value="<%= coupon[0].min_amount %>" required />
+                              <div class="invalid-feedback">Please Enter Discount Minimum Amount </div>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Maximum  Discount Price</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="discountprice" id="basic-default-name"
+                                placeholder="no value" value="<%= coupon[0].maxdiscountprice %>" required />
+                              <div class="invalid-feedback">Please enter Discount Price</div>
+                            </div>
+          
+                            <input type="hidden" value="<%= coupon[0]._id %>" name="id">
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Date</label>
+                            <div class="col-sm-10">
+                              <input type="date" class="form-control" name="date" id="basic-default-name"
+                                placeholder="<%= coupon[0].expiry_date %>" value="<%= coupon[0].expiry_date %>" required />
+                              <div class="invalid-feedback">Please Enter Expiry Date</div>
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="basic-default-name">Code</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" name="code" id="basic-default-name" placeholder=""
+                                value="<%= coupon[0].code %>" required />
+                              <div class="invalid-feedback">Please Enter Coupen Code</div>
+                            </div>
+                          </div>
+                          <% if(typeof message !=='undefined' ){ %>
+          
+                            <p style="color: rgb(100, 0, 0);">
+                              <%= message %>
+                            </p>
+                            <% } %>
+          
+                              <div class="row justify-content-end">
+                                <div class="col-sm-10">
+                                  <button type="submit" class="btn btn-primary">submit</button>
+                                </div>
+                              </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+</div>
+    <script>
+      
+    </script>
+
+    <!-- Jquery Core Js -->
+    <script src="/assets/admin/assets/bundles/libscripts.bundle.js"></script>
+
+    <!-- Jquery Plugin -->
+    <script src="/assets/admin/assets/plugin/nouislider/nouislider.min.js"></script>
+
+    <!-- Jquery Page Js -->
+    <script src="../js/template.js"></script>
+
+    <!-- Jquery Page Js -->
+    <script src="../js/template.js"></script>
+    <script>
+        $('#myDataTable')
+        .addClass( 'nowrap')
+        .dataTable( {
+            responsive: true,
+            columnDefs: [
+                { targets: [-1, -3], className: 'dt-body-right' }
+            ]
+        });
+    </script>
+
+    <script>
+      (() => {
+        'use strict';
+
+
+        const forms = document.querySelectorAll('.needs-validation');
+
+
+        Array.prototype.slice.call(forms).forEach((form) => {
+          form.addEventListener('submit', (event) => {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      })();
+    </script>
+</body>
+
+<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist/order-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Feb 2024 11:51:11 GMT -->
+</html> 

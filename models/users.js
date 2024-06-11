@@ -16,6 +16,10 @@ const loginSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    wallet:{
+        type: Number,
+        default: 0
+    },
     otp: { type: String },
     otpExpiration: { type: String },
     blocked: {

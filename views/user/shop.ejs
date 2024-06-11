@@ -133,7 +133,7 @@
                                 <!-- <li><a href="/shop">Collection</a></li> -->
                                 <!-- <li><a href="#"> Pages <i class="fa fa-angle-down"></i></a> -->
                                     <!-- <ul class="submenu">
-                                        <li><a href="about.html">about us</a></li>
+                                        <li><a href="/about">about us</a></li>
                                         <li><a href="/cartpage">cart page</a></li>
                                         <li><a href="/checkout">checkout </a></li>
                                         <li><a href="/wishlist">wishlist </a></li>
@@ -144,8 +144,7 @@
                                     </ul> -->
                                 </li>
                                 <!--  -->
-                                <li><a href="about.html"> About </a></li>
-                                <li><a href="contact.html"> Contact</a></li>
+                                <li><a href="/about"> About </a></li>
                             </ul>
                         </nav>
                     </div>
@@ -155,7 +154,7 @@
                         <div class="same-style header-search">
                             <a class="search-active" href="#"><i class="pe-7s-search"></i></a>
                             <div class="search-content">
-                                <form action="#">
+                                <form action="/search">
                                     <input type="text" placeholder="Search" />
                                     <button class="button-search"><i class="pe-7s-search"></i></button>
                                 </form>
@@ -183,10 +182,10 @@
                         <div class="same-style cart-wrap">
                             <button class="icon-cart">
                                 <i class="pe-7s-shopbag"></i>
-                                <span class="count-style">02</span>
+                                <!-- <span class="count-style">02</span> -->
                             </button>
                             <div class="shopping-cart-content">
-                                <ul>
+                                <!-- <ul>
                                     <li class="single-shopping-cart">
                                         <div class="shopping-cart-img">
                                             <a href="#"><img alt="" src="assets/img/cart/cart-1.png"></a>
@@ -217,7 +216,7 @@
                                 <div class="shopping-cart-total">
                                     <h4>Shipping : <span>$20.00</span></h4>
                                     <h4>Total : <span class="shop-total">$260.00</span></h4>
-                                </div>
+                                </div> -->
                                 <div class="shopping-cart-btn btn-hover text-center">
                                     <a class="default-btn" href="/cartpage">view cart</a>
                                     <a class="default-btn" href="/checkout">checkout</a>
@@ -312,7 +311,7 @@
                             <li><a href="/shop">Collection</a></li>
                             <li><a href="#">Pages</a>
                                 <ul>
-                                    <li><a href="about.html">about us</a></li>
+                                    <li><a href="/about">about us</a></li>
                                     <li><a href="/cartpage">cart page</a></li>
                                     <li><a href="/checkout">checkout </a></li>
                                     <li><a href="/wishlist">wishlist </a></li>
@@ -332,7 +331,7 @@
                                     <li><a href="blog-details-3.html">blog details 3</a></li>
                                 </ul>
                             </li>
-                            <li><a href="about.html">About us</a></li>
+                            <li><a href="/about">About us</a></li>
                             <li><a href="contact.html">Contact</a></li>
                         </ul>
                     </nav>
@@ -374,7 +373,6 @@
                                 <div class="row">
                                     <% if(products.length > 0) { %>
                                         <% for(let i = 0; i < products.length; i++) { %>
-                                
                                             <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                                 <div class="product-wrap mb-25 scroll-zoom">
                                                     <div class="product-img">
@@ -404,39 +402,36 @@
                     <div class="col-lg-3">
                         <div class="sidebar-style mr-30">
                             <div class="sidebar-widget">
-                                <h4 class="pro-sidebar-title"><a href="/shop">Category</a></h4>
-                                <div class="sidebar-widget-list mt-30">
-                                    <ul>
-                                        <% if (category.length > 0) { %>
-                                            <% for (let i = 0; i < category.length; i++) { %>
-                                                <li>
-                                                    <div class="sidebar-widget-list-left">
-                                                        <input type="checkbox">
-                                                        <a href="/shop/<%= category[i]._id %>"><%= category[i].categoryName %></a>
-                                                        <!-- <span class="checkmark"></span> -->
-                                                    </div>
-                                                </li>
-                                            
-                                            <% } %>
-                                        <% } %>
-                                    </ul>
+                                <h4 class="pro-sidebar-title">Search </h4>
+                                <div class="pro-sidebar-search mb-50 mt-25">
+                                    <form class="pro-sidebar-search-form" action="/search" method="POST">
+                                        <input type="text" name="s" placeholder="Search here...">
+                                        <button type="submit">
+                                            <i class="pe-7s-search"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
-                            <!-- <div class="sidebar-widget mt-45">
-                                <h4 class="pro-sidebar-title">Filter By Price </h4>
-                                <div class="price-filter mt-10">
-                                    <div class="price-slider-amount">
-                                        <input type="text" id="amount" name="price" placeholder="Add Your Price" />
-                                    </div>
-                                    <div id="slider-range"></div>
+                            <div class="sidebar-widget mt-50">
+                                <h4 class="pro-sidebar-title"><a href="/shop">Categories</a></h4>
+                                <div class="sidebar-widget-tag mt-25">
+                                    <% if (category.length > 0) { %>
+                                        <% for (let i = 0; i < category.length; i++) { %>
+                                    <ul>
+                                        
+                                                    <li><a href="/shop/<%= category[i]._id %>"><%= category[i].categoryName %></a></li>
+                                    </ul>
+                                    <% } %>
+                                    <% } %>
                                 </div>
-                            </div> -->
-                            
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </div>
+        
         <footer class="footer-area bg-gray pt-100 pb-70">
             <div class="container">
                 <div class="row">
@@ -457,7 +452,7 @@
                             </div>
                             <div class="footer-list">
                                 <ul>
-                                    <li><a href="about.html">About us</a></li>
+                                    <li><a href="/about">About us</a></li>
                                     <li><a href="#">Store location</a></li>
                                     <li><a href="contact.html">Contact</a></li>
                                     <li><a href="#">Orders tracking</a></li>
@@ -676,9 +671,9 @@
 
 <script>
      document.getElementById('sortSelect').addEventListener('change', function() {
-            const sortBy = this.value;
-            window.location.href = `/sortProducts?sortBy=${sortBy}`;
-        });
+    const sortValue = this.value;
+    window.location.href = `/sort?value=${sortValue}`;
+});
 </script>
 
         <!-- jQuery JS -->

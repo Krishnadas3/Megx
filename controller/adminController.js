@@ -2,16 +2,171 @@
 const admin = require('../models/admin')
 const user = require('../models/users')
 const adminAuth = require('../middleware/adminjwt')
+let Category = require('../models/category');
+let Product = require('../models/product');
+
+// const config = require('../config/')
+
+const bcrypt = require('bcrypt');
+
+// reguire nodemailer
+const nodemailer = require('nodemailer');
+const Order = require('../models/orederModel');
 const jwt = require('jsonwebtoken')
 
 
-let dashboardpage =(req,res) => {
+let  dashboardpage = async (req, res) => {
+
     try {
-        console.log("req.user : ",req.user);
-        res.status(200).render('admin/index')
+        // total sales
+        const totalsales = await Order.find({ status: "Delivered" })
+        let sum = 0
+        for (let i = 0; i < totalsales.length; i++) {
+            sum = sum + totalsales[i].total
+        }
+        const salescount = await Order.find({ status: "Delivered" }).count()
+
+
+        const cod = await Order.find({ paymentType: "COD" , status: "Delivered"  })
+        let cod_sum = 0
+        for (var i = 0; i < cod.length; i++) {
+            cod_sum = cod_sum + cod[i].total
+        }
+
+        const upi = await Order.find({ paymentType: "UPI" , status: "Delivered"  })
+
+        let upi_sum = 0
+        for (var i = 0; i < upi.length; i++) {
+            upi_sum = upi_sum + upi[i].total
+        }
+
+        const wallet = await Order.find({ paymentType: "WALLET" , status: "Delivered" })
+
+        let wallet_sum = 0
+       
+        for (var i = 0; i < wallet.length; i++) {
+            wallet_sum = wallet_sum + wallet[i].total
+        }
+
+        
+
+        const methodtotal = cod_sum + upi_sum + wallet_sum
+
+        const upi_percentage = upi_sum / methodtotal * 100
+        const wallet_percentage = wallet_sum / methodtotal * 100
+        const cod_percentage = cod_sum / methodtotal * 100
+
+        const deliveryCount = await Order.find({ status: "Delivered" }).count()
+        const confirmedCount = await Order.find({ status: "Confirmed" }).count()
+        const cancelledCount = await Order.find({ status: "Cancelled" }).count()
+        const returnedCount = await Order.find({ status: "Return" }).count()
+
+    
+
+        const salesChart = await Order.aggregate([
+          
+            {
+                $match: { status: "Delivered" } // Add $match stage to filter by status
+              },
+              {
+                
+              $group: {
+                _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
+
+                sales: { $sum: '$totel' },
+              },
+            },
+            {
+              $sort: { _id: -1 },
+            },
+            {
+              $limit: 7,
+            },
+          ]);
+          
+
+          const dates = salesChart.map((item) => {
+            return item._id;
+          })
+      
+          const sale = salesChart.map((item) => {
+            return item.sales;
+      });
+
+
+      const salesr = sale.map((x)=>{
+        return x
+      })
+
+      const date = dates.reverse()
+
+      const sales = salesr.reverse()
+
+
+        const User = await user.findOne({ _id: req.user.id })
+        res.render('admin/index', {
+            User,
+            date , 
+            sales ,
+            catacount:"",
+            deliveryCount,
+            cancelledCount,
+            returnedCount,
+            confirmedCount,
+            sum, cod_sum, upi_sum, wallet_sum,
+            salescount,
+            upi_percentage,
+            cod_percentage,
+            wallet_percentage
+
+        })
+
     } catch (error) {
-        console.log(error);
-        res.status(404).send("not found")
+
+        console.error('failed to get home:', error)
+        res.status(500).send('internal server error')
+    }
+
+}
+
+
+const salesReport = async (req , res )=>{
+    try {
+        const User = await user.findOne({ _id: req.session.admin })
+        const saleData = ""
+        res.render('admin/sales-report',{User , saleData})
+        // res.render("admin/customerslist", { User });
+
+    } catch (error) {
+        res.render('505')
+    }
+}
+
+const showSalesreport = async (req , res )=>{
+
+    try {
+        const User = await user.findOne({ _id: req.session.admin })
+        const currentDate = new Date(req.body.from) 
+        const newDate  = new Date(currentDate) 
+        newDate.setDate(currentDate.getDate()+1)
+        console.log(currentDate);
+        console.log(newDate);
+        if(req.body.from.trim()== '' || req.body.to.trim()==''){
+
+        }else{
+            const saleData = await Order.find({
+                status: 'Delivered' , 
+                date:{$gte: new Date(req.body.from),
+                    $lte: new Date(req.body.to)}
+            }).populate({path:'product',populate:{path:'productid',model:'Product'}})
+
+            console.log(saleData);
+            res.render('admin/sales-report',{saleData , User})
+        }
+
+    } catch (error) {
+
+        res.render('505')
     }
 }
 
@@ -145,5 +300,7 @@ module.exports = {
 
     blockUser,
     customerslist,
-    adminLogout
+    adminLogout,
+    salesReport,
+    showSalesreport
 }

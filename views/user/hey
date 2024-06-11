@@ -472,3 +472,326 @@ Answer: D. Ipratropium and Tiotropium
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                <div class="row g-2 mb-3">
+                                                                    <div class="col-md-12 col-lg-8 col-xl-8 col-xxl-9">
+                                                                        <div class="body d-flex py-3">
+                                                                            <div class="container-xxl">
+                                                                                <div class="row g-3 mb-3">
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="card">
+                                                                                            <div class="card-body">
+                                                                                                <table id="myDataTable" class="table align-middle mb-0"
+                                                                                                    style="width: 100%;">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th colspan="3">
+                                                                                                                <h4><b>Your Products</b></h4>
+                                                                                                            </th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <% if(products.length> 0) { %>
+                                                                                                            <% for(let i=0; i < products.length; i++) { %>
+                                                                                                                <tr>
+                                                                                                                    <td colspan="3">
+                                                                                                                        <div
+                                                                                                                            class="product-box p-2 mb-3 border rounded">
+                                                                                                                            <div class="row g-0">
+                                                                                                                                <div class="col-4">
+                                                                                                                                    <img class="w-100 rounded img-fluid mb-2"
+                                                                                                                                        src="/img/<%= products[i].images[0] %>"
+                                                                                                                                        alt="Product Image" />
+                                                                                                                                </div>
+                                                                                                                                <div class="col-8">
+                                                                                                                                    <div class="ms-2">
+                                                                                                                                        <h5><b>
+                                                                                                                                                <%= products[i].productName
+                                                                                                                                                    %>
+                                                                                                                                            </b></h5>
+                                                                                                                                        <p class="mb-1">
+                                                                                                                                            <b>Description:</b></p>
+                                                                                                                                        <p class="text-primary">
+                                                                                                                                            <%= products[i].description
+                                                                                                                                                %>
+                                                                                                                                        </p>
+                                                                                                                                        <p><b>Price:</b> <span
+                                                                                                                                                class="text-primary">
+                                                                                                                                                <%= products[i].price
+                                                                                                                                                    %>
+                                                                                                                                            </span></p>
+                                                                                                                                        <p><b>Category:</b> <span
+                                                                                                                                                class="text-primary">
+                                                                                                                                                <%= products[i].category
+                                                                                                                                                    %>
+                                                                                                                                            </span></p>
+                                                                                                                                            <p><b>Size:</b> <span
+                                                                                                                                                class="text-primary">
+                                                                                                                                                <%= products[i].size
+                                                                                                                                                    %>
+                                                                                                                                            </span></p>
+                                                                                                                                            <p><b>stockQuantity:</b> <span
+                                                                                                                                                class="text-primary">
+                                                                                                                                                <%= products[i].stockQuantity
+                                                                                                                                                    %>
+                                                                                                                                            </span></p>
+                                                                                                                                    </div>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                            <div class="d-flex justify-content-end">
+                                                                                                                                <button type="button"
+                                                                                                                                    class="btn btn-outline-secondary me-2">
+                                                                                                                                    <a
+                                                                                                                                        href="/admin/productedit/<%= products[i]._id %>">
+                                                                                                                                        <i
+                                                                                                                                            class="icofont-edit text-success"></i>
+                                                                                                                                        Edit
+                                                                                                                                    </a>
+                                                                                                                                </button>
+                                                                                                                                <button type="button"
+                                                                                                                                    class="btn btn-outline-secondary"
+                                                                                                                                    onclick="deleteProduct('<%= products[i]._id %>')">
+                                                                                                                                    <i
+                                                                                                                                        class="icofont-ui-delete text-danger"></i>
+                                                                                                                                    Delete
+                                                                                                                                </button>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                <% } %>
+                                                                                                                    <% } else { %>
+                                                                                                                        <tr>
+                                                                                                                            <td colspan="3">No products available.
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                        <% } %>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                <div class="sidebar-widget">
+                                                                    <h4 class="pro-sidebar-title"><a href="/shop">Category</a></h4>
+                                                                    <div class="sidebar-widget-list mt-30">
+                                                                        <ul>
+                                                                            <% if (category.length > 0) { %>
+                                                                                <% for (let i = 0; i < category.length; i++) { %>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox">
+                                                                                            <a href="/shop/<%= category[i]._id %>"><%= category[i].categoryName %></a>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                <% } %>
+                                                                            <% } %>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="col-lg-3">
+                                                                    <div class="sidebar-style mr-30">
+                                                                        <div class="sidebar-widget">
+                                                                            <h4 class="pro-sidebar-title">Search </h4>
+                                                                            <div class="pro-sidebar-search mb-50 mt-25">
+                                                                                <form class="pro-sidebar-search-form" action="/search" method="POST">
+                                                                                    <input type="text" name="s" placeholder="Search here...">
+                                                                                    <button type="submit">
+                                                                                        <i class="pe-7s-search"></i>
+                                                                                    </button>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- <div class="sidebar-widget">
+                                                                            <h4 class="pro-sidebar-title">Refine By </h4>
+                                                                            <div class="sidebar-widget-list mt-30">
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox"> <a href="#">On Sale <span>4</span> </a> 
+                                                                                            <span class="checkmark"></span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">New <span>4</span></a> 
+                                                                                            <span class="checkmark"></span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">In Stock <span>4</span> </a>
+                                                                                            <span class="checkmark"></span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div> -->
+                                                                        <!-- <div class="sidebar-widget mt-45">
+                                                                            <h4 class="pro-sidebar-title">Filter By Price </h4>
+                                                                            <div class="price-filter mt-10">
+                                                                                <div class="price-slider-amount">
+                                                                                    <input type="text" id="amount" name="price"  placeholder="Add Your Price" />
+                                                                                </div>
+                                                                                <div id="slider-range"></div>
+                                                                            </div>
+                                                                        </div> -->
+                                                                        <!-- <div class="sidebar-widget mt-50">
+                                                                            <h4 class="pro-sidebar-title">Colour </h4>
+                                                                            <div class="sidebar-widget-list mt-20">
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">Green <span>4</span> </a>
+                                                                                            <span class="checkmark"></span> 
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">Cream <span>4</span> </a>
+                                                                                            <span class="checkmark"></span> 
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">Blue <span>4</span> </a>
+                                                                                            <span class="checkmark"></span> 
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">Black <span>4</span> </a>
+                                                                                            <span class="checkmark"></span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div> -->
+                                                                        <div class="sidebar-widget mt-40">
+                                                                            <h4 class="pro-sidebar-title">Size </h4>
+                                                                            <div class="sidebar-widget-list mt-20">
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">XL</a>
+                                                                                            <span class="checkmark"></span> 
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">L</a>
+                                                                                            <span class="checkmark"></span>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">SM</a>
+                                                                                            <span class="checkmark"></span> 
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <div class="sidebar-widget-list-left">
+                                                                                            <input type="checkbox" value=""> <a href="#">XXL</a>
+                                                                                            <span class="checkmark"></span> 
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="sidebar-widget mt-50">
+                                                                            <h4 class="pro-sidebar-title"><a href="/shop">Categories</a></h4>
+                                                                            <div class="sidebar-widget-tag mt-25">
+                                                                                <% if (category.length > 0) { %>
+                                                                                    <% for (let i = 0; i < category.length; i++) { %>
+                                                                                <ul>
+                                                                                    
+                                                                                                <li><a href="/shop/<%= category[i]._id %>"><%= category[i].categoryName %></a></li>
+                                                                                </ul>
+                                                                                <% } %>
+                                                                                <% } %>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                <div class="dropdown user-profile ml-2 ml-sm-3 d-flex align-items-center zindex-popover">
+                                                                    <div class="u-info me-2">
+                                                                        <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold">Krishnadas</span></p>
+                                                                        <small>Admin Profile</small>
+                                                                    </div>
+                                                                    <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static">
+                                                                        <img class="avatar lg rounded-circle img-thumbnail" src="/assets/admin//assets/images/profile_av.svg" alt="profile">
+                                                                    </a>
+                                                                    <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
+                                                                        <div class="card border-0 w280">
+                                                                            <div class="card-body pb-0">
+                                                                                <div class="d-flex py-1">
+                                                                                    <img class="avatar rounded-circle" src="/assets/admin//assets/images/profile_av.svg" alt="profile">
+                                                                                    <!-- <div class="flex-fill ms-3">
+                                                                                        <p class="mb-0"><span class="font-weight-bold">John	Quinn</span></p>
+                                                                                        <small class="">Johnquinn@gmail.com</small>
+                                                                                    </div> -->
+                                                                                </div>
+                                                                                
+                                                                                <div><hr class="dropdown-divider border-dark"></div>
+                                                                            </div>
+                                                                            <div class="list-group m-2 ">
+                                                                                <!-- <a href="admin-profile.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-ui-user fs-5 me-3"></i>Profile Page</a> -->
+                                                                                <!-- <a href="order-invoices.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-file-text fs-5 me-3"></i>Order Invoices</a> -->
+                                                                                <a href="/admin/logout" class="list-group-item list-group-item-action border-0 "><i class="icofont-logout fs-5 me-3"></i>Signout</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
