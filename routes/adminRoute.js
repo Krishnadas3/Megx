@@ -34,11 +34,16 @@ router.get('/adminlogin',adminController.logingetpage)
 router.post('/admin/login',adminController.loginPostpage)
 router.get('/admin/dashboard',adminAuth,adminController.dashboardpage)
 
-router.get(' /admin/sales-report', adminAuth , adminController.salesReport );
+// router.get(' admin/sales-report', adminAuth , adminController.salesReport );
+router.get('/admin/sales-report',adminAuth,adminController.salesReport)
+router.get('/admin/indexx',adminAuth,adminController.home)
 router.post('/admin/sales-report' , adminAuth , adminController.showSalesreport );
 
-//customerlist
 
+// admin_route.get('/sales-report', auth.isLogin , admincontroller.salesReport );
+// admin_route.post('/sales-report' , auth.isLogin , admincontroller.showSalesreport );
+
+//customerlist
 router.get('/admin/customerslist',adminAuth,adminController.customerslist)
 router.post('/blockuser',adminController.blockUser)
 

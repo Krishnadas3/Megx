@@ -22,7 +22,7 @@ const loadwhislist = async (req, res) => {
         res.render('user/whishlist', { wishlist, user,isAuthenticated });
     } catch (error) {
         console.error('Error:', error);
-        res.render('500');
+        res.render('user/500');
     }
 };
 
@@ -45,7 +45,7 @@ const addWishlist = async (req, res) => {
         }
     } catch (error) {
         console.error('Error:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.render('user/500').send(500).json({ error: 'Internal Server Error' });
     }
 }
 
@@ -64,7 +64,7 @@ const remove_from_wishlist = async (req, res) => {
 
     } catch (error) {
                 
-        res.render('500');
+        res.render('user/500');
         console.log(error.message); 
 
     }
@@ -87,7 +87,7 @@ const add_to_cart = async (req, res) => {
     } catch (error) {
 
         c        
-        res.render('500');
+        res.render('user/500');
         console.log(error.message); 
 
 

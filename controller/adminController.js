@@ -124,7 +124,7 @@ let  dashboardpage = async (req, res) => {
     } catch (error) {
 
         console.error('failed to get home:', error)
-        res.status(500).send('internal server error')
+        res.render('user/500').send(500).send('internal server error')
     }
 
 }
@@ -134,11 +134,19 @@ const salesReport = async (req , res )=>{
     try {
         const User = await user.findOne({ _id: req.session.admin })
         const saleData = ""
-        res.render('admin/sales-report',{User , saleData})
-        // res.render("admin/customerslist", { User });
-
+      res.render("admin/sales-report", { User,saleData });
     } catch (error) {
-        res.render('505')
+        console.log(error);
+    }
+}
+
+const home = async (req , res )=>{
+    try {
+        // const User = await user.findOne({ _id: req.session.admin })
+        // const saleData = ""
+      res.render("admin/indexx",);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -147,6 +155,7 @@ const showSalesreport = async (req , res )=>{
     try {
         const User = await user.findOne({ _id: req.session.admin })
         const currentDate = new Date(req.body.from) 
+        console.log("hey here got the currentdate ",currentDate);
         const newDate  = new Date(currentDate) 
         newDate.setDate(currentDate.getDate()+1)
         console.log(currentDate);
@@ -165,7 +174,6 @@ const showSalesreport = async (req , res )=>{
         }
 
     } catch (error) {
-
         res.render('505')
     }
 }
@@ -178,7 +186,7 @@ let logingetpage = (req, res) => {
     res.render('admin/adminlogin')
     } catch (error) {
         console.error('failed to get home:', error)
-        res.status(500).send('internal server error')
+        res.render('user/500').send(500).send('internal server error')
     }
 }
 
@@ -240,7 +248,7 @@ let adminLogout = (req, res) => {
         return;
     } catch (error) {
         console.error("Error logging out:", error);
-        res.status(500).send("Internal Server Error");
+        res.render('user/500').send(500).send("Internal Server Error");
     }
   };
   
@@ -272,7 +280,7 @@ let blockUser = async (req, res) => {
         }
         res.redirect('/admin/customerslist')
     } catch (error) {
-        res.status(500).send('error on admin changing user status')
+        res.render('user/500').send(500).send('error on admin changing user status')
     }
 }
 
@@ -281,26 +289,11 @@ module.exports = {
     dashboardpage,
     logingetpage,
     loginPostpage,
-
-
-    // categorieList,
-    // addCategory,
-    // submitAddCategory,
-    // editCategory,
-    // submitEditCategory,
-    // deleteCategory,
-
-    // subCategoryList,
-    // deleteSubCategory,
-    // submitEditSubCategory,
-    // editSubCategory,
-    // submitAddSubCategory,
-    // addSubCategory,
-    // subCategoryList,
-
     blockUser,
     customerslist,
     adminLogout,
     salesReport,
-    showSalesreport
+    showSalesreport,
+    home
+
 }

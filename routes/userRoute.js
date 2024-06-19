@@ -16,6 +16,9 @@ router.use(passport.initialize())
 router.use(passport.session())
 router.use(bodyParser.urlencoded({extended:true}))
 
+router.get('/404',userController.errorpage)
+router.get('/500',userController.error)
+
 
 router.get('/',userController.homepage)
 router.get('/login',userController.logiGetpage)

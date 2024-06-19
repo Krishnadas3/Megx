@@ -56,7 +56,7 @@ const add_address = async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).render('500');
+        res.render('user/500').send(500).render('500');
     }
 }
 
@@ -73,7 +73,7 @@ const showAddress = async (req, res) => {
         res.render('user/address', { User, isAuthenticated });
     } catch (error) {
         console.error(error);
-        res.render('500');
+        res.render('user/500');
     }
 }
 
@@ -125,7 +125,7 @@ const deleteAddress = async (req, res) => {
         const data = await user.updateOne({ _id: id }, { $pull: { address: { _id: address } } })
         res.json({ success: true })
     } catch (error) {
-        res.render('500');
+        res.render('user/500');
         console.log(error.message);
     }
 }

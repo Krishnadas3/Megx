@@ -20,7 +20,7 @@ const AddToCart = async (req, res) => {
             const product = await Product.findOne({ _id: productId });
 
             if (!product) {
-                return res.status(404).json({ error: 'Product not found' });
+                return res.render('user/500').send(404).json({ error: 'Product not found' });
             }
 
             const newCartItem = {
@@ -44,7 +44,7 @@ const AddToCart = async (req, res) => {
             const product = await Product.findOne({ _id: productId });
 
             if (!product) {
-                return res.status(404).json({ error: 'Product not found' });
+                return res.render('user/500').send(404).json({ error: 'Product not found' });
             }
 
             const newCartItem = {
@@ -63,7 +63,8 @@ const AddToCart = async (req, res) => {
         return res.json({ status: false });
     } catch (error) {
         console.log(error.message);
-        return res.status(500).json({ error: 'Internal Server Error' });
+        res.render('user/404')
+        return res.render('user/500').send(500).json({ error: 'Internal Server Error' });
     }
 };
 
@@ -94,7 +95,7 @@ let ListCart = async (req, res) => {
     } catch (error) {
         console.log(error.message);
         console.log('error from list cart');
-        res.render('500');
+        res.render('user/500');
     }
 };
 
@@ -118,11 +119,11 @@ const deleteCartProduct = async (req, res) => {
             res.json({ success: true });
         } else {
             // Cart not found or product not found in the cart
-            res.status(404).json({ error: 'Cart or Product not found' });
+            res.render('user/500').send(404).json({ error: 'Cart or Product not found' });
         }
     } catch (error) {
         console.log(error.message);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.render('user/500').send(500).json({ error: 'Internal Server Error' });
     }
 };
 
@@ -182,7 +183,7 @@ const cartquantityupdation = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
-        // res.render('500');
+        res.render('user/500');
     }
 }
 

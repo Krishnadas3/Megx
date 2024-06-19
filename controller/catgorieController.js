@@ -7,7 +7,7 @@ let categorieList = async (req, res) => {
         res.render('admin/categorielist',{category})
     } catch (error) {
         console.error('failed to get categorieist', error)
-        res.status(500).send('internal server error')
+        res.render('user/500').send(500).send('internal server error')
     }
 }
 
@@ -23,7 +23,7 @@ let submitAddCategory = async (req, res) => {
         res.redirect('/admin/categorielist');
     } catch (error) {
         console.error('Failed to add category', error);
-        res.status(500).send('Internal server error');
+        res.render('user/500').send(500).send('Internal server error');
     }
 };
 
@@ -33,14 +33,14 @@ let deleteCategory = async (req,res) => {
     try {
         let category = await categorie.findById(categoryId); 
         if (!category) {
-            return res.status(400).send('Category Not Found');
+            return res.render('user/500').send(400).send('Category Not Found');
         }
 
         await category.deleteOne(); 
         res.redirect('/admin/categorielist');
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.render('user/500').send(500).send('Internal Server Error');
     }
 }
 
@@ -52,12 +52,12 @@ let editCategory = async (req, res) => {
         // Find the category by ID
         let category = await categorie.findById(categoryId);
         if (!category) {
-            return res.status(404).send('Category not found');
+            return res.render('user/500').send(404).send('Category not found');
         }
         res.render('admin/categoriesedit', { category });
     } catch (error) {
         console.error('Failed to fetch category', error);
-        res.status(500).send('Internal Server Error');
+        res.render('user/500').send(500).send('Internal Server Error');
     }
 };
 
@@ -70,7 +70,7 @@ const submitEditCategory = async (req, res) => {
         // Find the category by ID
         const category = await categorie.findById(categoryId);
         if (!category) {
-            return res.status(404).send('Category not found');
+            return res.render('user/500').send(404).send('Category not found');
         }
         // Update category name
         category.categoryName = categoryName;
@@ -79,7 +79,7 @@ const submitEditCategory = async (req, res) => {
         res.redirect('/admin/categorielist');
     } catch (error) {
         console.error('Failed to update category', error);
-        res.status(500).send('Internal Server Error');
+        res.render('user/500').send(500).send('Internal Server Error');
     }
 };
 
@@ -102,7 +102,7 @@ const submitEditCategory = async (req, res) => {
 let subCategoryList = async (req,res) => {
     let admin = await categorie.find();
     if(!admin){
-        res.status(400).send('Admin Not Found')
+        res.render('user/500').send(400).send('Admin Not Found')
     }
     let subCategory = admin[0].subCategory.map(item => item);
     res.render('admin/subCategoryList',{subCategory})
@@ -117,18 +117,18 @@ let submitAddSubCategory = async (req, res) => {
     try {
         const { subCategoryName } = req.body;
         if (!subCategoryName) {
-            return res.status(400).send('Subcategory name is required');
+            return res.render('user/500').send(400).send('Subcategory name is required');
         }
         let admin = await categorie.findOne();
         if (!admin) {
-            return res.status(404).send('Admin category not found');
+            return res.render('user/500').send(404).send('Admin category not found');
         }
         admin.subCategory.push({ subCategoryName });
         await admin.save();
         res.redirect('/admin/subcategories');
     } catch (error) {
         console.error('Failed to add subcategory', error);
-        res.status(500).send('Internal Server Error');
+        res.render('user/500').send(500).send('Internal Server Error');
     }
 };
 
@@ -137,14 +137,14 @@ let deleteSubCategory = async (req,res) => {
     try {
         let admin = await categorie.findOne();
         if(!admin){
-            res.status(400).send('Admin Not Found')
+            res.render('user/500').send(400).send('Admin Not Found')
         }
         admin.subCategory = admin.subCategory.filter(sub => sub.id != subCategoryId)
         admin.save()
         res.redirect('/admin/subcategories');
     } catch (error) {
         console.log(error);
-        res.status(500).send('Internal Server Error')
+        res.render('user/500').send(500).send('Internal Server Error')
     }
 }
 
@@ -156,16 +156,16 @@ let editSubCategory = async(req,res) =>{
     try {
         let admin = await categorie.findOne()
         if(!admin){
-            res.status(400).send('admin not found')
+            res.render('user/500').send(400).send('admin not found')
         }
         let subCategory = admin.subCategory.find(cat => cat.id == subCategoryId)
 
         if(!admin){
-            res.status(400).send('admi not found')
+            res.render('user/500').send(400).send('admi not found')
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send('Internal Server Error')
+        res.render('user/500').send(500).send('Internal Server Error')
     }
     res.render('admin/subCategory-edit')
 }
@@ -177,19 +177,19 @@ let submitEditSubCategory = async (req,res) => {
     try {
         let admin = await categorie.findOne();
         if(!admin){
-            res.status(400).send('Admin Not Found')
+            res.render('user/500').send(400).send('Admin Not Found')
         }
         let subCategoryInd = await admin.subCategory.findIndex(cat => cat.id == subCategoryId);
         console.log("subCategoryInd : ",subCategoryInd);
         if(subCategoryInd == -1){
-            res.status(400).send('Category Not Found')
+            res.render('user/500').send(400).send('Category Not Found')
         }else{
             admin.subCategory[subCategoryInd].subCategoryName = subCategoryName ; 
             await admin.save()
             res.redirect('/admin/subcategories');
         }
     } catch (error) {
-        res.status(500).send('Internal Server Error')
+        res.render('user/500').send(500).send('Internal Server Error')
     }
 }
 

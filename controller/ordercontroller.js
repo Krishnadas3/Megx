@@ -45,7 +45,7 @@ let loadcheckout = async (req, res) => {
     res.render('user/checkout', { isAuthenticated, User, products: productsInCart, cartTotalPrice })
   } catch (error) {
     console.error('failed to get login page', error)
-    res.status(500).send('intenal server error')
+    res.render('user/500').send('intenal server error')
   }
 }
 
@@ -153,7 +153,7 @@ const place_order = async (req, res) => {
       instance.orders.create(options, (err, order) => {
         if (err) {
           console.error("Error creating Razorpay order:", err);
-          return res.status(500).send("Internal server error");
+          return res.render('user/500').send(500).send("Internal server error");
         }
         res.json({ viewRazorpay: true, order });
       });
@@ -166,7 +166,7 @@ const place_order = async (req, res) => {
 
   } catch (error) {
     console.error('Failed to place order:', error);
-    res.status(500).send('Internal server error');
+    res.render('user/500').send(500).send('Internal server error');
   }
 };
 
@@ -208,7 +208,7 @@ const verify_payment = async (req, res) => {
     }
   } catch (error) {
 
-    res.render('500');
+    res.render('user/500');
     console.log(error.message);
 
   }
@@ -243,7 +243,7 @@ let order_success = async (req, res) => {
     res.render('user/order_success', { isAuthenticated, User, order, userdata });
   } catch (error) {
     console.error('Failed to process order:', error);
-    res.status(500).send('Internal server error');
+    res.render('user/500').send(500).send('Internal server error');
   }
 };
 
@@ -255,7 +255,7 @@ const load_order = async (req, res) => {
     res.render("admin/list-order", { order, User });
   } catch (error) {
 
-    // res.render('500');
+    res.render('user/500');
     console.log(error.message);
 
   }
@@ -284,7 +284,7 @@ const cancel_order = async (req, res) => {
       res.json({ success: true });
     }
   } catch (error) {
-    res.render('500');
+    res.render('user/500');
     console.log(error.message);
   }
 };
@@ -300,7 +300,7 @@ const retrun_order = async (req, res) => {
     console.log("hey ivide kittum return order ", retrun_order);
     res.json({ success: true });
   } catch (error) {
-    res.render('500');
+    res.render('user/500');
     console.log(error.message);
   }
 };
@@ -318,7 +318,7 @@ const confirm_return = async (req, res) => {
     );
   } catch (error) {
 
-    res.render('500');
+    res.render('user/500');
     console.log(error.message);
   }
 };
@@ -340,7 +340,7 @@ const show_orderlist = async (req, res) => {
     res.render("user/list-orders", { isAuthenticated, User, orders });
 
   } catch (error) {
-    res.render('500');
+    res.render('user/500');
     console.log(error.message);
 
   }
@@ -367,7 +367,7 @@ const view_order_user = async (req, res) => {
 
   } catch (error) {
     console.error("Error fetching order:", error.message);
-    res.render('500');
+    res.render('user/500');
   }
 };
 
@@ -395,7 +395,7 @@ const view_order_admin = async (req, res) => {
 
   } catch (error) {
 
-    res.render('500');
+    res.render('user/500');
     console.log(error.message);
 
   }
@@ -651,21 +651,20 @@ const apply_coupon = async (req, res) => {
   try {
 
     const id = req.user.id;
-
-    console.log("hey here got te id ",id);
+    
+    console.log("hey here got the ",id);
 
     const code = req.body.couponcode;
 
-    console.log("hey here got the code",code);
+    console.log("hey here got the couon code",code);
 
     const cartTotel = req.body.cartTotal;
 
-    console.log("hey here got the cargotal ",cartTotel);
+    console.log("hey here got the couon code",cartTotel);
 
     const coupondata = await Coupon.findOne({ code: code });
 
     const userused = await Coupon.findOne({ code: code, used: { $in: [id] } })
-
 
     const currentdate = Date.now();
 
@@ -686,6 +685,8 @@ const apply_coupon = async (req, res) => {
 
               cartTotel * (coupondata.discountpercentage / 100);
 
+              console.log("hey here got the ",discountAmount);
+
 
             if (discountAmount <= coupondata.maxdiscountprice) {
 
@@ -693,6 +694,7 @@ const apply_coupon = async (req, res) => {
 
               let value = cartTotel - discount_value;
 
+              console.log("hey here got the ",value);
 
               const coupon_apply = await user.updateOne(
 
@@ -729,8 +731,6 @@ const apply_coupon = async (req, res) => {
 
               );
               
-
-
               const coupon_used = await Coupon.updateOne(
 
                 { code: code },
@@ -739,9 +739,8 @@ const apply_coupon = async (req, res) => {
 
               );
 
-
               res.json({ success: true, value, discount_value, code });
-
+              
             }
 
           } else {

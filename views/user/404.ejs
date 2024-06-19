@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+}
+
+.container {
+    text-align: center;
+}
+
+.error {
+    font-size: 10em;
+    font-weight: bold;
+}
+
+.message {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.animation {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    margin: 0 auto 30px;
+}
+
+.ghost {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 200px;
+    width: 200px;
+    background: #fff;
+    border-radius: 100px 100px 0 0;
+    animation: float 2s ease-in-out infinite;
+}
+
+.ghost::before,
+.ghost::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    height: 20px;
+    width: 20px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.ghost::before {
+    left: 50px;
+}
+
+.ghost::after {
+    right: 50px;
+}
+
+.face {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 60px;
+    width: 100px;
+    background: #333;
+    border-radius: 50px 50px 0 0;
+}
+
+.shadow {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 20px;
+    width: 120px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    animation: shadow 2s ease-in-out infinite;
+}
+
+.home-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(-50%, 0);
+    }
+    50% {
+        transform: translate(-50%, 20px);
+    }
+}
+
+@keyframes shadow {
+    0%, 100% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(0.8);
+    }
+}
+</style>
+
+<body>
+    <div class="container">
+        <div class="error">404</div>
+        <div class="message">Page Not Found</div>
+        <div class="animation">
+            <div class="ghost">
+                <div class="face"></div>
+            </div>
+            <div class="shadow"></div>
+        </div>
+        <a href="/" class="home-link">Go Home</a>
+    </div>
+</body>
+</html>
