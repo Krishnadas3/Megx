@@ -85,8 +85,6 @@ const edit_banner = async (req , res )=>{
         const title = req.body.title
         const sub_title = req.body.sub_title
 
-        
-    
         const upadate = await Banner.updateOne({_id : id },{
             $set:{
                 caption: caption,
@@ -94,6 +92,7 @@ const edit_banner = async (req , res )=>{
                 sub_title : sub_title
             }
         })
+        console.log("here get the update",upadate);
         res.json({ success:true })
     } catch (error) {
         res.render('505')

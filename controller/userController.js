@@ -24,9 +24,31 @@ let homepage = async (req, res) => {
         res.render('user/index', { isAuthenticated, products,banner });
     } catch (error) {
         console.error('Failed to get home:', error);
-        res.status(500).send('Internal server error');
+        res.render('user/500').send(500).send('Internal server error');
     }
 }
+
+let errorpage = async (req, res) => {
+    try {
+        
+        res.render('user/404');
+    } catch (error) {
+        console.error('Failed to get home:', error);
+        res.render('user/500').send(500).send('Internal server error');
+    }
+}
+
+let error = async (req, res) => {
+    try {
+        
+        res.render('user/500');
+    } catch (error) {
+        console.error('Failed to get home:', error);
+        res.render('user/500').send(500).send('Internal server error');
+    }
+}
+
+
 
 let aboutpage = async (req, res) => {
     try {
@@ -34,7 +56,7 @@ let aboutpage = async (req, res) => {
         res.render('user/about',{isAuthenticated});
     } catch (error) {
         console.error('Failed to get home:', error);
-        res.status(500).send('Internal server error');
+        res.render('user/500').send(500).send('Internal server error');
     }
 }
 
@@ -50,7 +72,7 @@ let shopepage = async (req, res) => {
         res.render('user/shop', { products, category, user, isAuthenticated,coupon,banner });
     } catch (error) {
         console.error('failed to get home:', error)
-        res.status(500).send('internal server error')
+        res.render('user/500').send(500).send('internal server error')
     }
 }
 
@@ -107,7 +129,7 @@ const sortproudct = async (req, res) => {
         res.render('user/shop', { products,isAuthenticated,category });
     } catch (error) {
         console.error('Error sorting products:', error);
-        res.status(500).send('Internal Server Error');
+        res.render('user/500').send(500).send('Internal Server Error');
     }
 };
 
@@ -123,7 +145,7 @@ let productdetailpage = async (req, res) => {
         res.render('user/productdetail', { product, isAuthenticated,products });
     } catch (error) {
         console.error('Failed to connect:', error);
-        res.status(500).send('Internal server error');
+        res.render('user/500').send('Internal server error');
     }
 }
 
@@ -139,7 +161,7 @@ let signupGetpage = async (req, res) => {
         res.render('user/signup')
     } catch (error) {
         console.error('failed to get login page', error);
-        res.status(500).send('internal server error')
+        res.render('user/500').send(500).send('internal server error')
     }
 }
 
@@ -148,7 +170,7 @@ let signupPostpage = async (req, res) => {
     try {
         const password = req.body.password;
         if (!password) {
-            return res.status(400).json({ message: 'Password is required' });
+            return res.render('user/500').send(400).json({ message: 'Password is required' });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
         const data = new user({
@@ -163,7 +185,7 @@ let signupPostpage = async (req, res) => {
         res.redirect('/login?signupSuccess=true');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.render('user/500').send(500).json({ message: 'Internal server error' });
     }
 };
 
@@ -180,7 +202,7 @@ let logiGetpage = async (req, res) => {
 
     } catch (error) {
         console.error('failed to get login page', error)
-        res.status(500).send('intenal server error')
+        res.render('user/500').send(500).send('intenal server error')
     }
 }
 
@@ -228,7 +250,7 @@ const succesGoogleLogin = async (req, res) => {
     try {
         if (!req.user)
 
-            return res.status(401).send('no user data, login failed')
+            return res.render('user/500').send(401).send('no user data, login failed')
 
         console.log(req.user);
 
@@ -270,12 +292,12 @@ const succesGoogleLogin = async (req, res) => {
             secure: process.env.NODE_ENV === "production"
         })
 
-        res.status(200).redirect('/')
+        res.render('user/500').send(200).redirect('/')
         console.log('user loged in with google: jwt created');
 
     } catch (error) {
         console.error('login erroe', error)
-        res.status(500).redirect('user/login')
+        res.render('user/500').send(500).redirect('user/login')
     }
 }
 
@@ -311,7 +333,7 @@ let forgotpasspage = async (req, res) => {
         res.render('user/forgotpass');
     } catch (error) {
         console.error('Failed to get login page', error);
-        res.status(500).send('Internal server error');
+        res.render('user/500').send(500).send('Internal server error');
     }
 };
 
@@ -349,7 +371,7 @@ let forgetEmailPostpage = async (req, res) => {
 
         console.log(userRecord);
         if (!userRecord) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.render('user/500').send(404).json({ message: 'User not found' });
         }
 
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
@@ -365,7 +387,7 @@ let forgetEmailPostpage = async (req, res) => {
         res.render('user/forgetotppass', { email, message });
     } catch (error) {
         console.error('Error sending OTP:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.render('user/500').send(500).json({ message: 'Server error' });
     }
 };
 
@@ -376,15 +398,15 @@ let resetPassword = async (req, res) => {
         const userRecord = await user.findOne({ email });
 
         if (!userRecord) {
-            return res.status(404).json({ error: 'User not found.' });
+            return res.render('user/500').send(404).json({ error: 'User not found.' });
         }
 
         if (userRecord.otp !== otp || Date.now() > userRecord.otpExpiration) {
-            return res.status(400).json({ error: 'Invalid or expired OTP.' });
+            return res.render('user/500').send(400).json({ error: 'Invalid or expired OTP.' });
         }
 
         if (newpassword !== confirmpassword) {
-            return res.status(400).json({ error: 'Passwords do not match.' });
+            return res.render('user/500').send(400).json({ error: 'Passwords do not match.' });
         }
 
         const hashedPassword = await bcrypt.hash(newpassword, 10);
@@ -399,10 +421,10 @@ let resetPassword = async (req, res) => {
         await userRecord.save();
 
         console.log('Password reset successful.');
-        res.status(200).render('user/login');
+        res.render('user/500').send(200).render('user/login');
     } catch (error) {
         console.error('Error resetting password:', error);
-        res.status(500).json({ error: 'Server error.' });
+        res.render('user/500').send(500).json({ error: 'Server error.' });
     }
 };
 
@@ -416,7 +438,7 @@ let logingetotp = async (req, res) => {
         res.render('user/loginotphone')
     } catch (error) {
         console.error('failed to get login page', error)
-        res.status(500).send('intenal server error')
+        res.render('user/500').send(500).send('intenal server error')
     }
 }
 
@@ -442,7 +464,7 @@ const loginrequestsotp = async (req, res) => {
         const userRecord = await user.findOne({ phonenumber });
 
         if (!userRecord) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.render('user/500').send(404).json({ error: 'User not found' });
         }
 
         const otp = generateotp();
@@ -462,14 +484,14 @@ const loginrequestsotp = async (req, res) => {
             console.log('OTP SMS sent');
         } catch (error) {
             console.error('Error sending OTP SMS', error);
-            return res.status(500).json({ error: 'Error sending OTP' });
+            return res.render('user/500').send(500).json({ error: 'Error sending OTP' });
         }
 
         res.render('user/loginotp', { phonenumber });
 
     } catch (error) {
         console.error('Error requesting OTP', error);
-        res.status(500).json({ error: 'Server error' });
+        res.render('user/500').send(500).json({ error: 'Server error' });
     }
 };
 
@@ -482,11 +504,11 @@ const loginverifyotp = async (req, res) => {
         const userRecord = await user.findOne({ phonenumber });
 
         if (!userRecord) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.render('user/500').send(404).json({ error: 'User not found' });
         }
 
         if (userRecord.otp !== otp || Date.now() > userRecord.otpExpiration) {
-            return res.status(400).json({ error: 'Invalid or expired OTP' });
+            return res.render('user/500').send(400).json({ error: 'Invalid or expired OTP' });
         }
 
         // Clear OTP field after successful verification
@@ -494,11 +516,11 @@ const loginverifyotp = async (req, res) => {
         userRecord.otpExpiration = undefined;
         await userRecord.save();
 
-        res.status(200).redirect('/');
+        res.render('user/500').send(200).redirect('/');
         console.log('User logged in using OTP');
     } catch (error) {
         console.error('Error verifying OTP', error);
-        res.status(500).json({ error: 'Server error' });
+        res.render('user/500').send(500).json({ error: 'Server error' });
     }
 };
 
@@ -531,6 +553,8 @@ module.exports = {
     productdetailpage,
     loadbycategory,
     aboutpage,
-    sortproudct
+    sortproudct,
+    errorpage,
+    error
     // loadcheckout
 }

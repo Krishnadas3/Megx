@@ -795,3 +795,244 @@ Answer: D. Ipratropium and Tiotropium
                                                                         </div>
                                                                     </div>
                                                                 </div>
+
+
+
+                                                                <div class="checkout-area pt-95 pb-100">
+                                                                    <div class="container">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-7">
+                                                                                <div class="billing-info-wrap">
+                                                                                    <!-- Address Selection Form -->
+                                                                                    <form method="post" id="address_selection_form">
+                                                                                        <h3>Select Address</h3>
+                                                                                        <div class="row">
+                                                                                            <div class="col-lg-12">
+                                                                                                <div class="billing-info mb-20">
+                                                                                                    <label for="address_select">Select Address</label>
+                                                                                                    <select id="address_select" name="selected_address"
+                                                                                                        class="form-control form-select" required>
+                                                                                                        <% if (User[0].address.length> 0) {
+                                                                                                            User[0].address.forEach((x, index) => { %>
+                                                                                                            <option value="<%= index %>">
+                                                                                                                <%= x.name %> - <%= x.street %>, <%= x.district %>, <%= x.state
+                                                                                                                                %>, <%= x.pincode %>, <%= x.number %>
+                                                                                                            </option>
+                                                                                                            <% }); } %>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                        
+                                                                                        <div class="billing-btn">
+                                                                                            <button type="button" class="btn btn-dark" data-toggle="modal"
+                                                                                                data-target="#addAddressModal">
+                                                                                                Add Address
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <br>
+                                                                                <br>
+                                                                                <br>
+                                                                                <div class="col-lg-5 col-md-12 ps-2-3 mb-1-9 mb-lg-0">
+                                                                                    <div id="accordion" class="accordion-style3">
+                                                                                        <div class="card">
+                                                                                            <div class="card-header" id="headingOne">
+                                                                                                <h5 class="mb-0">
+                                                                                                    <button class="btn btn-link" data-bs-toggle="collapse"
+                                                                                                        data-bs-target="#collapseOne" aria-expanded="true"
+                                                                                                        aria-controls="collapseOne">
+                                                                                                        Coupon Code
+                                                                                                    </button>
+                                                                                                </h5>
+                                                                                            </div>
+                                                                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                                                                                data-bs-parent="#accordion">
+                                                                                                <div class="card-body">
+                                                        
+                                                                                                    <form id="apply_coupon">
+                                                        
+                                                                                                        <div class="row">
+                                                        
+                                                                                                            <div class="col-sm-12 mb-2">
+                                                        
+                                                                                                                <div class="form-group">
+                                                                                                                    <label>Enter Your Coupon Code</label>
+                                                                                                                    <input type="text" class="form-control" name="couponcode"
+                                                                                                                        placeholder="Enter Your Coupon Code">
+                                                                                                                </div>
+                                                                                                                <input type="hidden" name="total" value="<%= cartTotalPrice %>">
+                                                                                                            </div>
+                                                        
+                                                                                                        </div>
+                                                        
+                                                                                                        <button type="submit" class="butn-style2 dark" onclick="">Apply
+                                                                                                            Code</button>
+                                                        
+                                                                                                    </form>
+                                                        
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                        
+                                                        
+                                                        
+                                                                            <div class="col-lg-5">
+                                                                                <div class="your-order-area">
+                                                                                    <form id="checkout_form" action="/place_order" method="post">
+                                                                                        <div class="your-order-area">
+                                                                                            <h3>Your order</h3>
+                                                                                            <div class="your-order-wrap gray-bg-4">
+                                                                                                <div class="your-order-product-info">
+                                                                                                    <div class="your-order-top">
+                                                                                                        <ul>
+                                                                                                            <li>Product</li>
+                                                                                                            <li>Total</li>
+                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                                    <div class="your-order-middle">
+                                                                                                        <% products.forEach((product, index)=> { %>
+                                                                                                            <ul>
+                                                                                                                <li>
+                                                                                                                    <span class="order-middle-left">
+                                                                                                                        <%= product.productName %>
+                                                                                                                    </span>
+                                                                                                                    <span class="order-price">$<%= product.productTotalprice %>
+                                                                                                                            </span>
+                                                                                                                    <input type="hidden" name="productId"
+                                                                                                                        value="<%= product._id %>">
+                                                                                                                    <input type="hidden" name="qty" value="<%= product.qty %>">
+                                                                                                                    <input type="hidden" name="singleTotel"
+                                                                                                                        value="<%= product.productTotalprice %>">
+                                                                                                                    <input type="hidden" name="price"
+                                                                                                                        value="<%= product.price %>">
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                            <% }); %>
+                                                                                                    </div>
+                                                                                                    <div class="your-order-bottom">
+                                                                                                        <ul>
+                                                                                                            <li class="your-order-shipping">Shipping</li>
+                                                                                                            <li>Free shipping</li>
+                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                                    <div class="your-order-total">
+                                                                                                        <ul>
+                                                                                                            <li class="order-total">Total</li>
+                                                                                                            <li>
+                                                                                                                <%= cartTotalPrice %>
+                                                                                                            </li>
+                                                                                                            <input type="hidden" name="total" id="total"
+                                                                                                                value="<%= cartTotalPrice %>">
+                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                                </div>
+                                                        
+                                                                                                <div class="payment-method">
+                                                                                                    <div class="widget-title">
+                                                                                                        <h5>Please Choose your payment method</h5>
+                                                                                                    </div>
+                                                                                                    <br>
+                                                                                                    <div class="d-flex mb-4">
+                                                                                                        <div class="flex-grow-1 ms-3">
+                                                                                                            <div class="form-check">
+                                                                                                                <input class="form-check-input" type="radio"
+                                                                                                                    name="payment_method" id="flexRadioDefault2" checked
+                                                                                                                    required value="UPI">
+                                                                                                                <label class="form-check-label"
+                                                                                                                    for="flexRadioDefault2">UPI</label>
+                                                                                                            </div>
+                                                                                                            <br>
+                                                                                                            <div class="form-check">
+                                                                                                                <input class="form-check-input" type="radio"
+                                                                                                                    name="payment_method" value="COD" required>
+                                                                                                                <label class="form-check-label"
+                                                                                                                    for="flexRadioDefault1">COD</label>
+                                                                                                            </div>
+                                                                                                            <br>
+                                                                                                            <div class="form-check">
+                                                                                                                <input class="form-check-input" type="radio"
+                                                                                                                    name="payment_method" id="flexRadioDefault1" value="WALLET"
+                                                                                                                    required>
+                                                                                                                <label class="form-check-label"
+                                                                                                                    for="flexRadioDefault1">Wallet</label>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                        
+                                                                                                <div class="billing-info mb-20">
+                                                                                                    <label for="address_select">Select Address</label>
+                                                                                                    <select id="address_select" name="user" class="form-control form-select"
+                                                                                                        required>
+                                                                                                        <% if (User[0].address.length> 0) {
+                                                                                                            User[0].address.forEach((x, index) => { %>
+                                                                                                            <option value="<%= index %>">
+                                                                                                                <%= x.name %> - <%= x.street %>, <%= x.district %>, <%= x.state
+                                                                                                                                %>, <%= x.pincode %>
+                                                                                                            </option>
+                                                                                                            <% }); } %>
+                                                                                                    </select>
+                                                                                                </div>
+                                                        
+                                                                                                <div class="Place-order mt-25">
+                                                                                                    <button type="submit" class="btn btn-dark">Place Order</button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                        
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- <div class="col-lg-5 col-md-12 ps-2-3 mb-1-9 mb-lg-0">
+                                                                                <div id="accordion" class="accordion-style3">
+                                                                                    <div class="card">
+                                                                                        <div class="card-header" id="headingOne">
+                                                                                            <h5 class="mb-0">
+                                                                                                <button class="btn btn-link" data-bs-toggle="collapse"
+                                                                                                    data-bs-target="#collapseOne" aria-expanded="true"
+                                                                                                    aria-controls="collapseOne">
+                                                                                                    Coupon Code
+                                                                                                </button>
+                                                                                            </h5>
+                                                                                        </div>
+                                                                                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                                                                            data-bs-parent="#accordion">
+                                                                                            <div class="card-body">
+                                                        
+                                                                                                <form id="apply_coupon">
+                                                        
+                                                                                                    <div class="row">
+                                                        
+                                                                                                        <div class="col-sm-12 mb-2">
+                                                        
+                                                                                                            <div class="form-group">
+                                                                                                                <label>Enter Your Coupon Code</label>
+                                                                                                                <input type="text" class="form-control"
+                                                                                                                    name="couponcode"
+                                                                                                                    placeholder="Enter Your Coupon Code">
+                                                                                                            </div>
+                                                                                                            <input type="hidden" name="cartTotel"
+                                                                                                                value="<%= User[0].cartTotel %>">
+                                                                                                        </div>
+                                                        
+                                                                                                    </div>
+                                                        
+                                                                                                    <button type="submit" class="butn-style2 dark" onclick="">Apply
+                                                                                                        Code</button>
+                                                        
+                                                                                                </form>
+                                                        
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div> -->
+                                                                        </div>
+                                                        
+                                                                    </div>
+                                                                </div>

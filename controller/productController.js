@@ -29,16 +29,16 @@ let productlistpage = async (req,res) => {
         res.render('admin/product-list',{products})
     } catch (error) {
         console.log(error);
-        res.status(404).send("not found")
+        res.render('user/500').send(404).send("not found")
     }
 }
 
 let productgridpage = async (req,res) => {
     try {
-        res.status(200).render('admin/product-grid')
+        res.render('user/500').send(200).render('admin/product-grid')
     } catch (error) {
         console.log(error);
-        res.status(404).send("not found")
+        res.render('user/500').send(404).send("not found")
     }
 }
 
@@ -46,61 +46,12 @@ let productaddpage  = async(req,res) =>{
     try { 
       const category = await Categorie.find()
       console.log(category);
-        res.status(200).render('admin/product-add',{category})
+        res.render('user/500').send(200).render('admin/product-add',{category})
     } catch (error) {
         console.log(error);
-        res.status(404).send("not found")
+        res.render('user/500').send(404).send("not found")
     }
 }
-
-// let addproductSubmit =async (req,res) =>{
-//   console.log("req.body :", req.body);
-//   console.log("req.files :", req.files);
-//   let imageData = req.files;
-//   let productData = req.body;
-  // const category = req.body.category
-  // const name = req.body.productName
-  // console.log(name);
-  // console.log(category);
-  // console.log(productData);
-  // let { ProductName, Price, Stock, Description,category} = productData;
-  // const imageUrls = [];
-  // Upload images to Cloudinary
-//   try {
-
-//     if(productData){
-//       for (const file of imageData) {
-//         const result = await cloudinary.uploader.upload(file.path);
-//         console.log(result,'image url result from cloudinary');
-//         imageUrls.push(result.secure_url);
-//       }
-//       console.log("imageurls: ",imageUrls);
-//     }
-    
-//     let newProduct = {
-//       productName: ProductName,
-//       description: Description,
-//       price: Price,
-//       stockQuantity: Stock,
-//       category:category,
-//       images:imageUrls
-//     };
-
-//     let products = await Product.find();
-//     console.log("products: ",products);
-//     if (!products) {
-//       res.status(400).send('product Not Found');
-//     } else {
-//       products.push(newProduct);
-//       await Product.create(newProduct)
-//       res.redirect('/admin/productlist');
-//     }
-//   } catch (error) {
-//     console.error("Error uploading images to Cloudinary:", error);
-//     return res.status(500).send("Error uploading images to Cloudinary");
-//   }
-// }
-
 
 
 const addproductSubmit = async (req, res) => {
@@ -145,33 +96,12 @@ const addproductSubmit = async (req, res) => {
 
 let  productdetailpage = async(req,res) =>{
     try {
-        res.status(200).render('admin/product-detail')
+        res.render('user/500').send(200).render('admin/product-detail')
     } catch (error) {
         console.log(error);
-        res.status(404).send("not found")
+        res.render('user/500').send(404).send("not found")
     }
 }
-
-// let producteditpage = async(req,res) => {
-//     try {
-//         res.status(200).render('admin/product-edit')
-//     } catch (error) {
-//         console.log(error);
-//         res.status(404).send("not found")
-//     }
-// } 
-
-//  let deleteProduct = async (req,res) =>{
-//   let productId = req.params.id;
-//   console.log(productId)
-//   let products = await Product.find()
-//   if(!products){
-//     return res.status(400).send('prodcut not found')
-//   }
-//   products = product.filter(prod => prod._id.tostring() == productId )
-//   Prodcut.save()
-//   console.log('product deleted');
-//   res.redirect('/admin/productlist')
 
 const deleteProduct = async (req, res) => {
 
@@ -270,7 +200,7 @@ const sort = async (req, res) => {
         res.render("user/shop", { products,isAuthenticated, user, category, category_name: "sort", coupon: [], countpro: '' });
 
     } catch (error) {
-        res.render('500');
+        res.render('user/500');
         console.log(error.message);
     }
 };
@@ -287,7 +217,7 @@ const search_product = async (req, res) => {
         const category = await Categorie.find();
         res.render('user/shop', { category,isAuthenticated, products, user, category_name: "search", coupon: [], countpro: '' });
     } catch (error) {
-        res.render('500');
+        res.render('user/500');
         console.log(error.message);
     }
 };
