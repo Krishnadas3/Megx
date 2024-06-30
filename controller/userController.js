@@ -1,5 +1,5 @@
 
-const bcrypt = require('bcrypt')
+// const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 const user = require('../models/users')
@@ -172,7 +172,8 @@ let signupPostpage = async (req, res) => {
         if (!password) {
             return res.render('user/500').send(400).json({ message: 'Password is required' });
         }
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = password
         const data = new user({
             name: req.body.username,
             email: req.body.email,
