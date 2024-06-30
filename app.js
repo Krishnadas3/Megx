@@ -42,7 +42,7 @@ app.use(cookieParser())
 const { parsed: config } = require('dotenv').config();
 global.config = config;
 
-mongoose.connect(config.CONNECTIONSTRING, {
+mongoose.connect(config.CONNECTION_STRING, {
     dbName: 'shop'
 })
     .then((data) => {
