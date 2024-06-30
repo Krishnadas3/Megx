@@ -7,7 +7,7 @@ let Product = require('../models/product');
 
 // const config = require('../config/')
 
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 
 // reguire nodemailer
 const nodemailer = require('nodemailer');
