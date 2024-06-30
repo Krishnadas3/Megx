@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     price:{type:String},
     brand:{type:String},
     subCategory:{type:String},
-    stockQuantity: { type: Number },  // Changed from String to Number
+    stockQuantity: { type: Number },  
     addedOn:{type:Date,default:Date.now},
     images:{type:Array},
     size: [{

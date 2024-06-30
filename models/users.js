@@ -71,7 +71,32 @@ const loginSchema = new mongoose.Schema({
             required: true
         }
 
-    }]
+    }],
+    cart: [{
+
+        productId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'Product',
+            required: true
+        },
+        Price: {
+            type: Number,
+
+        },
+        qty: {
+
+            type: Number,
+            required: true
+        },
+        productTotalprice: {
+            type: Number,
+            required: true
+        }
+    }],
+    cartTotalPrice:{
+        type:Number,
+       
+    },
 
 });
 

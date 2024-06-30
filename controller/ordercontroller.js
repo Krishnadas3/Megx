@@ -1,5 +1,4 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart')
 const user = require('../models/users');
 const Order = require('../models/orederModel')
 const Category = require('../models/category')
@@ -21,33 +20,23 @@ var instance = new Razorpay({
 
 });
 
-let loadcheckout = async (req, res) => {
-  // console.log("hey ividek vannu nammal ");
+const loadcheckout = async (req, res) => {
   try {
     const isAuthenticated = req.cookies.jwt !== undefined;
     const id = req.user.id;
-    const userId = req.user.id;
-    const User = await user.find({ _id: id })
-    const cart = await Cart.findOne({ userId: userId }).populate('products.productId');
+    const User = await user.findById(id).populate("cart.productId").exec();
 
-    if (!cart || cart.products.length === 0) {
-      return res.render('user/cartpage', { products: [], cartTotalPrice: 0 });
+    if (User.cart.length > 0) {
+      res.render("user/checkout", { User, isAuthenticated });
+    } else {
+      
     }
-    const cartTotalPrice = cart.products.reduce((total, item) => total + (item.price * item.qty), 0);
-    const productsInCart = cart.products.map(item => ({
-      _id: item.productId._id,
-      images: item.productId.images,
-      productName: item.productId.productName,
-      price: item.price,
-      qty: item.qty,
-      productTotalprice: item.productTotalprice
-    }));
-    res.render('user/checkout', { isAuthenticated, User, products: productsInCart, cartTotalPrice })
   } catch (error) {
-    console.error('failed to get login page', error)
-    res.render('user/500').send('intenal server error')
+    console.log(error.message);
+    res.render('500');
   }
-}
+};
+
 
 
 
@@ -57,8 +46,13 @@ const place_order = async (req, res) => {
 
     const User = await user.findOne({ _id: id });
 
+    console.log("hey here got the User",User);
+
+    const productPush = [];
+
+
     const orderData = req.body;
-    //   console.log('Received orderData:', orderData);/
+    console.log('Received orderData:', orderData);
 
     // Ensure all order data fields are arrays
     if (!Array.isArray(orderData.productId)) {
@@ -74,7 +68,9 @@ const place_order = async (req, res) => {
       orderData.price = [orderData.price];
     }
 
-    const productPush = [];
+    // const productPush = [];
+
+    console.log("hey here the productPUsh ",productPush);
 
     for (let i = 0; i < orderData.productId.length; i++) {
       let productId = orderData.productId[i];
@@ -102,9 +98,9 @@ const place_order = async (req, res) => {
       status = "Confirmed";
     }
 
-    const index = req.body.user;
+    const index = orderData.selected_address
 
-    //   console.log("hey here got the index", index);
+    console.log("hey here got the index", index);
 
     const address = {
       name: User.address[index].name,
@@ -116,6 +112,10 @@ const place_order = async (req, res) => {
       street: User.address[index].street,
       building: User.address[index].building,
     };
+
+    console.log("hey here got the nammeeee",User.address[index].name);
+
+    console.log("hey here got address ",address);
 
     const totel = req.body.total;
 
@@ -131,10 +131,11 @@ const place_order = async (req, res) => {
       status: status,
       orderId: orderId,
     });
+    console.log(order);
 
     const neworderData = await order.save();
 
-    // console.log("hey  here got the neworderData",neworderData);
+    console.log("hey  here got the neworderData",neworderData);
 
     if (req.body.payment_method == "COD") {
       res.json({ status: true });
@@ -166,7 +167,7 @@ const place_order = async (req, res) => {
 
   } catch (error) {
     console.error('Failed to place order:', error);
-    res.render('user/500').send(500).send('Internal server error');
+    res.render('user/500').send('Internal server error');
   }
 };
 
@@ -228,8 +229,7 @@ let order_success = async (req, res) => {
       { $set: { cart: [], cartTotal: 0 } }
     );
 
-    const order = await Order.findOne()
-      .sort({ date: -1 })
+    const order = await Order.findOne().sort({ date: -1 }).limit(1)
       .populate({ path: 'product', populate: { path: 'productid', model: 'Product' } });
 
     for (let i = 0; i < order.product.length; i++) {
@@ -651,6 +651,8 @@ const apply_coupon = async (req, res) => {
   try {
 
     const id = req.user.id;
+
+    const userId = req.user.id;
     
     console.log("hey here got the ",id);
 
@@ -658,9 +660,8 @@ const apply_coupon = async (req, res) => {
 
     console.log("hey here got the couon code",code);
 
-    const cartTotel = req.body.cartTotal;
-
-    console.log("hey here got the couon code",cartTotel);
+    const cartTotel = req.body.total;
+    console.log("Cart Total:", cartTotel);
 
     const coupondata = await Coupon.findOne({ code: code });
 
@@ -681,11 +682,9 @@ const apply_coupon = async (req, res) => {
 
           if (coupondata.min_amount <= cartTotel) {
 
-            let discountAmount =
+            let discountAmount = cartTotel * (coupondata.discountpercentage / 100);
 
-              cartTotel * (coupondata.discountpercentage / 100);
-
-              console.log("hey here got the ",discountAmount);
+              console.log("hey here got the discountamount",discountAmount);
 
 
             if (discountAmount <= coupondata.maxdiscountprice) {
@@ -694,15 +693,30 @@ const apply_coupon = async (req, res) => {
 
               let value = cartTotel - discount_value;
 
-              console.log("hey here got the ",value);
+              console.log("hey here got the value",value);
 
               const coupon_apply = await user.updateOne(
-
-                { _id: req.user.id },
-
-                { $set: { cartTotel: value , discount : discountAmount  } }
-
+                { _id: userId },
+                { $set: { cartTotalPrice: value } }
               );
+              
+              if (!coupon_apply) {
+                console.log('Failed to update the cartTotalPrice.');
+              } else {
+                console.log('Successfully updated the cartTotalPrice.');
+              }
+
+              // console.log("hey here got the ",cart);
+
+              // const coupon_apply = await user.updateOne(
+
+              //   { _id: req.user.id },
+
+              //   { $set: { cartTotel: value , discount : discountAmount  } }
+
+              // );
+
+              console.log("hey here got the couon apply ",coupon_apply);
 
               const coupon_used = await Coupon.updateOne(
 
@@ -712,8 +726,10 @@ const apply_coupon = async (req, res) => {
 
               );
 
+              console.log("vannu iluminiatiy ",value,discount_value,code);
 
               res.json({ success: true, value, discount_value, code });
+
 
             } else {
 
@@ -723,11 +739,17 @@ const apply_coupon = async (req, res) => {
 
               console.log("ente ammo ivide value kittum nokkiko ",value);
 
+              const cartTotal = value;
+              const id = req.user.id
+              const discountValue = discount_value;
+
+              console.log("hey here got ",cartTotal,id,discountValue);
+
               const coupon_apply = await user.updateOne(
 
                 { _id: req.user.id },
 
-                { $set: { cartTotel: value , discount : discount_value } }
+                { $set: { cartTotel: value , discount : discount_value }, }
 
               );
               

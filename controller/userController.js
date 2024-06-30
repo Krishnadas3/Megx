@@ -141,7 +141,7 @@ let productdetailpage = async (req, res) => {
         const isAuthenticated = req.cookies.jwt !== undefined;
         let products = await Products.find();
         let product = await Products.findOne({ _id: productId });
-        console.log(product);
+        // console.log(product);
         res.render('user/productdetail', { product, isAuthenticated,products });
     } catch (error) {
         console.error('Failed to connect:', error);
@@ -248,6 +248,8 @@ const loginPostpage = async (req, res) => {
 // google verification here 
 const succesGoogleLogin = async (req, res) => {
     try {
+
+        console.log("heye etfa");
         if (!req.user)
 
             return res.render('user/500').send(401).send('no user data, login failed')

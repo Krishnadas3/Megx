@@ -124,7 +124,7 @@ let  dashboardpage = async (req, res) => {
     } catch (error) {
 
         console.error('failed to get home:', error)
-        res.render('user/500').send(500).send('internal server error')
+        res.render('user/500').send('internal server error')
     }
 
 }

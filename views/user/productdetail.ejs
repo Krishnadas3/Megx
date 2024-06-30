@@ -61,7 +61,7 @@
                         <!-- <div class="cart-plus-minus">
                             <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
                         </div> -->
-                        <div class="pro-details-cart btn-hover" onclick="addToCart('<%= product._id %>')">
+                        <div class="pro-details-cart btn-hover" onclick="addToCart('<%=product._id%>')">
                             <a href="#">Add To Cart</a>
                         </div>
 
@@ -267,36 +267,40 @@
 
 <script>
 function addToCart(prodId){
-          console.log(prodId);
+          
           $.ajax({
-              url:'/addtocart',
+            
+              url:'/add-to-cart',
               data:{
                   productId:prodId
               },
+              
               method:'post',
               success:(res)=>{
-                  if (res.status==true) {
-                      swal.fire({
-                          position:'center',
-                          icon:'success',
-                          title:'your product added to cart',
-                          showConfirmButton: false,
-                          timer:1000
-                      })
-                  }else{
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Item already exist',
-                           
-                          
-                        })
-
-                    }
+                console.log(res);
+                  if (res.exist) {
+                    console.log("hey")
+                    Swal.fire({
+                    title: 'Already Exist',
+                    text: 'Product Already in your Cart',
+                    icon: 'info',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+                  }else {
+                    Swal.fire({
+                    title: 'Added',
+                    text: 'Product added to Wishlist',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+            }
               }
           })
          
       }
+
 </script>
 
 <script>

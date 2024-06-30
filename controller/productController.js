@@ -29,16 +29,16 @@ let productlistpage = async (req,res) => {
         res.render('admin/product-list',{products})
     } catch (error) {
         console.log(error);
-        res.render('user/500').send(404).send("not found")
+        res.render('user/500').send("not found")
     }
 }
 
 let productgridpage = async (req,res) => {
     try {
-        res.render('user/500').send(200).render('admin/product-grid')
+        res.render('user/500').render('admin/product-grid')
     } catch (error) {
         console.log(error);
-        res.render('user/500').send(404).send("not found")
+        res.render('user/500').send("not found")
     }
 }
 
@@ -46,10 +46,10 @@ let productaddpage  = async(req,res) =>{
     try { 
       const category = await Categorie.find()
       console.log(category);
-        res.render('user/500').send(200).render('admin/product-add',{category})
+        res.render('admin/product-add',{category})
     } catch (error) {
         console.log(error);
-        res.render('user/500').send(404).send("not found")
+        res.render('user/500').send("not found")
     }
 }
 
