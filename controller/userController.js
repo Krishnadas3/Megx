@@ -213,7 +213,12 @@ const loginPostpage = async (req, res) => {
         const foundUser = await user.findOne({ email: req.body.email });
 
         if (foundUser) {
-            const passwordMatch = await bcrypt.compare(req.body.password, foundUser.password);
+            const enteredpassword = req.body.password
+            // const passwordMatch = await bcrypt.compare(req.body.password, foundUser.password);
+            
+            if (enteredpassword == foundUser.password) {
+                passwordMatch = enteredpassword
+            }
 
             if (foundUser.blocked) {
                 console.log('User is blocked');
