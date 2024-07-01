@@ -1,5 +1,5 @@
 <%- include('../layouts/header.ejs') %>
-<%- include('../layouts/nav.ejs')%>
+    <%- include('../layouts/nav.ejs')%>
 
         <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
             <div class="container">
@@ -13,6 +13,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="shop-area pt-95 pb-100">
             <div class="container">
                 <div class="row flex-row-reverse">
@@ -32,18 +33,20 @@
                         <div class="shop-bottom-area mt-35">
                             <div class="tab-content jump">
                                 <div class="row">
-                                    <% if(products.length > 0) { %>
-                                        <% for(let i = 0; i < products.length; i++) { %>
+                                    <% if(products.length> 0) { %>
+                                        <% for(let i=0; i < products.length; i++) { %>
                                             <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                                                 <div class="product-wrap mb-25 scroll-zoom">
                                                     <div class="product-img">
                                                         <a href="/productdetail?id=<%= products[i]._id %>">
-                                                            <img class="default-img"  src="/img/<%= products[i].images[0] %>" alt="">
+                                                            <img class="default-img" src="/img/<%= products[i].images[0] %>" alt="">
                                                             <img class="hover-img" src="/img/<%= products[i].images[1] %>" alt="">
                                                         </a>
                                                     </div>
                                                     <div class="product-content text-center">
-                                                        <h3><a href=""> <%= products[i].productName %> </a></h3>
+                                                        <h3><a href="">
+                                                            <%= products[i].productName %>
+                                                        </a></h3>
                                                         <div class="product-price">
                                                             <span>₹ <%= products[i].price %></span>
                                                         </div>
@@ -76,35 +79,64 @@
                             <div class="sidebar-widget mt-50">
                                 <h4 class="pro-sidebar-title"><a href="/shop">Categories</a></h4>
                                 <div class="sidebar-widget-tag mt-25">
-                                    <% if (category.length > 0) { %>
-                                        <% for (let i = 0; i < category.length; i++) { %>
-                                    <ul>
-                                        
-                                                    <li><a href="/shop/<%= category[i]._id %>"><%= category[i].categoryName %></a></li>
-                                    </ul>
-                                    <% } %>
+                                    <% if (category.length> 0) { %>
+                                        <% for (let i=0; i < category.length; i++) { %>
+                                            <ul>
+                                                <li><a href="/shop/<%= category[i]._id %>">
+                                                    <%= category[i].categoryName %>
+                                                </a></li>
+                                            </ul>
+                                        <% } %>
                                     <% } %>
                                 </div>
                             </div>
+                            <div class="sidebar-widget mt-50">
+                                <h4 class="pro-sidebar-title">Coupon</h4>
+                                <br>
+                                <div id="offerCarousel" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <% coupon.forEach((x, index) => { %>
+                                            <div class="carousel-item %>" style="background-color: #f5f5f5; padding: 20px;">
+                                                <div class="carousel-caption d-md-block" style="position: static; text-align: left;">
+                                                    <h5 style="font-weight: 200px; color: #333;"><%= x.coupon_name %></h5>
+                                                    <p style="font-weight: 200px; color: #333;">Up to <%= x.description %> <%= x.discountpercentage %>% Off. <br>Use  <b style="color: red; font-family: cursive; font-size: larger;"><%= x.code %></b></p>
+                                                    <!-- <a class="butn-style1 fill small" href="#"><span>Buy Now</span></a> -->
+                                                </div>
+                                            </div>
+                                        <% }); %>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#offerCarousel" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#offerCarousel" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>
         </div>
         
         
-
         
 
 
 
-<script>
-     document.getElementById('sortSelect').addEventListener('change', function() {
-    const sortValue = this.value;
-    window.location.href = `/sort?value=${sortValue}`;
-});
-</script>
 
-<%- include('../layouts/footer.ejs') %>
-<%- include('../layouts/foot.ejs')%>
+
+
+
+
+        <script>
+            document.getElementById('sortSelect').addEventListener('change', function () {
+                const sortValue = this.value;
+                window.location.href = `/sort?value=${sortValue}`;
+            });
+        </script>
+
+        <%- include('../layouts/footer.ejs') %>
+            <%- include('../layouts/foot.ejs')%>

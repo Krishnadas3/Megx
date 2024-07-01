@@ -88,6 +88,9 @@ const loadbycategory = async (req, res) => {
 
         const cat_name = await Category.findOne({ _id: cat_id })
 
+        const coupon = await Coupon.find({active : true})
+
+
         const categoryname = cat_name.categoryName
 
         console.log('hey here got the category ', categoryname);
@@ -96,7 +99,7 @@ const loadbycategory = async (req, res) => {
 
         console.log('hey here got the category ', products);
 
-        res.render('user/shop', { products, categoryname, user, category, isAuthenticated })
+        res.render('user/shop', { products, categoryname,user, category, isAuthenticated,coupon })
     } catch (error) {
         res.render('500');
         console.log(error.message);
