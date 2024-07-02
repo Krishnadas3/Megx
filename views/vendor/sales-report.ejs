@@ -1,0 +1,148 @@
+<%- include('../layouts/adminheader.ejs') %>
+    <%- include('../layouts/admin_nav.ejs') %>
+
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4">Sales Report</h4>
+  
+        <!-- Basic Layout & Basic with Icons -->
+        <div class="row">
+          <!-- Basic Layout -->
+          <div class="col-xxl">
+            <div class="card mb-4">
+              <br>
+              <div class="card-body">
+                <form method="post" class="row g-3 needs-validation" novalidate >
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" for="basic-default-name">Date from</label>
+                    <div class="col-sm-10">
+                      <input type="date" class="form-control" name="from" id="basic-default-name" placeholder=""
+                        required />
+                      <div class="invalid-feedback">Please Enter Date to</div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" for="basic-default-name">Ending date</label>
+                    <div class="col-sm-10">
+                      <input type="date" class="form-control" name="to" id="basic-default-name" placeholder=""
+                        required />
+                      <div class="invalid-feedback">Please Enter Ending date</div>
+                    </div>
+                  </div>
+  
+                  
+                  <div class="row justify-content-end">
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary">submit</button>
+  
+  
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% if(saleData !== ""){ %>
+
+
+      <div class="card mb-4" id="invoice">
+        <br>
+        <div class="table-responsive text-nowrap" >
+          <table class="table" id="example" >
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Date</th>
+                <th>Product </th>
+                <th>Payment Method</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+            
+
+             <% saleData.forEach((x,index)=> {  %>
+                  
+                
+
+                  <tr>
+                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>
+                        <%= index +1 %>
+                      </strong></td>
+                    <td><strong>
+                      <%= x.date.toLocaleDateString() %>
+                      </strong></td>
+                    <td>
+                     
+                      
+                        <% x.product.forEach(product =>{ %>
+                       
+                          <%= product.productid.product_name %> <br>
+                          Qty :  <%= product.qty %> <br>
+                          Price : <%= product.productid.price %>
+                      
+
+                    <% }) %>
+                    </td>
+                    <td> <%= x.paymentType %> </td>
+                    <td> <%= x.totel %></td>
+                  </tr>
+                  <% }) %>
+                
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <button type="button" class="btn btn-dark float-end" onclick="invoice()">Save Sales Report</button>
+      <%  } %>
+
+      
+    
+        <script>
+              $(document).ready(function () {
+                $('#example').DataTable({
+                  dom: 'Bfrtip',
+                  buttons: [
+                    'copy', 'print', 'excel', 'csv', 'pdf'
+                  ]
+                });
+              });
+
+            </script>
+  
+
+      <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+          'use strict';
+  
+  
+          const forms = document.querySelectorAll('.needs-validation');
+  
+  
+          Array.prototype.slice.call(forms).forEach((form) => {
+            form.addEventListener('submit', (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        })();
+      </script>
+
+      <script>
+        function invoice(){
+          var divToPrint = document.getElementById("invoice");
+        var newWindow = window.open("", "Print Window");
+        newWindow.document.write(divToPrint.outerHTML);
+        newWindow.print();
+        newWindow.close();
+        }
+      </script>
+
+    
+    <%- include('../layouts/adminfooter.ejs') %>

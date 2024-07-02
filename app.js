@@ -55,7 +55,11 @@ mongoose.connect( process.env.CONNECTION_STRING ||"", {
 app.use('/', userRouter);
 app.use('/',adminRouter)
 
-
-app.listen(2018, () => {
+app.listen(1020, () => {
     console.log('Server is running on port 5050');
 });
+
+
+
+
+

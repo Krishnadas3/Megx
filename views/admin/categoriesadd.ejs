@@ -111,83 +111,10 @@
                         </div>
                     </div> <!-- Row end  -->  
                     
-                    <!-- <div class="row g-3 mb-3">
-                        <div class="col-lg-4">
-                            <div class="sticky-lg-top">
-                                <div class="card mb-3">
-                                    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                        <h6 class="m-0 fw-bold">Visibility Status</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="couponsstatus" checked>
-                                            <label class="form-check-label">
-                                                Published
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="couponsstatus">
-                                            <label class="form-check-label">
-                                                Scheduled
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="couponsstatus">
-                                            <label class="form-check-label">
-                                                Hidden
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="card mb-3">
-                                    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                        <h6 class="m-0 fw-bold">Publish Schedule</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row g-3 align-items-center">
-                                            <div class="col-md-12">
-                                                <label  class="form-label">Publish Date</label>
-                                                <input type="date" class="form-control w-100">
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label  class="form-label">Publish Time</label>
-                                                <input type="time" class="form-control w-100">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card mb-3">
-                                    <div class="card-header py-3 d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
-                                        <h6 class="m-0 fw-bold">Categories</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <label  class="form-label">Parent category Select</label>
-                                        <select class="form-select" size="3" aria-label="size 3 select example">
-                                            <option value="2">Clothes</option>
-                                            <option value="3">Toy</option>
-                                            <option value="4">Cosmetic</option>
-                                            <option value="5">Laptop</option>
-                                            <option value="6">Mobile</option>
-                                            <option value="7">Watch</option>
-                                        </select>
-                                    </div>
-                                </div> -->
-                                <!-- <div class="card">
-                                    <div class="card-header py-3 bg-transparent border-bottom-0">
-                                        <h6 class="m-0 fw-bold">Categories Image Upload</h6>
-                                        <small>With event and default file try to remove the image</small>
-                                    </div>
-                                    <div class="card-body">
-                                        <input type="file" id="dropify-event" data-default-file="assets/images/product/cropimg-upload.jpg">
-                                    </div>
-                                </div>
-                            </div> 
-                         </div> -->
+                    
                         <div class="col-lg-8">
                             <div class="card mb-3">
-                                <!-- <div class="card-header py-3 d-flex justify-content-between bg-transparent border-bottom-0">
-                                    <h6 class="mb-0 fw-bold ">Basic information</h6>
-                                </div> -->
+                               
                                 <div class="card-body">
                                     <form method="post" action="/admin/addCategory">
                                         <div class="row g-3 align-items-center">
@@ -198,24 +125,7 @@
                                             <div class="col-12">
                                                 <button type="submit" style="margin-top:0px;" class="col-6 form-control btn btn-primary py-2 px-5 mt-3 text-uppercase btn-set-task w-sm-100">Add Category</button>
                                             </div>
-                                            <!-- <div class="col-md-6">
-                                                <label class="form-label">Page Title</label>
-                                                <input type="text" class="form-control">
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="form-label">Product Identifier URL</label>
-                                                <div class="input-group mb-3">
-                                                    <span class="input-group-text">https://eBazar.com</span>
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="form-label">Product Description</label>
-                                                <div id="editor">
-                                                    <h4>Please add Product Description here</h4>
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                           
                                     </form>
                                 </div>
                             </div>
@@ -225,236 +135,162 @@
                 </div>
             </div>    
         
-            <!-- Modal Custom Settings-->
-            <div class="modal fade right" id="Settingmodal" tabindex="-1"  aria-hidden="true">
-                <div class="modal-dialog  modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Custom Settings</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body custom_setting">
-                            <!-- Settings: Color -->
-                            <div class="setting-theme pb-3">
-                                <h6 class="card-title mb-2 fs-6 d-flex align-items-center"><i class="icofont-color-bucket fs-4 me-2 text-primary"></i>Template Color Settings</h6>
-                                <ul class="list-unstyled row row-cols-3 g-2 choose-skin mb-2 mt-2">
-                                    <li data-theme="indigo"><div class="indigo"></div></li>
-                                    <li data-theme="tradewind"><div class="tradewind"></div></li>
-                                    <li data-theme="monalisa"><div class="monalisa"></div></li>
-                                    <li data-theme="blue" class="active"><div class="blue"></div></li>
-                                    <li data-theme="cyan"><div class="cyan"></div></li>
-                                    <li data-theme="green"><div class="green"></div></li>
-                                    <li data-theme="orange"><div class="orange"></div></li>
-                                    <li data-theme="blush"><div class="blush"></div></li>
-                                    <li data-theme="red"><div class="red"></div></li>
-                                </ul>
-                            </div>
-                            <div class="sidebar-gradient py-3">
-                                <h6 class="card-title mb-2 fs-6 d-flex align-items-center"><i class="icofont-paint fs-4 me-2 text-primary"></i>Sidebar Gradient</h6>
-                                <div class="form-check form-switch gradient-switch pt-2 mb-2">
-                                    <input class="form-check-input" type="checkbox" id="CheckGradient">
-                                    <label class="form-check-label" for="CheckGradient">Enable Gradient! ( Sidebar )</label>
-                                </div>
-                            </div>
-                            <!-- Settings: Template dynamics -->
-                            <div class="dynamic-block py-3">
-                                <ul class="list-unstyled choose-skin mb-2 mt-1">
-                                    <li data-theme="dynamic"><div class="dynamic"><i class="icofont-paint me-2"></i> Click to Dyanmic Setting</div></li>
-                                </ul>
-                                <div class="dt-setting">
-                                    <ul class="list-group list-unstyled mt-1">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
-                                            <label>Primary Color</label>
-                                            <button id="primaryColorPicker" class="btn bg-primary avatar xs border-0 rounded-0"></button>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
-                                            <label>Secondary Color</label>
-                                            <button id="secondaryColorPicker" class="btn bg-secondary avatar xs border-0 rounded-0"></button>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
-                                            <label class="text-muted">Chart Color 1</label>
-                                            <button id="chartColorPicker1" class="btn chart-color1 avatar xs border-0 rounded-0"></button>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
-                                            <label class="text-muted">Chart Color 2</label>
-                                            <button id="chartColorPicker2" class="btn chart-color2 avatar xs border-0 rounded-0"></button>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
-                                            <label class="text-muted">Chart Color 3</label>
-                                            <button id="chartColorPicker3" class="btn chart-color3 avatar xs border-0 rounded-0"></button>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
-                                            <label class="text-muted">Chart Color 4</label>
-                                            <button id="chartColorPicker4" class="btn chart-color4 avatar xs border-0 rounded-0"></button>
-                                        </li>
-                                        <li class="list-group-item d-flex justify-content-between align-items-center py-1 px-2">
-                                            <label class="text-muted">Chart Color 5</label>
-                                            <button id="chartColorPicker5" class="btn chart-color5 avatar xs border-0 rounded-0"></button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- Settings: Font -->
-                            <div class="setting-font py-3">
-                                <h6 class="card-title mb-2 fs-6 d-flex align-items-center"><i class="icofont-font fs-4 me-2 text-primary"></i> Font Settings</h6>
-                                <ul class="list-group font_setting mt-1">
-                                    <li class="list-group-item py-1 px-2">
-                                        <div class="form-check mb-0">
-                                            <input class="form-check-input" type="radio" name="font" id="font-poppins" value="font-poppins">
-                                            <label class="form-check-label" for="font-poppins">
-                                                Poppins Google Font
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item py-1 px-2">
-                                        <div class="form-check mb-0">
-                                            <input class="form-check-input" type="radio" name="font" id="font-opensans" value="font-opensans" checked="">
-                                            <label class="form-check-label" for="font-opensans">
-                                                Open Sans Google Font
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item py-1 px-2">
-                                        <div class="form-check mb-0">
-                                            <input class="form-check-input" type="radio" name="font" id="font-montserrat" value="font-montserrat">
-                                            <label class="form-check-label" for="font-montserrat">
-                                                Montserrat Google Font
-                                            </label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item py-1 px-2">
-                                        <div class="form-check mb-0">
-                                            <input class="form-check-input" type="radio" name="font" id="font-mukta" value="font-mukta">
-                                            <label class="form-check-label" for="font-mukta">
-                                                Mukta Google Font
-                                            </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- Settings: Light/dark -->
-                            <div class="setting-mode py-3">
-                                <h6 class="card-title mb-2 fs-6 d-flex align-items-center"><i class="icofont-layout fs-4 me-2 text-primary"></i>Contrast Layout</h6>
-                                <ul class="list-group list-unstyled mb-0 mt-1">
-                                    <li class="list-group-item d-flex align-items-center py-1 px-2">
-                                        <div class="form-check form-switch theme-switch mb-0">
-                                            <input class="form-check-input" type="checkbox" id="theme-switch">
-                                            <label class="form-check-label" for="theme-switch">Enable Dark Mode!</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex align-items-center py-1 px-2">
-                                        <div class="form-check form-switch theme-high-contrast mb-0">
-                                            <input class="form-check-input" type="checkbox" id="theme-high-contrast">
-                                            <label class="form-check-label" for="theme-high-contrast">Enable High Contrast</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex align-items-center py-1 px-2">
-                                        <div class="form-check form-switch theme-rtl mb-0">
-                                            <input class="form-check-input" type="checkbox" id="theme-rtl">
-                                            <label class="form-check-label" for="theme-rtl">Enable RTL Mode!</label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-start">
-                            <button type="button" class="btn btn-white border lift" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary lift">Save Changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div> 
+              <!-- / Content -->
 
-            <!-- Modal Cropper-->
-            <div class="modal docs-cropped" id="getCroppedCanvasModal" tabindex="-1"  aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Cropped</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body"></div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-white border lift" data-bs-dismiss="modal">Close</button>
-                            <a class="btn btn-primary" id="download" href="javascript:void(0);" download="cropped.html">Download</a> </div>
-                        </div>
-                </div>
-            </div>
-
-        </div>       
-
-    </div>
-    <div class="modal docs-cropped" id="getCroppedCanvasModal" tabindex="-1"  aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Cropped</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-white border lift" data-bs-dismiss="modal">Close</button>
-                    <a class="btn btn-primary" id="download" href="javascript:void(0);" download="cropped.html">Download</a> </div>
-                </div>
-        </div>
-    </div>
-
-</div>       
-
-</div>
-
-
-    <!-- Jquery Core Js -->      
-    <script src="/assets/admin/assets/bundles/libscripts.bundle.js"></script>
-
-    <!-- Jquery Plugin -->  
-    <script src="../../../../../cdn.ckeditor.com/ckeditor5/29.0.0/classic/ckeditor.js"></script>
-    <script src="/assets/admin/assets/plugin/cropper/cropper.min.js"></script>
-    <script src="/assets/admin/assets/plugin/cropper/cropper-init.js"></script>
-    <script src="/assets/admin/assets/bundles/dropify.bundle.js"></script>
-
-    <!-- Jquery Page Js -->   
-    <script src="../js/template.js"></script>
     <script>
-        
-        $(document).ready(function() {
-        //Ch-editer
-        ClassicEditor
-            .create( document.querySelector( '#editor' ) )
-            .catch( error => {
-                console.error( error );
-            } );
-            //Deleterow
-            $("#tbproduct").on('click', '.deleterow', function () {
-                $(this).closest('tr').remove();
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+          'use strict';
+  
+  
+          const forms = document.querySelectorAll('.needs-validation');
+  
+  
+          Array.prototype.slice.call(forms).forEach((form) => {
+            form.addEventListener('submit', (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        })();
+      </script>
+      <script>
+        $(document).ready(function () {
+          $("#input").cropzee();
+          $.each($("input[name='enable']"), function () {
+            if ($(this).is(":checked")) {
+              $(this).closest("div.uk-position-relative").find("textarea").removeAttr("disabled");
+            } else {
+              $(this).closest("div.uk-position-relative").find("textarea").attr("disabled", "disabled");
+            }
+          });
+          $("input, select, textarea").on("keyup change", $.debounce(300, function () {
+            destroyPlugin($("#input"));
+            $.each($("input[name='enable']"), function () {
+              if ($(this).is(":checked")) {
+                $(this).closest("div.uk-position-relative").find("textarea").removeAttr("disabled");
+              } else {
+                $(this).closest("div.uk-position-relative").find("textarea").attr("disabled", "disabled");
+              }
             });
-            
+            var aspectRatio = "";
+            $.each($("input[name='aspectRatio']"), function () {
+              aspectRatio += $(this).val();
+            });
+            var maxSize = [];
+            $.each($("input[name='maxSize'], select[name='maxSize']"), function () {
+              maxSize.push($(this).val());
+            });
+            var minSize = [];
+            $.each($("input[name='minSize'], select[name='minSize']"), function () {
+              minSize.push($(this).val());
+            });
+            var startSize = [];
+            $.each($("input[name='startSize'], select[name='startSize']"), function () {
+              startSize.push($(this).val());
+            });
+            var allowedInputs = [];
+            $.each($("input[name='allowedInputs']:checked"), function () {
+              allowedInputs.push($(this).val());
+            });
+            var imageExtension = "";
+            $.each($("input[name='imageExtension']:checked"), function () {
+              imageExtension += $(this).val();
+            });
+            var returnImageMode = "";
+            $.each($("input[name='returnImageMode']:checked"), function () {
+              returnImageMode += $(this).val();
+            });
+            var modalAnimation = "";
+            $.each($("select[name='modalAnimation']"), function () {
+              modalAnimation += $(this).val();
+            });
+            var onCropStart = null;
+            $.each($("textarea[name='onCropStart']"), function () {
+              if (!$(this).is(":disabled")) {
+                onCropStart = $(this).val();
+              }
+            });
+            var onCropMove = null;
+            $.each($("textarea[name='onCropMove']"), function () {
+              if (!$(this).is(":disabled")) {
+                onCropMove = $(this).val();
+              }
+            });
+            var onCropEnd = null;
+            $.each($("textarea[name='onCropEnd']"), function () {
+              if (!$(this).is(":disabled")) {
+                onCropEnd = $(this).val();
+              }
+            });
+            var onInitialize = null;
+            $.each($("textarea[name='onInitialize']"), function () {
+              if (!$(this).is(":disabled")) {
+                onInitialize = $(this).val();
+              }
+            });
+            window.options = {
+              aspectRatio: aspectRatio,
+              maxSize: maxSize,
+              minSize: minSize,
+              startSize: startSize,
+              onCropStart: onCropStart,
+              onCropMove: onCropMove,
+              onCropEnd: onCropEnd,
+              onInitialize: onInitialize,
+              modalAnimation: modalAnimation,
+              allowedInputs: allowedInputs,
+              imageExtension: imageExtension,
+              returnImageMode: returnImageMode,
+            }
+            // alert(JSON.stringify(options));
+            $("#input").cropzee(options);
+          }));
         });
-
-        $(function() {
-            $('.dropify').dropify();
-
-            var drEvent = $('#dropify-event').dropify();
-            drEvent.on('dropify.beforeClear', function(event, element) {
-                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
-            });
-
-            drEvent.on('dropify.afterClear', function(event, element) {
-                alert('File deleted');
-            });
-
-            $('.dropify-fr').dropify({
-                messages: {
-                    default: 'Glissez-dÃ©posez un fichier ici ou cliquez',
-                    replace: 'Glissez-dÃ©posez un fichier ou cliquez pour remplacer',
-                    remove: 'Supprimer',
-                    error: 'DÃ©solÃ©, le fichier trop volumineux'
-                }
-            });
-        });
-            
-    </script>
-</body>
-
-<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist/categories-add.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:56:28 GMT -->
-</html> 
+        var destroyPlugin = function ($elem, eventNamespace) {
+          var isInstantiated = !!$.data($elem.get(0));
+          if (isInstantiated) {
+            $.removeData($elem.get(0));
+            $elem.off(eventNamespace);
+            $elem.unbind('.' + eventNamespace);
+          }
+        };
+      </script>
+      <style>
+        * {
+          font-family: sans-serif;
+        }
+  
+        .image-previewer {
+          height: 300px;
+          width: 300px;
+          display: flex;
+          border-radius: 10px;
+          border: 1px solid lightgrey;
+        }
+  
+        li {
+          font-size: 11px;
+        }
+  
+        .dependencies {
+          font-family: 'Reenie Beanie', cursive;
+          font-size: 28px;
+          text-decoration: none;
+        }
+  
+        textarea {
+          resize: none;
+          min-height: 50px;
+        }
+  
+        pre,
+        code {
+          user-select: all;
+        }
+      </style>
+  
+      <%- include('../layouts/adminfooter.ejs') %>

@@ -150,6 +150,8 @@ const home = async (req , res )=>{
     }
 }
 
+
+
 const showSalesreport = async (req , res )=>{
 
     try {
@@ -284,6 +286,32 @@ let blockUser = async (req, res) => {
     }
 }
 
+const adminhome = async (req , res )=>{
+    try {
+        // const User = await user.findOne({ _id: req.session.admin })
+        // const saleData = ""
+      res.render("vendor/home",);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const banner = async (req,res) =>{
+    try {
+        res.render("vendor/add-banner")
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// const banner = async (req,res) =>{
+//     try {
+//         res.render("vendor/add-banner")
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
 
 module.exports = {
     dashboardpage,
@@ -294,6 +322,7 @@ module.exports = {
     adminLogout,
     salesReport,
     showSalesreport,
-    home
+    home,
+    adminhome,
 
 }

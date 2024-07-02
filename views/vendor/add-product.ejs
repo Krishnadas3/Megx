@@ -1,0 +1,135 @@
+<%- include('../layouts/adminheader.ejs') %>
+  <%- include('../layouts/admin_nav.ejs') %>
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product/</span>Add Product </h4>
+
+      <!-- Basic Layout & Basic with Icons -->
+      <div class="row">
+        <!-- Basic Layout -->
+        <div class="col-xxl">
+          <div class="card mb-4">
+            <br>
+            <div class="card-body">
+              <form method="post" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="name" class="form-control" id="basic-default-name" required />
+                    <div class="invalid-feedback">Please enter product Name</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-company">Category</label>
+                  <div class="col-sm-10">
+                    <select id="Select Category" name="category" class="form-select" required>
+                      <% if(category.length> 0){
+
+                        for(let i=0; i<category.length; i++){ %>
+                          <option value="<%=category[i]._id %>">
+                            <%= category[i].category_name %>
+                          </option>
+                          <% }} %>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-email">Offer Price</label>
+                  <div class="col-sm-10">
+                    <div class="input-group input-group-merge">
+                      <input type="number" id="basic-default-email" class="form-control" name="price" required />
+                      <div class="invalid-feedback">Please enter a Price</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-email">Price</label>
+                  <div class="col-sm-10">
+                    <div class="input-group input-group-merge">
+                      <input type="number" class="form-control" name="offer_price" required />
+                      <div class="invalid-feedback">Please provide a valid city.</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-phone">Quantity</label>
+                  <div class="col-sm-10">
+                    <input type="number" name="quantity" id="basic-default-phone" class="form-control phone-mask"
+                      required />
+                    <div class="invalid-feedback">Please provide a valid city.</div>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-message">Description</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="description" id="basic-default-message" required>
+                    <div class="invalid-feedback">Please provide a valid city.</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="formFile" class="col-sm-2 col-form-label">Image </label>
+                  <input class="form-control" type="file" multiple id="formFile" name="image" required
+                    accept="image/*" />
+                  <div class="invalid-feedback">Please provide a valid city.</div>
+                </div>
+                <div class="card-body">
+                  <div class="row gy-3">
+                    <div class="col-md">
+                      <label class="col-sm-2 col-form-label" for="basic-default-email">Size</label>
+                      <div class="form-check form-check-inline mt-3">
+                        <input class="form-check-input" type="checkbox" name="size" value="XS" />
+                        <label class="form-check-label" for="inlineCheckbox1">Extra Small</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="size" value="S" />
+                        <label class="form-check-label" for="inlineCheckbox2">Small</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="size" value="M" />
+                        <label class="form-check-label" for="inlineCheckbox2">Medium</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="size" value="L" />
+                        <label class="form-check-label" for="inlineCheckbox2">Large</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="size" value="XL" />
+                        <label class="form-check-label" for="inlineCheckbox2">Extra Large</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="row justify-content-end">
+                  <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (() => {
+        'use strict';
+
+
+        const forms = document.querySelectorAll('.needs-validation');
+
+
+        Array.prototype.slice.call(forms).forEach((form) => {
+          form.addEventListener('submit', (event) => {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      })();
+    </script>
+    <%- include('../layouts/adminfooter.ejs') %>
