@@ -207,24 +207,21 @@
             $(document).ready(function () {
                 $('#checkout_form').submit((x) => {
                     x.preventDefault();
-                    console.log("Form submitted");
 
                     $.ajax({
                         url: "/place_order",
                         method: "post",
                         data: $('#checkout_form').serialize(),
                         success: (response) => {
-                            console.log("AJAX request successful");
                             console.log(response);
-
                             if (response.status) {
-                                console.log("Order placed successfully, redirecting...");
                                 location.href = "/order_success";
                             } else if (response.viewRazorpay) {
-                                console.log("Initiating Razorpay payment");
                                 razorpayPayment(response.order);
                             } else if (response.wallet == false) {
+
                                 Swal.fire({
+                                    
                                     position: 'center',
                                     icon: 'error',
                                     title: 'wallet has insufficient balance !',
@@ -233,18 +230,14 @@
                                 })
                             }
                         },
-                        error: (error) => {
-                            console.error('Error placing order:', error);
-                            Swal.fire({
-                                position: 'center',
-                                icon: 'error',
-                                title: 'Failed to place order!',
-                                showConfirmButton: true
-                            });
-                        }
+    
                     });
                 });
             });
+
+            function walletPayment() {
+
+            }
 
             function razorpayPayment(order) {
                 console.log("Initiating Razorpay Payment");

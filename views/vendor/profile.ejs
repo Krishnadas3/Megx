@@ -1,0 +1,183 @@
+<%- include('../layouts/adminheader.ejs') %>
+  <%- include('../layouts/admin_nav.ejs') %>
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Account /</span> Account Details</h4>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card mb-4">
+            <h5 class="card-header">Profile Details</h5>
+
+
+            <hr class="my-0" />
+            <div class="card-body">
+              <form id="myform" method="post">
+                <div class="row">
+                  <div class="mb-3 col-md-6">
+                    <label for="firstName" class="form-label">Full Name</label>
+                    <input class="form-control" type="text" id="firstName" name="name" value="<%= user.name  %>" autofocus />
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input class="form-control" type="text" id="email" name="email" value="<%= user.email%>"
+                      placeholder="john.doe@example.com" />
+                  </div>
+                  <div class="mb-3 col-md-6">
+                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                    <div class="input-group input-group-merge">
+                      <span class="input-group-text">(+91)</span>
+                      <input type="text" id="phoneNumber" name="number" class="form-control"
+                        placeholder="<%= user.number %>" />
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                  <button type="reset" class="btn btn-outline-secondary" style="border: none;" >Cancel</button>
+                  <button type="button" class="btn btn-outline-secondary float-end" data-bs-toggle="modal"
+                    data-bs-target="#change_password" style="border: none;">Change Password </button>
+                </div>
+              </form>
+            </div>
+            <!-- /Account -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!-- / Content -->
+
+    <div class="modal fade" id="change_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">change Password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" id="password">
+
+              <div class="row">
+
+                <div class="col-sm-12">
+
+                  <div class="form-group">
+                    <label>Old Password</label>
+                    <input type="text" class="form-control" minlength="6" name="oldPassword">
+                  </div>
+
+                </div>
+
+
+
+              </div>
+
+              <div class="row">
+
+                <div class="col-sm-6">
+                  <input name="id" type="hidden">
+                  <div class="form-group">
+                    <label>New password</label>
+                    <input type="text" class="form-control" minlength="6" name="pass">
+                  </div>
+
+                </div>
+
+                <div class="col-sm-6">
+
+                  <div class="form-group">
+                    <label>Renter password</label>
+                    <input type="text" class="form-control" minlength="6" name="pas">
+                  </div>
+
+                </div>
+
+              </div>
+
+
+
+
+
+              <button type="submit" class="btn btn-dark float-end" data-bs-dismiss="modal">Save</button>
+
+
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    
+    <script>
+         $(document).ready(function () {
+            $('#password').submit(function (event) {
+                event.preventDefault(); //prevent default form submit action
+                var formData = $(this).serialize(); //serialize form data
+            
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/change-password',
+                    data: formData,
+                    success: function (response) {
+                        if(response.success == true){
+                            Swal.fire({
+                            title: 'Changed!',
+                            text: 'Your Password Changed',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
+                        }else{
+                            Swal.fire({
+                            title: 'Not Changed!',
+                            text: 'Enter correct Password',
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
+                        }
+                        
+                    },
+                    error: function (xhr, status, error) {
+                        //handle error response
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+                $('#myform').submit(function (event) {
+                    event.preventDefault(); //prevent default form submit action
+                    var formData = $(this).serialize(); //serialize form data
+                    $.ajax({
+                        type: 'POST',
+                        url: '/admin/edit-profile',
+                        data: formData,
+                        success: function (response) {
+                            if (response.success == true) {
+                                $('#reloadDiv').load('/profile #reloadDiv')
+                                console.log(response);
+                                Swal.fire({
+                                    title: 'Edited!',
+                                    text: 'Your profile edited',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                })
+                            } else {
+                                document.getElementById('validation').innerHTML = 'please fill your form'
+                            }
+
+                        },
+                        error: function (xhr, status, error) {
+                            //handle error response
+                        }
+                    });
+                });
+            });
+
+    </script>
+    <%- include('../layouts/adminfooter.ejs') %>

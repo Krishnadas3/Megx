@@ -1,0 +1,132 @@
+<%- include('../layouts/adminheader.ejs') %>
+  <%- include('../layouts/admin_nav.ejs') %>
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4">Order Details</h4>
+
+      <!-- Basic Bootstrap Table -->
+      <span>Ordered on <%= order[0].date.toLocaleDateString() %> | </span>
+      <span>
+        <%= order[0].orderId %>
+      </span>
+      <div class="card">
+        <br>
+        <div class="table-responsive text-nowrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>user</th>
+                <th>Shipping Address
+                </th>
+                <th>Payment Methods</th>
+                <th>Order Summary</th>
+                <th>Status</th>
+
+              </tr>
+            </thead>
+            <tbody>
+
+
+              <tr>
+                <td>
+                  <%= user_id[0].userId.name %>
+                </td>
+                <td><strong>
+                    <%= order[0].address %><br>
+                  
+
+
+                  </strong></td>
+                <td><strong>
+                    <%= order[0].paymentType %>
+                  </strong></td>
+                <td>
+                  <ul>
+                    <li><strong>Subtotal:</strong> ₹ <%= order[0].totel %>
+                    </li>
+                    <li><strong>Shipping:</strong> free </li>
+                    <li><strong>Total:</strong> ₹ <%= order[0].totel %>
+                    </li>
+                  </ul>
+                </td>
+                <td>
+                  <%= order[0].status %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <br><br>
+
+
+      <div class="card">
+        <br>
+        <div class="table-responsive text-nowrap">
+          <table class="table">
+            <tbody>
+
+              <% order[0].product.forEach(x=> { %>
+
+
+                <tr>
+                  <td><strong>
+                      <img src="/product_img/<%= x.productid.image[0] %>" alt="" style="width: 70px; height: 70px;">
+                    </strong>
+                  </td>
+                  <td><strong>
+                      <%= x.productid.product_name %>
+                    </strong>
+                  </td>
+                  <td>
+                    <ul>
+                      <li><strong>qty:</strong>
+                        <%= x.qty %>
+                      </li>
+                      <li><strong>price:</strong> ₹ <%= x.productid.price %>
+                      </li>
+                      <li><strong>Subtotal:</strong> ₹ <%= x.singleTotel %>
+                      </li>
+                      </li>
+                    </ul>
+                  </td>
+                  <td>
+
+                  </td>
+                </tr>
+                <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+
+      <hr class="my-5" />
+
+    <script>
+      function updateStatus(orderId, status) {
+
+        $.ajax({
+          url: '/admin/update_status',
+          data: {
+            order_Id: orderId,
+            status: status
+
+          },
+
+          method: 'post',
+          success: (response) => {
+            if (response.success) {
+
+              location.href = '/admin/list-order'
+
+            }
+          }
+        })
+      }
+    </script>
+
+
+    <%- include('../layouts/adminfooter.ejs') %>

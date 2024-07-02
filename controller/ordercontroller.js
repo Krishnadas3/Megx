@@ -46,13 +46,14 @@ const place_order = async (req, res) => {
 
     const User = await user.findOne({ _id: id });
 
-    console.log("hey here got the User",User);
+    // console.log("hey here got the User",User);
 
     const productPush = [];
 
 
     const orderData = req.body;
     console.log('Received orderData:', orderData);
+
 
     // Ensure all order data fields are arrays
     if (!Array.isArray(orderData.productId)) {
@@ -70,7 +71,7 @@ const place_order = async (req, res) => {
 
     // const productPush = [];
 
-    console.log("hey here the productPUsh ",productPush);
+    // console.log("hey here the productPUsh ",productPush);
 
     for (let i = 0; i < orderData.productId.length; i++) {
       let productId = orderData.productId[i];
@@ -86,16 +87,28 @@ const place_order = async (req, res) => {
       });
     }
 
-    let status;
+    let status
 
-    if (req.body.payment_method === "COD" || req.body.payment_method === "UPI") {
-      status = "Confirmed";
-    } else if (req.body.payment_method === "WALLET") {
-      if (User.wallet < orderData.totel) {
-        res.json({ wallet: false });
-        return;
+    // const totalOrderAmount = parseFloat(orderData.total); 
+
+
+    if (req.body.payment_method == "COD") {
+
+      status = "Confirmed"
+
+    } else if (req.body.payment_method == "UPI") {
+
+      status = "Confirmed"
+
+    } else if (req.body.payment_method == "WALLET") {
+      if (User.wallet < orderData.total) {
+
+        res.json({ wallet: false })
+
+        return
       }
-      status = "Confirmed";
+      status = "Confirmed"
+
     }
 
     const index = orderData.selected_address
@@ -113,9 +126,9 @@ const place_order = async (req, res) => {
       building: User.address[index].building,
     };
 
-    console.log("hey here got the nammeeee",User.address[index].name);
+    // console.log("hey here got the nammeeee",User.address[index].name);
 
-    console.log("hey here got address ",address);
+    // console.log("hey here got address ",address);
 
     const totel = req.body.total;
 
@@ -135,7 +148,7 @@ const place_order = async (req, res) => {
 
     const neworderData = await order.save();
 
-    console.log("hey  here got the neworderData",neworderData);
+    // console.log("hey  here got the neworderData",neworderData);
 
     if (req.body.payment_method == "COD") {
       res.json({ status: true });
@@ -159,13 +172,18 @@ const place_order = async (req, res) => {
         res.json({ viewRazorpay: true, order });
       });
 
-    } else if (req.body.payment_method == "WALLET") {
-      const walupdate = User.wallet - orderData.total;
-      await user.updateOne({ _id: id }, { $set: { wallet: walupdate } });
-      res.json({ status: true });
-    }
+    }else if (req.body.payment_method == "WALLET") {
 
-  } catch (error) {
+      const walupdate = User.wallet - orderData.total
+
+      console.log("hey here got the walupdate",walupdate);
+
+      await user.updateOne({ _id: id }, { $set: { wallet: walupdate } })
+
+      res.json({ status: true })
+
+    }
+  }  catch (error) {
     console.error('Failed to place order:', error);
     res.render('user/500').send('Internal server error');
   }

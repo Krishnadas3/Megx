@@ -1,69 +1,5 @@
-<!doctype html>
-<html class="no-js" lang="en" dir="ltr">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>::eBazar:: Products List </title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
-
-    <!--plugin css file -->
-    <link rel="stylesheet" href="/assets/admin/assets/nouislider/nouislider.min.css">
-
-    <!-- project css file  -->
-    <link rel="stylesheet" href="/assets/admin/css/ebazar.style.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-</head>
-
-<body>
-    <div id="ebazar-layout" class="theme-blue">
-
-        <!-- sidebar -->
-        <div class="sidebar px-4 py-4 py-md-4 me-0">
-            <div class="d-flex flex-column h-100">
-                <a href="/admin/dashboard" class="mb-0 brand-icon">
-                    <span class="logo-icon">
-                        <i class="bi bi-bag-check-fill fs-4"></i>
-                    </span>
-                    <span class="logo-text">Megx.ft</span>
-                </a>
-                <ul class="menu-list flex-grow-1 mt-3">
-                    <li><a class="m-link active" href="/admin/dashboard"><i class="icofont-home fs-5"></i> <span>Dashboard</span></a></li>
-                    <li><a class="m-link active" href="/admin/productlist"><i class="icofont-truck-loaded fs-5"></i> <span>Products</span></a></li>
-                    <li><a class="m-link active" href="/admin/categorielist"><i class="icofont-chart-flow fs-5"></i> <span>Categories</span></a></li>
-                    <li><a class="m-link active" href="/admin/subcategories"><i class="icofont-chart-flow fs-5"></i> <span>Subcategories</span></a></li>
-                    <li><a class="m-link active" href="/admin/list-order"><i class="icofont-notepad fs-5"></i> <span>Orders</span></a></li>
-                    <li><a class="m-link active" href="/admin/customerslist"><i class="icofont-funky-man fs-5"></i> <span>Customers</span></a></li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- main body area -->
-        <div class="main px-lg-4 px-md-4">
-
-            <!-- Body: Header -->
-            <div class="header">
-                <nav class="navbar py-4">
-                    <div class="container-xxl">
-
-                        <!-- header rightbar icon -->
-                        <div class="h-right d-flex align-items-center mr-5 mr-lg-0 order-1">
-
-                            <div class="dropdown zindex-popover">
-                                <a class="nav-link dropdown-toggle pulse" href="#" role="button"
-                                    data-bs-toggle="dropdown">
-                                    <img src="assets/images/flag/GB.png" alt="">
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </nav>
-            </div>
+<%- include('../layouts/adminheader.ejs') %>
+  <%- include('../layouts/admin_nav.ejs') %>
 
 
             <!-- Body: Body -->
@@ -154,10 +90,7 @@
 
     <hr class="my-5" />
 
-    <!-- Row end  -->
-</div>
 
-    </div>
 
 
 
@@ -168,34 +101,8 @@
 
     </div>
 
-    <!-- Jquery Core Js -->
-    <script src="/assets/admin/bundles/libscripts.bundle.js"></script>
-
-    <!-- Jquery Plugin -->
-    <script src="/assets/admin/plugin/nouislider/nouislider.min.js"></script>
-
-    <!-- Jquery Page Js -->
-    <script src="../js/template.js"></script>
     <script>
-        var stepsSlider2 = document.getElementById('slider-range2');
-        var input3 = document.getElementById('minAmount2');
-        var input4 = document.getElementById('maxAmount2');
-        var inputs2 = [input3, input4];
-        noUiSlider.create(stepsSlider2, {
-            start: [149, 399],
-            connect: true,
-            step: 1,
-            range: {
-                'min': [0],
-                'max': 2000
-            },
-
-        });
-
-        stepsSlider2.noUiSlider.on('update', function (values, handle) {
-            inputs2[handle].value = values[handle];
-        });
-
+       
 
         function deleteProduct(productId) {
             console.log(productId);
@@ -239,14 +146,5 @@
                 }
             });
         }
-
-
-
-
-
     </script>
-</body>
-
-<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist//admin/productlist by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:56:19 GMT -->
-
-</html>
+        <%- include('../layouts/adminfooter.ejs') %>

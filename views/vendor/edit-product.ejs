@@ -1,0 +1,91 @@
+<%- include('../layouts/adminheader.ejs') %>
+  <%- include('../layouts/admin_nav.ejs') %>
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Product/</span>Edit Product </h4>
+
+      <!-- Basic Layout & Basic with Icons -->
+      <div class="row">
+        <!-- Basic Layout -->
+        <div class="col-xxl">
+          <div class="card mb-4">
+            <br>
+            <div class="card-body">
+              <form method="post" action="/admin/edit-product/<%= product._id %>">
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-name">Product Name</label>
+                  <div class="col-sm-10">
+                    <input type="text" name="name" class="form-control" id="basic-default-name"
+                      value="<%= product.product_name %>" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-company">Category</label>
+                  <div class="col-sm-10">
+                    <select id="Select Category" name="category" class="form-select">
+                      <% if(category.length> 0){
+
+                        for(let i=0; i<category.length; i++){ %>
+                          <option value=<%=category[i]._id %> ><%= category[i].category_name %>
+                          </option>
+                          <% }} %>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-email">Offer Price</label>
+                  <div class="col-sm-10">
+                    <div class="input-group input-group-merge">
+                      <input type="number" id="basic-default-email" value="<%= product.price %>" class="form-control"
+                        name="price" />
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <br>
+                  <label class="col-sm-2 col-form-label" for="basic-default-email">Price</label>
+                  <div class="col-sm-10">
+                    <div class="input-group input-group-merge">
+                      <input type="number" id="basic-default-email" value="<%= product.offer_price %>"
+                        class="form-control" name="offer_price" />
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-phone"> Quantity </label>
+                  <div class="col-sm-10">
+                    <input type="number" name="quantity" id="basic-default-phone" value="<%= product.quantity %>"
+                      class="form-control phone-mask" />
+                    <!-- //hhfgfghg -->
+
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label" for="basic-default-message">Description</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="description" value="<%= product.description %>"
+                      id="basic-default-message">
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="formFile" class="col-sm-2 col-form-label">Image </label>
+                  <% for(let i=0; i<product.image.length; i++ ) { %>
+                    <input class="form-control" type="file" multiple id="formFile"
+                      value="/product_img/<%=product.image[i] %>" name="image" accept="image/*" />
+                    <% }%>
+                </div>
+                <br>
+                <div class="row justify-content-end">
+                  <div class="col-sm-10">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- / Content -->
+
+    <%- include('../layouts/adminfooter.ejs') %>

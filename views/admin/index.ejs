@@ -1,105 +1,6 @@
-<!doctype html>
-<html class="no-js" lang="en" dir="ltr">
 
-<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist//admin/dashboard by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:55:54 GMT -->
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>::eBazar:: Dashboard </title>
-  <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
-
-  <!-- plugin css file  -->
-  <link rel="stylesheet" href="/assets/adminplugin/datatables/responsive.dataTables.min.css">
-  <link rel="stylesheet" href="/assets/adminplugin/datatables/dataTables.bootstrap5.min.css">
-
-  <!-- project css file  -->
-  <link rel="stylesheet" href="/assets/admin/css/ebazar.style.min.css">
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    /* Adjust the size of the canvas for the doughnut chart */
-    #orderStatisticsChartCanvas {
-        max-width: 200px; /* Adjust the maximum width as needed */
-        max-height: 200px; /* Adjust the maximum height as needed */
-        margin: 0 auto; /* Center the canvas */
-    }
-</style>
-
-</head>
-
-<body>
-  <div id="ebazar-layout" class="theme-blue">
-
-    <!-- sidebar -->
-    <div class="sidebar px-4 py-4 py-md-4 me-0">
-      <div class="d-flex flex-column h-100">
-        <a href="/admin/dashboard" class="mb-0 brand-icon">
-          <span class="logo-icon">
-            <i class="bi bi-bag-check-fill fs-4"></i>
-          </span>
-          <span class="logo-text">Megx.ft</span>
-        </a>
-        <ul class="menu-list flex-grow-1 mt-3">
-          <li><a class="m-link active" href="/admin/dashboard"><i class="icofont-home fs-5"></i>
-              <span>Dashboard</span></a></li>
-          <li><a class="m-link active" href="/admin/productlist"><i class="icofont-truck-loaded fs-5"></i>
-              <span>Products</span></a></li>
-          <li><a class="m-link active" href="/admin/categorielist"><i class="icofont-chart-flow fs-5"></i>
-              <span>Categories</span></a></li>
-          <li><a class="m-link active" href="/admin/subcategories"><i class="icofont-chart-flow fs-5"></i>
-              <span>Subcategories</span></a></li>
-          <li><a class="m-link active" href="/admin/list-order"><i class="icofont-notepad fs-5"></i>
-              <span>Orders</span></a></li>
-          <li><a class="m-link active" href="/admin/customerslist"><i class="icofont-funky-man fs-5"></i>
-              <span>Customers</span></a></li>
-          <li><a class="m-link active" href="/admin/list-banner"><i class="icofont-funky-man fs-5"></i>
-              <span>Banner</span></a></li>
-          <li><a class="m-link active" href="/admin/list-coupon"><i class="icofont-coffee-cup fs-5"></i>
-              <span>Coupen</span></a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="main px-lg-4 px-md-4">
-
-      <div class="dropdown user-profile ml-2 ml-sm-3 d-flex align-items-center zindex-popover">
-        <div class="u-info me-2">
-          <p class="mb-0 text-end line-height-sm "><span class="font-weight-bold">Krishnadas</span></p>
-          <small>Admin Profile</small>
-        </div>
-        <a class="nav-link dropdown-toggle pulse p-0" href="#" role="button" data-bs-toggle="dropdown"
-          data-bs-display="static">
-          <img class="avatar lg rounded-circle img-thumbnail" src="/assets/admin/images/profile_av.svg"
-            alt="profile">
-        </a>
-        <div class="dropdown-menu rounded-lg shadow border-0 dropdown-animation dropdown-menu-end p-0 m-0">
-          <div class="card border-0 w280">
-            <div class="card-body pb-0">
-              <div class="d-flex py-1">
-                <img class="avatar rounded-circle" src="/assets/admin/images/profile_av.svg" alt="profile">
-                <!-- <div class="flex-fill ms-3">
-                                    <p class="mb-0"><span class="font-weight-bold">John	Quinn</span></p>
-                                    <small class="">Johnquinn@gmail.com</small>
-                                </div> -->
-              </div>
-
-              <div>
-                <hr class="dropdown-divider border-dark">
-              </div>
-            </div>
-            <div class="list-group m-2 ">
-              <!-- <a href="admin-profile.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-ui-user fs-5 me-3"></i>Profile Page</a> -->
-              <!-- <a href="order-invoices.html" class="list-group-item list-group-item-action border-0 "><i class="icofont-file-text fs-5 me-3"></i>Order Invoices</a> -->
-              <a href="/admin/logout" class="list-group-item list-group-item-action border-0 "><i
-                  class="icofont-logout fs-5 me-3"></i>Signout</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
+<%- include('../layouts/adminheader.ejs') %>
+<%- include('../layouts/admin_nav.ejs') %>
 
       <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
@@ -138,8 +39,7 @@
                 <ul class="p-0 m-0">
                   <li class="d-flex mb-4 pb-1">
                     <div class="avatar flex-shrink-0 me-3">
-                      <span class="avatar-initial rounded bg-label-primary">
-                        <img style="width: 40px; height: 30px;" src="/assets/admin/images/deliverd.png" alt="User" class="rounded" />
+                      <span class="avatar-initial rounded bg-label-success"><i class='bx bx-check'></i></span>
                     </div>
                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                       <div class="me-2">
@@ -155,12 +55,12 @@
                   <li class="d-flex mb-4 pb-1">
                     <div class="avatar flex-shrink-0 me-3">
                       <span class="avatar-initial rounded bg-label-primary">
-                        <img style="width: 40px; height: 30px;" src="/assets/admin/images/confirm.png" alt="User" class="rounded" />
+                        <i class='bx bx-list-check'></i></span>
                     </div>
                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                       <div class="me-2">
                         <h6 class="mb-0">Confirmed</h6>
-
+  
                       </div>
                       <div class="user-progress">
                         <small class="fw-semibold">
@@ -171,13 +71,12 @@
                   </li>
                   <li class="d-flex mb-4 pb-1">
                     <div class="avatar flex-shrink-0 me-3">
-                      <span class="avatar-initial rounded bg-label-primary">
-                        <img style="width: 40px; height: 30px;" src="/assets/admin/images/return.png" alt="User" class="rounded" />
+                      <span class="avatar-initial rounded bg-label-danger"><i class='bx bx-repeat'></i></span>
                     </div>
                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                       <div class="me-2">
                         <h6 class="mb-0">Returned </h6>
-
+  
                       </div>
                       <div class="user-progress">
                         <small class="fw-semibold">
@@ -188,13 +87,13 @@
                   </li>
                   <li class="d-flex">
                     <div class="avatar flex-shrink-0 me-3">
-                      <span class="avatar-initial rounded bg-label-primary">
-                        <img style="width: 40px; height: 30px;" src="/assets/admin/images/cancel.png" alt="User" class="rounded" />
+                      <span class="avatar-initial rounded bg-label-secondary"><i class='bx bx-block'></i>
+                      </span>
                     </div>
                     <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
                       <div class="me-2">
                         <h6 class="mb-0"> Cancelled</h6>
-
+  
                       </div>
                       <div class="user-progress">
                         <small class="fw-semibold">
@@ -225,7 +124,6 @@
                     <span>Total Orders</span>
                   </div>
                   <div id="orderStatisticsChart">
-                    <canvas id="orderStatisticsChartCanvas"></canvas>
                   </div>
                 </div>
                 <ul class="p-0 m-0">
@@ -307,7 +205,7 @@
                       </div>
                     </div>
                     <div id="incomeChart">
-                      <canvas id="incomeChartCanvas"></canvas>
+                      
                   </div>
                     <div class="d-flex justify-content-center pt-4 gap-2">
                       <div class="flex-shrink-0"></div>
@@ -324,76 +222,4 @@
       </div>
 
 
-      <script src="/assets/admin/bundles/libscripts.bundle.js"></script>
-      <script src="/assets/admin/bundles/dashboards-analytics.js"></script>
-      <script src="/assets/admin/libscripts.bundle.js"></script>
-      <script src="/assets/admin/apex-charts/appex-charts.css"></script>
-      <script src="/assets/admin/apex-charts/apexcharts.bundle.js"></script>
-      <!-- <script src="/assets/admin/js/dashboards-analytics.js"></script> -->
-      <!-- <script src="assets/js/plugins.js"></script> -->
-      <script>
-        $('#myDataTable')
-          .addClass('nowrap')
-          .dataTable({
-            responsive: true,
-            columnDefs: [
-              { targets: [-1, -3], className: 'dt-body-right' }
-            ]
-          });
-      </script>
-
-<script>
-  // Order Statistics Chart
-  const orderStatisticsCtx = document.getElementById('orderStatisticsChartCanvas').getContext('2d');
-  const orderStatisticsChart = new Chart(orderStatisticsCtx, {
-      type: 'doughnut',
-      data: {
-          labels: ['Delivered', 'Confirmed', 'Returned', 'Cancelled'],
-          datasets: [{
-              label: 'Orders',
-              data: [<%= deliveryCount %>, <%= confirmedCount %>, <%= returnedCount %>, <%= cancelledCount %>],
-              backgroundColor: ['#28a745', '#007bff', '#dc3545', '#6c757d']
-          }]
-      },
-      options: {
-  legend: {
-    labels: {
-      usePointStyle: true,
-      boxWidth: 6
-    }
-  }
-}
-  });
-
-  // Sales Chart
-  const salesCtx = document.getElementById('incomeChartCanvas').getContext('2d');
-  const salesData = JSON.parse(document.getElementById('sales').value);
-  const dateLabels = JSON.parse(document.getElementById('date').value);
-  const incomeChart = new Chart(salesCtx, {
-      type: 'line',
-      data: {
-          labels: dateLabels,
-          datasets: [{
-              label: 'Sales',
-              data: salesData,
-              borderColor: '#007bff',
-              backgroundColor: 'rgba(0, 123, 255, 0.1)'
-          }]
-      },
-      options: {
-          responsive: true,
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          }
-      }
-  });
-</script>
-      
-
-</body>
-
-<!-- Mirrored from pixelwibes.com/template/ebazar/html/dist//admin/dashboard by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Feb 2024 06:56:09 GMT -->
-
-</html>
+      <%- include('../layouts/adminfooter.ejs') %>

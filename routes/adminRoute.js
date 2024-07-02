@@ -117,4 +117,7 @@ router.post('/admin/edit-coupon', order_controller.editing_coupon);
 router.post('/admin/coupon_active', order_controller.coupon_active)
 
 
+router.get('/vendor/home',adminAuth,adminController.adminhome)
+
+
 module.exports = router
