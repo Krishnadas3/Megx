@@ -32,6 +32,7 @@ let  dashboardpage = async (req, res) => {
         for (var i = 0; i < cod.length; i++) {
             cod_sum = cod_sum + cod[i].total
         }
+        console.log("hey hre got the ",cod_sum);
 
         const upi = await Order.find({ paymentType: "UPI" , status: "Delivered"  })
 
@@ -48,13 +49,16 @@ let  dashboardpage = async (req, res) => {
             wallet_sum = wallet_sum + wallet[i].total
         }
 
-        
-
+    
         const methodtotal = cod_sum + upi_sum + wallet_sum
+
+        console.log("hey here got the methodtotal",methodtotal);
 
         const upi_percentage = upi_sum / methodtotal * 100
         const wallet_percentage = wallet_sum / methodtotal * 100
         const cod_percentage = cod_sum / methodtotal * 100
+
+        console.log("hey here got the cod percenetage ",cod_percentage);
 
         const deliveryCount = await Order.find({ status: "Delivered" }).count()
         const confirmedCount = await Order.find({ status: "Confirmed" }).count()
@@ -73,7 +77,7 @@ let  dashboardpage = async (req, res) => {
               $group: {
                 _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
 
-                sales: { $sum: '$totel' },
+                sales: { $sum: '$total' },
               },
             },
             {
@@ -88,7 +92,7 @@ let  dashboardpage = async (req, res) => {
           const dates = salesChart.map((item) => {
             return item._id;
           })
-      
+
           const sale = salesChart.map((item) => {
             return item.sales;
       });
@@ -122,7 +126,6 @@ let  dashboardpage = async (req, res) => {
         })
 
     } catch (error) {
-
         console.error('failed to get home:', error)
         res.render('user/500').send('internal server error')
     }
@@ -262,6 +265,7 @@ let adminLogout = (req, res) => {
 let customerslist = async (req, res) => {
     try {
       let User = await user.find();
+      console.log("hey here got the user is",User);
       res.render("admin/customerslist", { User });
     } catch (error) {
       console.log(error);

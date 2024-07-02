@@ -58,7 +58,7 @@ router.get('/about',userController.aboutpage)
 router.post('/addtowhishlist', userAuth,wishlist.addWishlist)
 router.get('/wishlist', userAuth, wishlist.loadwhislist)
 router.post('/remove_wishlist',userAuth,wishlist.remove_from_wishlist);
-router.post('/add_to_cart',userAuth,wishlist.add_to_cart);
+router.post('/add_to_cart',userAuth,wishlist.AddtoCart);
 
 
 // cart

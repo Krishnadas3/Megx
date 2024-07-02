@@ -71,26 +71,44 @@ const remove_from_wishlist = async (req, res) => {
 
 }
 
-const add_to_cart = async (req, res) => {
+const AddtoCart = async (req, res) => {
 
     try {
 
-        const product_id = req.body.productId
+        const productId = req.body.productId
 
-        const userId = req.user.id;
+        console.log("hey here got the ",productId);
+        
+        const _id =await req.user.id
 
-        const data = await User.updateOne({ _id: userId }, { $push: { cart: { product: product_id } } })
+        console.log("hey here got the id",_id);
+       
+        let exist = await User.findOne({ _id: _id, 'cart.productId': productId })
 
+        console.log("hery her exist : ",exist);
 
-        res.json({ success: true })
+        if (exist) {
+           
+            res.json({exist:true})
+           
+        } else {
+            const product = await Product.findOne({ _id: req.body.productId })
+           
+            const userData = await User.findOne({ _id })
 
+            const result = await User.updateOne({ _id }, { $push: { cart: { productId: product._id, qty: 1, price: product.price, productTotalprice: product.price } } })
+         
+            if (result) {
+                res.json({ success: true })
+                // res.render('user/cartpage')/
+
+            } else {
+                console.log(' adding to cart is failed it didnt updated');
+            }
+        }
     } catch (error) {
-
-        c        
         res.render('user/500');
         console.log(error.message); 
-
-
     }
 
 }
@@ -99,5 +117,5 @@ module.exports = {
     addWishlist,
     loadwhislist,
     remove_from_wishlist,
-    add_to_cart
+    AddtoCart
 }

@@ -39,7 +39,7 @@
                                         <td class="product-thumbnail"><a href="#"><img src="/img/<%= wishlist[i].product.images[i] %>" alt="" style="width: 100px; height: 100px;"></a></td>
                                         <td class="product-name"><a href="#"><%= wishlist[i].product.productName %></a></td>
                                         <td class="product-price-cart"><span class="amount">₹<%= wishlist[i].product.price %></span></td>
-                                        <td class="product-wishlist-cart"><a href="#">add to cart</a></td>
+                                        <td class="product-wishlist-cart"><a onclick="addToCart('<%=wishlist[i].product._id%>')" href="#">add to cart</a></td>
                                         <td class="product-remove"><a href="#" onclick="deleteWish('<%= wishlist[i].product._id %>')"><i class="fa fa-times"></i></a></td>
                                     </tr>
                                     <% } %>
@@ -103,32 +103,35 @@
 
         function addToCart(proid) {
 
-            $.ajax({
-                url: "/add_to_cart",
-                data: {
-                    productId: proid
-                },
-                method: 'post',
-                success: (response) => {
-                    console.log("waoring")
+$.ajax({
+    url: "/add_to_cart",
+    data: {
+        productId: proid
+    },
+    method: 'post',
+    success: (response) => {
+        console.log("waoring")
 
-                    $('#reloadDiv').load('/wishlist #reloadDiv')
-                    console.log(response);
-                    Swal.fire({
-                        title: 'added',
-                        text: 'iteam in your cart ',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 1000
-                    })
-                    //  setTimeout(()=>{
-                    //     location.reload()
-                    //  },1000);
+        $('#reloadDiv').load('/wishlist #reloadDiv')
+        console.log(response);
+        Swal.fire({
+            title: 'success',
+            text: 'Added to Wishlist',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1000
 
-                }
 
-            })
-        }
+            // iteam in your cart
+        })
+        //  setTimeout(()=>{
+        //     location.reload()
+        //  },1000);
+
+    }
+
+})
+}
     </script>
 
 

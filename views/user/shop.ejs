@@ -91,15 +91,16 @@
                                 </div>
                             </div>
                             <div class="sidebar-widget mt-50">
-                                <h4 class="pro-sidebar-title">Coupon</h4>
+                                <h4 class="pro-sidebar-title" style="text-align: center;">Coupon</h4>
                                 <br>
                                 <div id="offerCarousel" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner">
                                         <% coupon.forEach((x, index) => { %>
-                                            <div class="carousel-item %>" style="background-color: #f5f5f5; padding: 20px;">
+                                            <div class="carousel-item <%= index === 0 ? 'active' : '' %>" style="background-color: #f6f6f6; padding: 20px;">
                                                 <div class="carousel-caption d-md-block" style="position: static; text-align: left;">
-                                                    <h5 style="font-weight: 200px; color: #333;"><%= x.coupon_name %></h5>
-                                                    <p style="font-weight: 200px; color: #333;">Up to <%= x.description %> <%= x.discountpercentage %>% Off. <br>Use  <b style="color: red; font-family: cursive; font-size: larger;"><%= x.code %></b></p>
+                                                    <h5 style="font-weight: 200px; color: #333; text-align: center;"><%= x.coupon_name %></h5>
+                                                    <%= console.log(x.coupon_name) %>
+                                                    <p style="font-weight: 200px; color: #333; text-align: center;">Up to <%= x.description %> <%= x.discountpercentage %>% Off. <br>Use  <b style="color: red; font-family: cursive; font-size: larger;"><%= x.code %></b></p>
                                                     <!-- <a class="butn-style1 fill small" href="#"><span>Buy Now</span></a> -->
                                                 </div>
                                             </div>
@@ -114,7 +115,7 @@
                                         <span class="sr-only">Next</span>
                                     </a>
                                 </div>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>
