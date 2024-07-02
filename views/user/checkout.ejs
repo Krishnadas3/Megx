@@ -3,6 +3,23 @@
 
         <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+        <style>
+            .btn-hover {
+                background-color: #000000;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-block;
+            }
+        
+            .btn-hover:hover {
+                background-color: #000000;
+            }
+        </style>
 
         <div class="breadcrumb-area pt-35 pb-35 bg-gray-3">
             <div class="container">
@@ -22,9 +39,8 @@
                 <div class="row">
                     <div class="col-lg-7">
                         <div class="billing-info-wrap">
-                            <!-- Address Selection Form -->
+                            <h3>Select Address</h3>
                             <form method="post" id="address_selection_form">
-                                <h3>Select Address</h3>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="billing-info mb-20">
@@ -40,96 +56,134 @@
                                         </div>
                                     </div>
                                 </div>
-        
-                                <div class="billing-btn">
-                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addAddressModal">
-                                        Add Address
-                                    </button>
+
+                                <div class="checkout-account-toggle open-toggle2 mb-30">
+                                    <!-- <input placeholder="Email address" type="email">
+                                    <input placeholder="Password" type="password"> -->
+                                    <button class="btn-hover checkout-btn" type="button" data-toggle="modal" data-target="#addAddressModal">Add Address</button>
                                 </div>
                             </form>
+                                <div class="col-lg-5 col-md-12 ps-2-3 mb-1-9 mb-lg-0">
+                                    <div id="accordion" class="accordion-style3">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button class="btn btn-link" data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseOne" aria-expanded="true"
+                                                        aria-controls="collapseOne">
+                                                        Coupon Code
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                                data-bs-parent="#accordion">
+                                                <div class="card-body">
+                    
+                                                    <form id="apply_coupon">
+                    
+                                                        <div class="row">
+                    
+                                                            <div class="col-sm-12 mb-2">
+                                                                <div class="form-group">
+                                                                    <label>Enter Your Coupon Code</label>
+                                                                    <input type="text" class="form-control" name="couponcode" placeholder="Enter Your Coupon Code" required>
+                                                                </div>
+                                                                <input type="hidden" name="total" value="<%= User.cartTotalPrice %>">
+                                                            </div>
+                    
+                                                        </div>
+                    
+                                                        <button type="submit" class="butn-style2 dark" onclick="">Apply
+                                                            Code</button>
+                    
+                                                    </form>
+                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
                         </div>
                     </div>
-
-                    
         
                     <div class="col-lg-5">
                         <div class="your-order-area">
-                            <form id="checkout_form" action="/place_order" method="post">
-                                <div class="your-order-area">
-                                    <h3>Your order</h3>
-                                    <div class="your-order-wrap gray-bg-4">
-                                        <div class="your-order-product-info">
-                                            <div class="your-order-top">
-                                                <ul>
-                                                    <li>Product</li>
-                                                    <li>Total</li>
-                                                </ul>
+                            <h3>Your order</h3>
+                        <form id="checkout_form" action="/place_order" method="post">
+                            <div class="your-order-wrap gray-bg-4">
+                                <div class="your-order-product-info">
+                                    <div class="your-order-top">
+                                        <ul>
+                                            <li>Product</li>
+                                            <li>Total</li>
+                                        </ul>
+                                    </div>
+                                    <div class="your-order-middle">
+                                        <% User.cart.forEach((x)=>{ 
+                                            const product = x.productId;
+                                            if (product) { %>
+                                        <ul>
+                                            <span class="order-middle-left"><%= x.productId.productName %></span>
+                                                                    <span class="order-price">$<%= x.productId.price %></span>
+                                                                    <input type="hidden" name="productId" value="<%= x.productId.id %>">
+                                                                    <input type="hidden" name="qty" value="<%= x.qty %>">
+                                                                    <input type="hidden" name="singleTotel" value="<%= x.productId.price %>">
+                                                                    <input type="hidden" name="price" value="<%= x.productId.price %>">
+                                                                    <%= console.log("product name:",x.qty) %>
+                                        </ul>
+                                    </ul>
+                                    <% } else { %>
+                                        <!-- <p style="color: red;">Product not found for cart item</p> -->
+                                    <% } 
+                                }) %>
+                                    </div>
+                                    <div class="your-order-bottom">
+                                        <ul>
+                                            <li class="your-order-shipping">Shipping</li>
+                                            <li>Free shipping</li>
+                                        </ul>
+                                    </div>
+                                    <div class="your-order-total">
+                                        <ul>
+                                            <li class="order-total">Total</li>
+                                            <li>$<%= User.cartTotalPrice %></li>
+                                            <%= console.log("here get the cartTotalPrice", User.cartTotalPrice) %>
+                                            <input type="hidden" name="total" id="total" value="<%= User.cartTotalPrice %>">
+                                            <tr>
+                                                <th id="discountt"></th>
+                                                <td class="text-gray-dark" id="discount"></td>
+                                            </tr>
+                                            <tr>
+                                                <th id="newtotal"></th>
+                                                <td class="text-gray-dark" id="newwtotal"></td>
+                                            </tr>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="payment-method">
+                                    <div class="widget-title">
+                                        <h5>Please Choose your payment method</h5>
+                                    </div>
+                                    <br>
+                                    <div class="d-flex mb-4">
+                                        <div class="flex-grow-1 ms-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment_method" id="flexRadioDefault2" checked required value="UPI">
+                                                <label class="form-check-label" for="flexRadioDefault2">UPI</label>
                                             </div>
-                                            <div class="your-order-middle">
-                                                <% User.cart.forEach((x)=>{ %>
-                                                    <ul>
-                                                        <li>
-                                                            <span class="order-middle-left"><%= x.productId.productName %></span>
-                                                            <span class="order-price">$<%= x.productId.price %></span>
-                                                            <input type="hidden" name="productId" value="<%= x.productId.id %>">
-                                                            <input type="hidden" name="qty" value="<%= x.qty %>">
-                                                            <input type="hidden" name="singleTotel" value="<%= x.productId.price %>">
-                                                            <input type="hidden" name="price" value="<%= x.productId.price %>">
-                                                            <%= console.log("product name:",x.qty) %>
-                                                        </li>
-                                                    </ul>
-                                                <% }) %>
+                                            <br>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment_method" value="COD" required>
+                                                <label class="form-check-label" for="flexRadioDefault1">COD</label>
                                             </div>
-                                            <div class="your-order-bottom">
-                                                <ul>
-                                                    <li class="your-order-shipping">Shipping</li>
-                                                    <li>Free shipping</li>
-                                                </ul>
-                                            </div>
-                                            <div class="your-order-total">
-                                                <ul>
-                                                    <li class="order-total">Total</li>
-                                                    <li>$<%= User.cartTotalPrice %></li>
-                                                    <%= console.log("here get the cartTotalPrice", User.cartTotalPrice) %>
-                                                    <input type="hidden" name="total" id="total" value="<%= User.cartTotalPrice %>">
-                                                </ul>
-                                                <tr>
-                                                    <th id="discountt"></th>
-                                                    <td class="text-gray-dark" id="discount"></td>
-                                                </tr>
-                                                <tr>
-                                                    <th id="newtotal"></th>
-                                                    <td class="text-gray-dark" id="newwtotal"></td>
-                                                </tr>
+                                            <br>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment_method" id="flexRadioDefault1" value="WALLET" required>
+                                                <label class="form-check-label" for="flexRadioDefault1">Wallet</label>
                                             </div>
                                         </div>
                                     </div>
-        
-                                    <div class="payment-method">
-                                        <div class="widget-title">
-                                            <h5>Please Choose your payment method</h5>
-                                        </div>
-                                        <br>
-                                        <div class="d-flex mb-4">
-                                            <div class="flex-grow-1 ms-3">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="payment_method" id="flexRadioDefault2" checked required value="UPI">
-                                                    <label class="form-check-label" for="flexRadioDefault2">UPI</label>
-                                                </div>
-                                                <br>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="payment_method" value="COD" required>
-                                                    <label class="form-check-label" for="flexRadioDefault1">COD</label>
-                                                </div>
-                                                <br>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="payment_method" id="flexRadioDefault1" value="WALLET" required>
-                                                    <label class="form-check-label" for="flexRadioDefault1">Wallet</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-        
                                     <div class="billing-info mb-20">
                                         <label for="address_select">Select Address</label>
                                         <select id="address_select" name="selected_address" class="form-control form-select" required>
@@ -141,55 +195,14 @@
                                                 <% }); } %>
                                         </select>
                                     </div>
-        
-                                    <div class="Place-order mt-25">
-                                        <button type="submit" class="btn btn-dark">Place Order</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-12 ps-2-3 mb-1-9 mb-lg-0">
-                        <div id="accordion" class="accordion-style3">
-                            <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            Coupon Code
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                    data-bs-parent="#accordion">
-                                    <div class="card-body">
-        
-                                        <form id="apply_coupon">
-        
-                                            <div class="row">
-        
-                                                <div class="col-sm-12 mb-2">
-                                                    <div class="form-group">
-                                                        <label>Enter Your Coupon Code</label>
-                                                        <input type="text" class="form-control" name="couponcode" placeholder="Enter Your Coupon Code" required>
-                                                    </div>
-                                                    <input type="hidden" name="total" value="<%= User.cartTotalPrice %>">
-                                                </div>
-        
-                                            </div>
-        
-                                            <button type="submit" class="butn-style2 dark" onclick="">Apply
-                                                Code</button>
-        
-                                        </form>
-        
-                                    </div>
                                 </div>
                             </div>
+                            <div class="Place-order mt-25">
+                                <button type="submit" class="btn-hover">Place Order</button>
+                            </div>
+                        </form>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </div>
@@ -201,12 +214,14 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script>
 
             $(document).ready(function () {
                 $('#checkout_form').submit((x) => {
                     x.preventDefault();
+                    console.log("Form submitted");
 
                     $.ajax({
                         url: "/place_order",
@@ -219,9 +234,7 @@
                             } else if (response.viewRazorpay) {
                                 razorpayPayment(response.order);
                             } else if (response.wallet == false) {
-
                                 Swal.fire({
-                                    
                                     position: 'center',
                                     icon: 'error',
                                     title: 'wallet has insufficient balance !',
@@ -230,14 +243,13 @@
                                 })
                             }
                         },
-    
                     });
                 });
             });
 
             function walletPayment() {
 
-            }
+}
 
             function razorpayPayment(order) {
                 console.log("Initiating Razorpay Payment");
@@ -345,64 +357,72 @@
 
 
             $(document).ready(function () {
-            $('#apply_coupon').submit(function (event) {
-                event.preventDefault(); //prevent default form submit action
-                var formData = $(this).serialize(); //serialize form data
-                $.ajax({
-                    type: 'POST',
-                    url: '/apply_coupon',
-                    data: formData,
-                    success: function (response) {
-                        console.log(response);
-                        if (response.success) {
-                            $('#reloadDiv').load('user/checkout #reloadDiv')
-                            document.getElementById('discountt').innerHTML = 'discount amount : '
-                            document.getElementById('discount').innerHTML = "₹" + response.discount_value
-                            document.getElementById('newtotal').innerHTML = 'new total'
-                            document.getElementById('newwtotal').innerHTML = "₹" + response.value
-                            Swal.fire({
-                                title: 'Coupon Applied SuccessFully!',
-                                text: `You saved your ${response.discount_value}. Your new totel is ${response.value} `,
-                                icon: 'success',
-                                timer: 1000
-                            })
-                        } else if (response.used) {
-                            Swal.fire({
-                                title: 'Coupon Already Used!',
-                                text: `You Already Used this coupon `,
-                                icon: 'error',
-                                timer: 1000
-                            })
-                        } else if (response.lessamount) {
-                            Swal.fire({
-                                title: 'Coupon Not Applicable!',
-                                text: `The order totel is not sufficent to use this coupon`,
-                                icon: 'error',
-                                timer: 1000
-                            })
-                        } else if (response.expired) {
-                            Swal.fire({
-                                title: 'Coupon Expired!',
-                                text: `The Coupon has Expired`,
-                                icon: 'error',
-                                timer: 1000
-                            })
-                        } else if (response.invalid) {
-                            Swal.fire({
-                                title: 'Invalid Coupon!',
-                                text: `The Coupon code you enterd is in valid`,
-                                icon: 'error',
-                                timer: 1000
-                            })
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        //handle error response
+        $('#apply_coupon').submit(function (event) {
+            event.preventDefault(); //prevent default form submit action
+            var formData = $(this).serialize(); //serialize form data
+
+            $.ajax({
+                type: 'POST',
+                url: '/apply_coupon',
+                data: formData,
+                success: function (response) {
+                    console.log(response);
+                    if (response.success) {
+                        $('#reloadDiv').load('user/checkout #reloadDiv', function() {
+                            document.getElementById('discountt').innerHTML = 'Discount amount: ';
+                            document.getElementById('discount').innerHTML = "₹" + response.discount_value;
+                            document.getElementById('newtotal').innerHTML = 'New total: ';
+                            document.getElementById('newwtotal').innerHTML = "₹" + response.value;
+                        });
+
+                        Swal.fire({
+                            title: 'Coupon Applied Successfully!',
+                            text: `You saved ₹${response.discount_value}. Your new total is ₹${response.value}.`,
+                            icon: 'success',
+                            timer: 2000
+                        });
+                    } else if (response.used) {
+                        Swal.fire({
+                            title: 'Coupon Already Used!',
+                            text: 'You have already used this coupon.',
+                            icon: 'error',
+                            timer: 2000
+                        });
+                    } else if (response.lessamount) {
+                        Swal.fire({
+                            title: 'Coupon Not Applicable!',
+                            text: 'The order total is not sufficient to use this coupon.',
+                            icon: 'error',
+                            timer: 2000
+                        });
+                    } else if (response.expired) {
+                        Swal.fire({
+                            title: 'Coupon Expired!',
+                            text: 'The coupon has expired.',
+                            icon: 'error',
+                            timer: 2000
+                        });
+                    } else if (response.invalid) {
+                        Swal.fire({
+                            title: 'Invalid Coupon!',
+                            text: 'The coupon code you entered is invalid.',
+                            icon: 'error',
+                            timer: 2000
+                        });
                     }
-                });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error in AJAX request:", status, error);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'There was an error applying the coupon. Please try again.',
+                        icon: 'error',
+                        timer: 2000
+                    });
+                }
             });
         });
-
+    });
 
         </script>
 

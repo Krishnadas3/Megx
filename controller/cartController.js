@@ -53,6 +53,9 @@ const AddtoCart = async (req, res) => {
 
 const ListCart = async (req, res) => {
     try {
+
+        const isAuthenticated = req.cookies.jwt !== undefined;
+
         const userId = req.user.id;
         // console.log("userId: ", userId);
 
@@ -74,11 +77,11 @@ const ListCart = async (req, res) => {
 
             const userData = await User.findOne({ _id: userId }).populate('cart.productId').exec();
             const user = true;
-            res.render('user/cartpage', { userData, user });
+            res.render('user/cartpage', { userData, user,isAuthenticated });
         } else {
             const userData = await User.findOne({ _id: userId });
             const user = true;
-            res.render('user/cartpage', { userData, user });
+            res.render('user/cartpage', { userData, user,isAuthenticated });
         }
     } catch (error) {
         console.log(error.message);
