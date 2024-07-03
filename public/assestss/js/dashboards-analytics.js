@@ -417,17 +417,19 @@
     const profileReportChart = new ApexCharts(profileReportChartEl, profileReportChartConfig);
     profileReportChart.render();
   }
+
+
   const upi = document.getElementById('upi').value
   const cod = document.getElementById('cod').value
+  console.log("hey here got the cod",cod);
   const wallet = document.getElementById('wallet').value
-
-  
-  
  
 
   const upii = parseInt(upi)
   const codd = parseInt(cod)
   const wallett = parseInt(wallet)
+  console.log("hey erer",wallett);
+
 
   
 
@@ -504,7 +506,8 @@
   const sales = document.getElementById('sales').value
 
   
-  const sale = JSON.parse(sales);
+  const sale = JSON.parse(sales).map(el => el/100);
+  console.log(sale);
   const date = JSON.parse(dates);
 
 
@@ -530,11 +533,11 @@ let dayOfWeekStrings = dateStrings.map(getDayOfWeek);
     incomeChartConfig = {
       series: [
         {
-          data: sale
+          data:  sale
         }
       ],
       chart: {
-        height: 215,
+        height: 400,
         parentHeightOffset: 0,
         parentWidthOffset: 0,
         toolbar: {
@@ -553,7 +556,7 @@ let dayOfWeekStrings = dateStrings.map(getDayOfWeek);
         show: false
       },
       markers: {
-        size: 6,
+        size: 2,
         colors: 'transparent',
         strokeColors: 'transparent',
         strokeWidth: 4,
@@ -614,7 +617,7 @@ let dayOfWeekStrings = dateStrings.map(getDayOfWeek);
           show: false
         },
         min: 10,
-        max: 15000,
+        max: 50,
         tickAmount: 4
       }
     };

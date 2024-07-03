@@ -70,7 +70,7 @@ let  dashboardpage = async (req, res) => {
         const salesChart = await Order.aggregate([
           
             {
-                $match: { status: "Delivered" } // Add $match stage to filter by status
+                $match: { status: "Delivered" }
               },
               {
                 
@@ -78,7 +78,9 @@ let  dashboardpage = async (req, res) => {
                 _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
 
                 sales: { $sum: '$total' },
+               
               },
+              
             },
             {
               $sort: { _id: -1 },
@@ -88,6 +90,7 @@ let  dashboardpage = async (req, res) => {
             },
           ]);
           
+          console.log("Sales Chart Data: ", salesChart);
 
           const dates = salesChart.map((item) => {
             return item._id;
@@ -102,10 +105,15 @@ let  dashboardpage = async (req, res) => {
         return x
       })
 
+      console.log("salesr",salesr);
+
       const date = dates.reverse()
 
-      const sales = salesr.reverse()
+      console.log("here get the date",date);
 
+      const sales = salesr.reverse()
+      
+      console.log("here get the date",sales);
 
         const User = await user.findOne({ _id: req.user.id })
         res.render('admin/index', {
