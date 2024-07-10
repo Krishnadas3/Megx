@@ -49,10 +49,10 @@ const add_banner = async (req, res) => {
 
             const bannerData = await banner.save();
             if (bannerData) {
-                res.render('admin/add-banner', { user })
+                res.json({ success: true, message: 'Banner added successfully', user });
             }
         } else {
-            res.render('admin/add-banner', { message: "fill your form", user })
+            res.json({ success: false, message: 'Please fill out all fields', user });
         }
 
 

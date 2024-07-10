@@ -11,7 +11,7 @@
                     <div class="card mb-4">
                       <br>
                       <div class="card-body">
-                        <form method="post" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
+                        <form id="addBannerForm" method="post" class="row g-3 needs-validation" novalidate enctype="multipart/form-data">
                           <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="basic-default-name">caption </label>
                             <div class="col-sm-10">
@@ -58,6 +58,53 @@
                 </div>
               </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('#addBannerForm').on('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+
+    $.ajax({
+      url: '/admin/add-banner',
+      type: 'POST',
+      data: formData,
+      contentType: false,
+      processData: false,
+      success: function(response) {
+        if (response.success) {
+          Swal.fire({
+            title: 'Success!',
+            text: response.message,
+            icon: 'success',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+          Swal.fire({
+            title: 'Error!',
+            text: response.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      },
+      error: function() {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Internal server error',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  });
+});
+</script>
    
     <script>
       (() => {
@@ -78,4 +125,6 @@
         });
       })();
     </script>
+
+
     <%- include('../layouts/adminfooter.ejs') %>

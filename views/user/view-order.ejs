@@ -17,9 +17,6 @@
     <div class="cart-main-area pt-90 pb-100">
         <div class="container">
             <h3 class="cart-page-title">My Orders</h3>
-            <span>
-
-            </span>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
                     <form action="#">
@@ -35,7 +32,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <tr>
                                         <td class="product-thumbnail">
                                             <%= order[0].address %>
@@ -50,71 +46,62 @@
                                         <td class="product-price-cart">₹ <%= order[0].total %>
                                         </td>
                                     </tr>
-
-                                    <tr>
-                                        <!-- <td colspan="5" class="text-center">
-                                                <img src="/userr/img/content/no orders.jpg" alt="No orders">
-                                            </td> -->
-                                    </tr>
-
                                 </tbody>
                             </table>
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
 
-
-                <div class="cart-main-area pt-90 pb-100">
-                    <div class="container">
-                        <h3 class="cart-page-title">Products</h3>
+    <div class="cart-main-area pt-90 pb-100">
+        <div class="container">
+            <h3 class="cart-page-title">Products</h3>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                    <form action="#">
+                        <div class="table-content table-responsive cart-table-content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Product Name</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% order[0].product.forEach(x=> { %>
+                                        <tr>
+                                            <td class="product-thumbnail">
+                                                <img style="height: 100px; width: 100px;"
+                                                    src="/img/<%= x.productid.images[0] %>"
+                                                    alt="Product Image">
+                                            </td>
+                                            <td class="product-name">
+                                                <%= x.productid.productName %>
+                                            </td>
+                                            <td class="product-price-cart">
+                                                <%= x.qty %>
+                                            </td>
+                                            <td class="product-price-cart">
+                                                ₹<%= x.productid.price %>
+                                            </td>
+                                            <td class="product-price-cart">
+                                                ₹<%= x.singleTotel %>
+                                            </td>
+                                        </tr>
+                                        <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                                <form action="#">
-                                    <div class="table-content table-responsive cart-table-content">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Image</th>
-                                                    <th>Product Name</th>
-                                                    <th>Qty</th>
-                                                    <th>Price</th>
-                                                    <th>Subtotal</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% order[0].product.forEach(x=> { %>
-                                                    <tr>
-                                                        <td class="product-thumbnail">
-                                                            <img style="height: 100px; width: 100px;"
-                                                                src="/img/<%= x.productid.images[0] %>"
-                                                                alt="Product Image">
-                                                        </td>
-                                                        <td class="product-name">
-                                                            <%= x.productid.productName %>
-                                                        </td>
-                                                        <td class="product-price-cart">
-                                                            <%= x.qty %>
-                                                        </td>
-                                                        <td class="product-price-cart">
-                                                            ₹<%= x.productid.price %>
-                                                        </td>
-                                                        <td class="product-price-cart">
-                                                            ₹<%= x.singleTotel %>
-                                                        </td>
-                                                    </tr>
-                                                    <% }); %>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="cart-shiping-update-wrapper">
-                                                <div class="cart-shiping-update">
-
-                                                    <% if(order[0].status=="Return Pending" || order[0].status=="Retrun"
+                            <div class="col-lg-12">
+                                <div class="cart-shiping-update-wrapper">
+                                    <div class="cart-shiping-update">
+                                        <% if(order[0].status=="Return Pending" || order[0].status=="Retrun"
                                                         ){ %>
                                                         <% }else if( order[0].status !="Cancelled" && order[0].status
                                                             !="Delivered" ){ %>
@@ -125,19 +112,17 @@
                                                                     onclick="returnorder('<%= order[0]._id %>')">Retrun
                                                                     your Order</button>
                                                                 <% } %>
-                                                </div>
-
-                                            </div>
-                                        </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    
 
 
 

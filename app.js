@@ -7,9 +7,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 
 
-
 const app = express(); // Define the Express app here
-
 
 
 require('dotenv').config()

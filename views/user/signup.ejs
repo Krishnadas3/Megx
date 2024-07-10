@@ -7,18 +7,19 @@
   <title>Create an Account</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {
+   body {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
       background-color: #fff;
+      padding: 10px;
     }
 
     .signup-container {
       max-width: 400px;
       width: 100%;
-      padding: 1px;
+      padding: 20px;
       text-align: center;
     }
 
@@ -38,40 +39,73 @@
       border-color: #000;
       height: 46px;
       color: #fff;
-      /* Set text color to white */
     }
 
     .btn-primary:hover {
       background-color: #000;
-      /* No hover effect */
       border-color: #000;
-    }
-
-    /* Remove underline from <a> tag */
-    a {
-      text-decoration: none;
     }
 
     a {
       text-decoration: none;
       color: #000;
-      /* Set link color to black */
     }
 
     h2 {
       font-weight: bolder;
-      font-size: 32px;
+      font-size: 28px;
     }
 
-    */
-
-    /* Additional style for terms and conditions checkbox */
     .form-check-label {
       font-size: 14px;
     }
 
-    label.form-label {
-      font-size: 14px;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    .fade-in {
+      animation: fadeIn 1s ease-in;
+    }
+
+    .fade-out {
+      animation: fadeOut 1s ease-out;
+    }
+
+    @media (max-width: 576px) {
+      body {
+        padding: 0;
+      }
+
+      .signup-container {
+        padding: 10px;
+      }
+
+      .form-control {
+        height: 40px;
+      }
+
+      .btn-primary {
+        height: 40px;
+      }
+
+      h2 {
+        font-size: 24px;
+      }
     }
   </style>
 
@@ -80,12 +114,10 @@
 <body>
 
   <div class="signup-container">
-
-    <!-- <img
-      src="https://see.fontimg.com/api/renderfont4/owrrV/eyJyIjoiZnMiLCJoIjo0MCwidyI6MTI1MCwiZnMiOjMyLCJmZ2MiOiIjMDAwMDAwIiwiYmdjIjoiI0ZGRkZGRiIsInQiOjF9/TUVHWA/black-romero-demo.png"//
-      alt="logo" class="logo"> -->
-
     <h2 class="text-center mb-4">Signup</h2>
+
+
+    <!-- <h2 class="text-center mb-4">Signup</h2> -->
 
     <form action="/user/signup" method="post">
       <!-- Name input -->
@@ -93,7 +125,6 @@
       <div class="form-group">
         <input type="text" name="username" id="usernameInput" class="form-control" placeholder="Enter your name"
           autocomplete="off">
-        <!-- <label class="form-label"for="usernameInput"></label> -->
         <small id="name-error" style="color: red; display: none;">Invalid name</small>
       </div>
 
@@ -128,7 +159,6 @@
         <!-- <label class="form-label" for="repeatPasswordInput"></label> -->
         <small id="repeat-password-error" style="color: red; display: none;">Passwords do not match</small>
       </div>
-
       <br>
 
       <button type="button" class="btn btn-primary btn-block" onclick="validateAndSubmit()">signup</button>
