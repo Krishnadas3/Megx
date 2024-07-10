@@ -535,7 +535,6 @@ const add_coupon = async (req, res) => {
     console.log(error.message);
 
   }
-
 };
 
 
